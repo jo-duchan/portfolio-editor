@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 // Components
-import TitleElement from "components/TitleElement";
-import TextElement from "components/TextElement";
+import TitleElement from "components/common/TitleElement";
+import TextElement from "components/common/TextElement";
 
 // Type
 import { ContentItem } from "type/contentDataType";

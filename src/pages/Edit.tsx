@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 // Components
-import Editor from "components/Editor";
-import Assign from "components/Assign";
+import Editor from "components/edit/Editor";
+import Assign from "components/edit/Assign";
 
 // Type
 import { ContentList, ContentItem, ContentSort } from "type/contentDataType";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 // Components
-import Assign from "components/Assign";
+import Assign from "components/edit/Assign";
 
 // Type
 import { ContentList, ContentItem } from "type/contentDataType";

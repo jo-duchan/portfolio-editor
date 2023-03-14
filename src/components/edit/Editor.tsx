@@ -2,13 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 // Type
-import {
-  ContentList,
-  ContentItem,
-  ContentSort,
-  Size,
-  Aline,
-} from "type/contentDataType";
+import { ContentList, ContentItem, ContentSort } from "type/contentDataType";
 
 interface Props {
   data: ContentList;
@@ -16,23 +10,12 @@ interface Props {
   onCreateHandler: (sort: ContentSort) => void;
 }
 
-interface Option {
-  size: Size;
-  margin: Size;
-  aline: Aline;
-}
-
 function Editor({ data, isSelect, onCreateHandler }: Props) {
-  const [selectOption, setSelectOption] = useState<Option>({
-    size: "S",
-    margin: "S",
-    aline: "LEFT",
-  });
+  const [selectOption, setSelectOption] = useState<ContentItem | null>(null);
 
   useEffect(() => {
-    if (!isSelect) return;
-    console.log(data.filter((item) => item.id === isSelect)[0].option);
-    setSelectOption(data.filter((item) => item.id === isSelect)[0].option);
+    if (!isSelect && !selectOption) return;
+    setSelectOption(data.filter((item) => item.id === isSelect)[0]);
   }, [isSelect]);
 
   return (
@@ -40,7 +23,7 @@ function Editor({ data, isSelect, onCreateHandler }: Props) {
       <Button onClick={() => onCreateHandler("TITLE")}>Title</Button>
       <Button onClick={() => onCreateHandler("TEXT")}>TEXT</Button>
       <select
-        value={selectOption.size}
+        value={selectOption ? selectOption.option.size : "XS"}
         onChange={(e) => console.log(e.target.value)}
       >
         <option value="XS">XS</option>
