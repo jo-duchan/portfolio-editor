@@ -1,25 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 // Components
 import Assign from "components/Assign";
 
 // Type
-import { ContentList } from "type/contentDataType";
+import { ContentList, ContentItem } from "type/contentDataType";
 
 interface Props {
   data: ContentList;
 }
 
 function Home({ data }: Props) {
-  return (
-    <Container>
-      HOME List :
-      {data.map((item) => (
-        <Assign key={item.id} data={item} />
-      ))}
-    </Container>
-  );
+  return <Container>HOME</Container>;
 }
 
 export default Home;

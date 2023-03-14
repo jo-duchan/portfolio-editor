@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GlobalStyle } from "styles/common";
 
@@ -20,18 +20,20 @@ const dummyData: ContentList = [
     option: {
       size: "L",
       margin: "NONE",
+      aline: "LEFT",
     },
   },
   {
     id: "get1",
     sort: "TITLE",
     content: {
-      text: "",
+      text: "타이틀",
       url: "",
     },
     option: {
       size: "S",
-      margin: "NONE",
+      margin: "S",
+      aline: "LEFT",
     },
   },
   {
@@ -44,17 +46,22 @@ const dummyData: ContentList = [
     option: {
       size: "S",
       margin: "NONE",
+      aline: "LEFT",
     },
   },
 ];
 
 function App() {
+  const [contentData, setContentData] = useState<ContentList>(dummyData);
   return (
     <BrowserRouter>
       <GlobalStyle />
       <Routes>
-        <Route path="/" element={<Home data={dummyData} />} />
-        <Route path="/edit" element={<Edit />} />
+        <Route path="/" element={<Home data={contentData} />} />
+        <Route
+          path="/edit"
+          element={<Edit data={contentData} setContentData={setContentData} />}
+        />
       </Routes>
     </BrowserRouter>
   );
