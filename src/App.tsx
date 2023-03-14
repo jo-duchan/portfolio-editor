@@ -6,21 +6,45 @@ import { GlobalStyle } from "styles/common";
 import Home from "pages/Home";
 import Edit from "pages/Edit";
 
-const dummyData = [
+// Type
+import { ContentList } from "type/contentDataType";
+
+const dummyData: ContentList = [
   {
     id: "get0",
-    tag: "p",
-    content: "Create First Component",
+    sort: "TEXT",
+    content: {
+      text: "",
+      url: "",
+    },
+    option: {
+      size: "L",
+      margin: "NONE",
+    },
   },
   {
     id: "get1",
-    tag: "p",
-    content: "Create Second Component",
+    sort: "TITLE",
+    content: {
+      text: "",
+      url: "",
+    },
+    option: {
+      size: "S",
+      margin: "NONE",
+    },
   },
   {
     id: "get2",
-    tag: "p",
-    content: "Create Third Component",
+    sort: "IMG",
+    content: {
+      text: "",
+      url: "",
+    },
+    option: {
+      size: "S",
+      margin: "NONE",
+    },
   },
 ];
 

@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
+// Components
+import Assign from "components/Assign";
+
 // Type
 import { ContentList } from "type/contentDataType";
 
@@ -9,7 +12,14 @@ interface Props {
 }
 
 function Home({ data }: Props) {
-  return <Container>Home : {data[0].id}</Container>;
+  return (
+    <Container>
+      HOME List :
+      {data.map((item) => (
+        <Assign key={item.id} data={item} />
+      ))}
+    </Container>
+  );
 }
 
 export default Home;
