@@ -29,7 +29,7 @@ function App() {
     <BrowserRouter>
       <GlobalStyle />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home data={dummyData} />} />
         <Route path="/edit" element={<Edit />} />
       </Routes>
     </BrowserRouter>
