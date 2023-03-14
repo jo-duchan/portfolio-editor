@@ -25,7 +25,7 @@ function Assign({ data, onSetIdHandler, isFocus }: Props) {
         return <TitleElement data={data} />;
       }
       case "TEXT": {
-        return <div>TEXT</div>;
+        return <TextElement data={data} />;
       }
       case "IMG": {
         return <div>IMG</div>;

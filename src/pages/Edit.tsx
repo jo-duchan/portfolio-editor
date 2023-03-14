@@ -6,7 +6,7 @@ import Editor from "components/edit/Editor";
 import Assign from "components/edit/Assign";
 
 // Type
-import { ContentList, ContentItem, ContentSort } from "type/contentDataType";
+import { ContentList, ContentItem } from "type/contentDataType";
 
 interface Props {
   data: ContentList;
@@ -16,34 +16,13 @@ interface Props {
 function Edit({ data, setContentData }: Props) {
   const [isSelect, setIsSelect] = useState<string>("");
 
-  const onCreateHandler = (sort: ContentSort) => {
-    // TEXT
-    let dataId = Math.random().toString();
-    const updateData: ContentItem = {
-      id: dataId,
-      sort: sort,
-      content: {
-        text: "Enter the content here.",
-        url: "",
-      },
-      option: {
-        size: "S",
-        margin: "NONE",
-        aline: "LEFT",
-      },
-    };
-
-    if (!isSelect) {
-      setContentData((prev) => {
-        return [...prev, updateData];
-      });
-    } else {
-      const updateArray = data;
-      const selectIndex = updateArray.findIndex((item) => item.id === isSelect);
-      updateArray.splice(selectIndex + 1, 0, updateData);
-      setIsSelect(dataId);
-      setContentData(updateArray);
-    }
+  const onCreateHandler = (createData: ContentItem) => {
+    const copyData = data;
+    const selectIndex = copyData.findIndex((item) => item.id === isSelect);
+    const startPoint = isSelect ? selectIndex + 1 : copyData.length;
+    copyData.splice(startPoint, 0, createData);
+    setIsSelect(createData.id);
+    setContentData(copyData);
   };
 
   const onSetIdHandler = (id: string) => {
@@ -63,7 +42,7 @@ function Edit({ data, setContentData }: Props) {
   return (
     <Container>
       <Viewer>
-        {data.map((item, index) => (
+        {data.map((item) => (
           <Assign
             key={item.id}
             data={item}

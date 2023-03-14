@@ -2,28 +2,62 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 // Type
-import { ContentList, ContentItem, ContentSort } from "type/contentDataType";
+import { ContentList, ContentItem } from "type/contentDataType";
 
 interface Props {
   data: ContentList;
   isSelect: string;
-  onCreateHandler: (sort: ContentSort) => void;
+  onCreateHandler: (createData: ContentItem) => void;
 }
 
 function Editor({ data, isSelect, onCreateHandler }: Props) {
-  const [selectOption, setSelectOption] = useState<ContentItem | null>(null);
+  const [selectItem, setSelectItem] = useState<ContentItem | null>(null);
 
   useEffect(() => {
-    if (!isSelect && !selectOption) return;
-    setSelectOption(data.filter((item) => item.id === isSelect)[0]);
+    if (!isSelect && !selectItem) return;
+    setSelectItem(data.filter((item) => item.id === isSelect)[0]);
   }, [isSelect]);
+
+  const onCreateTitle = () => {
+    const CreateData: ContentItem = {
+      id: Math.random().toString(),
+      sort: "TITLE",
+      content: {
+        text: "Enter the Title here.",
+        url: "",
+      },
+      option: {
+        size: "S",
+        margin: "NONE",
+        aline: "LEFT",
+      },
+    };
+    onCreateHandler(CreateData);
+  };
+
+  const onCreateText = () => {
+    const CreateData: ContentItem = {
+      id: Math.random().toString(),
+      sort: "TEXT",
+      content: {
+        text: "Enter the Text here.",
+        url: "",
+      },
+      option: {
+        size: "S",
+        margin: "NONE",
+        aline: "LEFT",
+      },
+    };
+    onCreateHandler(CreateData);
+  };
 
   return (
     <Container>
-      <Button onClick={() => onCreateHandler("TITLE")}>Title</Button>
-      <Button onClick={() => onCreateHandler("TEXT")}>TEXT</Button>
+      <Button onClick={onCreateTitle}>Title</Button>
+      <Button onClick={onCreateText}>TEXT</Button>
       <select
-        value={selectOption ? selectOption.option.size : "XS"}
+        value={selectItem ? selectItem.option.size : "XS"}
         onChange={(e) => console.log(e.target.value)}
       >
         <option value="XS">XS</option>

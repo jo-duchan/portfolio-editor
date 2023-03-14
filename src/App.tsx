@@ -14,7 +14,7 @@ const dummyData: ContentList = [
     id: "get0",
     sort: "TEXT",
     content: {
-      text: "",
+      text: "text",
       url: "",
     },
     option: {
