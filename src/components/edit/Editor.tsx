@@ -9,14 +9,14 @@ import { ContentList, ContentItem } from "type/contentDataType";
 
 interface Props {
   data: ContentList;
-  isSelect: string;
   onCreateHandler: (createData: ContentItem) => void;
 }
 
-function Editor({ data, isSelect, onCreateHandler }: Props) {
+function Editor({ data, onCreateHandler }: Props) {
   return (
     <Container>
       <Creator onCreateHandler={onCreateHandler} />
+      {data[0].option.size}
     </Container>
   );
 }
