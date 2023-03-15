@@ -10,7 +10,7 @@ export interface ContentItem {
     url: string | undefined | null;
   };
   option: {
-    size: Size;
+    size: string;
     margin: Size;
     aline: Aline;
   };

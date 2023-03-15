@@ -10,19 +10,20 @@ import { ContentItem } from "type/contentDataType";
 
 interface Props {
   data: ContentItem;
-  onSetIdHandler: (id: string) => void;
   isFocus: boolean;
+  onSetIdHandler: (id: string, item: ContentItem) => void;
+  onUpdateHandler: (updateData: ContentItem) => void;
 }
 
 interface StyledProps {
   focus: boolean;
 }
 
-function Assign({ data, onSetIdHandler, isFocus }: Props) {
+function Assign({ data, isFocus, onSetIdHandler, onUpdateHandler }: Props) {
   const onRanderElement = () => {
     switch (data.sort) {
       case "TITLE": {
-        return <TitleElement data={data} />;
+        return <TitleElement data={data} onUpdateHandler={onUpdateHandler} />;
       }
       case "TEXT": {
         return <TextElement data={data} />;
@@ -38,14 +39,15 @@ function Assign({ data, onSetIdHandler, isFocus }: Props) {
     }
   };
 
+  const setSelectItemHandler = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    onSetIdHandler(data.id, data);
+  };
+
   return (
-    <Container
-      onClick={(e) => {
-        onSetIdHandler(data.id);
-        e.stopPropagation();
-      }}
-      focus={isFocus}
-    >
+    <Container onClick={setSelectItemHandler} focus={isFocus}>
       {onRanderElement()}
     </Container>
   );

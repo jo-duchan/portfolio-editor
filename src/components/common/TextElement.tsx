@@ -9,7 +9,7 @@ interface Props {
 }
 
 interface StyledProps {
-  size?: Size;
+  size?: string;
   margin?: Size;
   aline?: Aline;
 }

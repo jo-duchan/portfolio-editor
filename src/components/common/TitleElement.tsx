@@ -6,17 +6,20 @@ import { ContentItem, Size, Aline } from "type/contentDataType";
 
 interface Props {
   data: ContentItem;
+  onUpdateHandler: (updateData: ContentItem) => void;
 }
 
 interface StyledProps {
-  size?: Size;
+  size?: string;
   margin?: Size;
   aline?: Aline;
 }
 
-function TitleElement({ data }: Props) {
+function TitleElement({ data, onUpdateHandler }: Props) {
   const onChangeHandler = (e: React.FormEvent<HTMLParagraphElement>) => {
-    console.log(e.currentTarget.textContent);
+    const updateItme = data;
+    updateItme.content.text = e.currentTarget.textContent;
+    onUpdateHandler(updateItme);
   };
 
   return (

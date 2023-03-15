@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 // Components
@@ -14,7 +14,9 @@ interface Props {
 }
 
 function Edit({ data, setContentData }: Props) {
+  const viewRef = useRef<HTMLDivElement | null>(null);
   const [isSelect, setIsSelect] = useState<string>("");
+  const [selectItem, setSelectItem] = useState<ContentItem | null>(null);
 
   const onCreateHandler = (createData: ContentItem) => {
     const copyData = data;
@@ -25,29 +27,36 @@ function Edit({ data, setContentData }: Props) {
     setContentData(copyData);
   };
 
-  const onSetIdHandler = (id: string) => {
+  const onUpdateHandler = (updateData: ContentItem) => {
+    const copyData = data;
+    const selectIndex = copyData.findIndex((item) => item.id === isSelect);
+    copyData[selectIndex] = updateData;
+    setContentData(copyData);
+    console.log("update:", data);
+  };
+
+  const onSetIdHandler = (id: string, item: ContentItem) => {
     setIsSelect(id);
+    setSelectItem(item);
   };
 
   useEffect(() => {
-    const clearIdHandler = () => setIsSelect("");
-
-    window.addEventListener("click", clearIdHandler);
-
-    return () => {
-      window.removeEventListener("click", clearIdHandler);
-    };
+    if (viewRef.current) {
+      const clearIdHandler = () => setIsSelect("");
+      viewRef.current.addEventListener("click", clearIdHandler);
+    }
   }, []);
 
   return (
     <Container>
-      <Viewer>
+      <Viewer ref={viewRef}>
         {data.map((item) => (
           <Assign
             key={item.id}
             data={item}
             onSetIdHandler={onSetIdHandler}
             isFocus={item.id === isSelect}
+            onUpdateHandler={onUpdateHandler}
           />
         ))}
       </Viewer>
@@ -55,6 +64,7 @@ function Edit({ data, setContentData }: Props) {
         data={data}
         isSelect={isSelect}
         onCreateHandler={onCreateHandler}
+        // onUpdateHandler={onUpdateHandler}
       />
     </Container>
   );
