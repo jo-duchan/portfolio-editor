@@ -1,19 +1,27 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import styled from "styled-components";
+import useContentAction from "context/useContentAction";
 
 // Components
 import Creator from "components/edit/Creator";
 import Editor from "components/edit/Editor";
 
 // Type
-import { ContentList, ContentItem } from "type/contentDataType";
+import { ContentItem } from "type/contentDataType";
 
 interface Props {
-  data: ContentList;
-  onCreateHandler: (createData: ContentItem) => void;
+  selectItem: ContentItem | null;
+  setSelectItem: Dispatch<React.SetStateAction<ContentItem | null>>;
 }
 
-function ToolsPanel({ data, onCreateHandler }: Props) {
+function ToolsPanel({ selectItem, setSelectItem }: Props) {
+  const action = useContentAction();
+
+  const onCreateHandler = (createData: ContentItem) => {
+    setSelectItem(createData);
+    if (!selectItem) return;
+    action.create(createData, selectItem.id);
+  };
   return (
     <Container>
       <Creator onCreateHandler={onCreateHandler} />

@@ -16,18 +16,6 @@ function Edit() {
   const viewRef = useRef<HTMLDivElement | null>(null);
   const [selectItem, setSelectItem] = useState<ContentItem | null>(null);
 
-  const onCreateHandler = (createData: ContentItem) => {
-    // const copyData = data;
-    // const selectIndex = copyData.findIndex(
-    //   (item) => item.id === selectItem?.id
-    // );
-    // const startPoint = selectItem ? selectIndex + 1 : copyData.length;
-    // copyData.splice(startPoint, 0, createData);
-    setSelectItem(createData);
-    if (!selectItem) return;
-    action.onCreateHandler(createData, selectItem.id);
-  };
-
   const onUpdateHandler = (updateData: ContentItem) => {
     const copyData = data;
     const selectIndex = copyData.findIndex(
@@ -62,12 +50,7 @@ function Edit() {
           />
         ))}
       </CanvasPanel>
-      <ToolsPanel
-        data={data}
-        // isSelect={isSelect}
-        onCreateHandler={onCreateHandler}
-        // onUpdateHandler={onUpdateHandler}
-      />
+      <ToolsPanel selectItem={selectItem} setSelectItem={setSelectItem} />
     </Container>
   );
 }

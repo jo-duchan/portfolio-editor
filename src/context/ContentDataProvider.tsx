@@ -8,7 +8,7 @@ interface Props {
 }
 
 type ContentActionType = {
-  onCreateHandler(createData: ContentItem, currentId: string): void;
+  create(createData: ContentItem, currentId: string): void;
 };
 
 export const ContentValueContext = createContext<ContentList | undefined>(
@@ -24,7 +24,7 @@ function ContentDataProvider({ children }: Props) {
   // 리듀서로 수정 예정
   const actions = useMemo(
     () => ({
-      onCreateHandler(createData: ContentItem, currentId: string) {
+      create(createData: ContentItem, currentId: string) {
         setContentData((prevData) => {
           const updateData = [...prevData];
           const selectIndex = updateData.findIndex(
