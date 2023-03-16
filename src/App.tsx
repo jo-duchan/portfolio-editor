@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GlobalStyle } from "styles/common";
+import ContentDataProvider from "context/ContentDataProvider";
 
 // Pages
 import Home from "pages/Home";
@@ -53,16 +54,21 @@ const dummyData: ContentList = [
 
 function App() {
   const [contentData, setContentData] = useState<ContentList>(dummyData);
+
   return (
     <BrowserRouter>
-      <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<Home data={contentData} />} />
-        <Route
-          path="/edit"
-          element={<Edit data={contentData} setContentData={setContentData} />}
-        />
-      </Routes>
+      <ContentDataProvider>
+        <GlobalStyle />
+        <Routes>
+          <Route path="/" element={<Home data={contentData} />} />
+          <Route
+            path="/edit"
+            element={
+              <Edit data={contentData} setContentData={setContentData} />
+            }
+          />
+        </Routes>
+      </ContentDataProvider>
     </BrowserRouter>
   );
 }

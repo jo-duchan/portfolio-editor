@@ -29,7 +29,9 @@ function Creator({ onCreateHandler }: Props) {
   return (
     <Container>
       <Button onClick={() => onCreateText("TITLE")}>Title</Button>
-      <Button onClick={() => onCreateText("TEXT")}>TEXT</Button>
+      <Button onClick={() => onCreateText("TEXT")}>Text</Button>
+      <Button>Gap</Button>
+      <Button>Image</Button>
     </Container>
   );
 }
