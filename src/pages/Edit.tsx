@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import useContentValue from "context/useContentValue";
 // import useContentAction from "context/useContentAction";
@@ -27,10 +27,6 @@ function Edit() {
     console.log("update:", data);
   };
 
-  const onSetIdHandler = (id: string, item: ContentItem) => {
-    setCurrentItem(item);
-  };
-
   useEffect(() => {
     if (viewRef.current) {
       // const clearIdHandler = () => setSelectItem(null);
@@ -43,13 +39,7 @@ function Edit() {
     <Container>
       <CanvasPanel ref={viewRef}>
         {data.map((item) => (
-          <Viewer
-            key={item.id}
-            data={item}
-            onSetIdHandler={onSetIdHandler}
-            isFocus={item.id === currentItem?.id}
-            onUpdateHandler={onUpdateHandler}
-          />
+          <Viewer key={item.id} data={item} onUpdateHandler={onUpdateHandler} />
         ))}
       </CanvasPanel>
       <ToolsPanel />

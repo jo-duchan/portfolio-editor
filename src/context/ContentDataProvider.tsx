@@ -9,6 +9,7 @@ interface Props {
 
 type ContentActionType = {
   create(createData: ContentItem, currentId: string): void;
+  update(updateData: ContentItem, currentId: string): void;
 };
 
 export const ContentValueContext = createContext<ContentList | undefined>(
@@ -26,13 +27,23 @@ function ContentDataProvider({ children }: Props) {
     () => ({
       create(createData: ContentItem, currentId: string) {
         setContentData((prevData) => {
-          const updateData = [...prevData];
-          const selectIndex = updateData.findIndex(
+          const newData = [...prevData];
+          const selectIndex = newData.findIndex(
             (item) => item.id === currentId
           );
-          const startPoint = currentId ? selectIndex + 1 : updateData.length;
-          updateData.splice(startPoint, 0, createData);
-          return updateData;
+          const startPoint = currentId ? selectIndex + 1 : newData.length;
+          newData.splice(startPoint, 0, createData);
+          return newData;
+        });
+      },
+      update(updateData: ContentItem, currentId: string) {
+        setContentData((prevData) => {
+          const newData = [...prevData];
+          const selectIndex = newData.findIndex(
+            (item) => item.id === currentId
+          );
+          newData[selectIndex] = updateData;
+          return newData;
         });
       },
     }),
