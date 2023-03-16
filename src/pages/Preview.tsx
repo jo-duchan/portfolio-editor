@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-function Home() {
-  return <Container>HOME</Container>;
+function Preview() {
+  return <Container>Preview</Container>;
 }
 
-export default Home;
+export default Preview;
 
 const Container = styled.div``;

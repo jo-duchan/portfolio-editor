@@ -1,10 +1,10 @@
-import React, { createContext, useMemo, useState } from "react";
+import React, { ReactNode, createContext, useMemo, useState } from "react";
 
 // Type
 import { ContentList, ContentItem } from "type/contentDataType";
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 type ContentActionType = {

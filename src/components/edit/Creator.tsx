@@ -1,14 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import useContentAction from "context/useContentAction";
+import useCurrentItem from "context/useCurrentItem";
 
 // Type
 import { ContentItem, ContentSort } from "type/contentDataType";
 
-interface Props {
-  onCreateHandler: (createData: ContentItem) => void;
-}
+function Creator() {
+  const action = useContentAction();
+  const [currentItem, setCurrentItem] = useCurrentItem();
 
-function Creator({ onCreateHandler }: Props) {
+  const onCreateHandler = (createData: ContentItem) => {
+    setCurrentItem(createData);
+    if (!currentItem) return;
+    action.create(createData, currentItem.id);
+  };
+
   const onCreateText = (sort: ContentSort) => {
     const CreateData: ContentItem = {
       id: Math.random().toString(),

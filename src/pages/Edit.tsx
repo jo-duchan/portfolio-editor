@@ -1,25 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import useContentValue from "context/useContentValue";
-import useContentAction from "context/useContentAction";
+// import useContentAction from "context/useContentAction";
+import useCurrentItem from "context/useCurrentItem";
 
 // Components
 import ToolsPanel from "components/edit/ToolsPanel";
 import Viewer from "components/edit/Viewer";
 
 // Type
-import { ContentList, ContentItem } from "type/contentDataType";
+import { ContentItem } from "type/contentDataType";
 
 function Edit() {
-  const action = useContentAction();
+  // const action = useContentAction();
   const data = useContentValue();
+  const [currentItem, setCurrentItem] = useCurrentItem();
   const viewRef = useRef<HTMLDivElement | null>(null);
-  const [selectItem, setSelectItem] = useState<ContentItem | null>(null);
 
   const onUpdateHandler = (updateData: ContentItem) => {
     const copyData = data;
     const selectIndex = copyData.findIndex(
-      (item) => item.id === selectItem?.id
+      (item) => item.id === currentItem?.id
     );
     copyData[selectIndex] = updateData;
     // setData(copyData);
@@ -27,12 +28,13 @@ function Edit() {
   };
 
   const onSetIdHandler = (id: string, item: ContentItem) => {
-    setSelectItem(item);
+    setCurrentItem(item);
   };
 
   useEffect(() => {
     if (viewRef.current) {
-      const clearIdHandler = () => setSelectItem(null);
+      // const clearIdHandler = () => setSelectItem(null);
+      const clearIdHandler = () => setCurrentItem(null);
       viewRef.current.addEventListener("click", clearIdHandler);
     }
   }, []);
@@ -45,12 +47,12 @@ function Edit() {
             key={item.id}
             data={item}
             onSetIdHandler={onSetIdHandler}
-            isFocus={item.id === selectItem?.id}
+            isFocus={item.id === currentItem?.id}
             onUpdateHandler={onUpdateHandler}
           />
         ))}
       </CanvasPanel>
-      <ToolsPanel selectItem={selectItem} setSelectItem={setSelectItem} />
+      <ToolsPanel />
     </Container>
   );
 }
