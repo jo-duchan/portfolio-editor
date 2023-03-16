@@ -19,7 +19,7 @@ interface StyledProps {
   focus: boolean;
 }
 
-function Assign({ data, isFocus, onSetIdHandler, onUpdateHandler }: Props) {
+function Viewer({ data, isFocus, onSetIdHandler, onUpdateHandler }: Props) {
   const onRanderElement = () => {
     switch (data.sort) {
       case "TITLE": {
@@ -53,7 +53,7 @@ function Assign({ data, isFocus, onSetIdHandler, onUpdateHandler }: Props) {
   );
 }
 
-export default Assign;
+export default Viewer;
 
 const Container = styled.div<StyledProps>`
   background: ${(props) => props.focus && "red"};

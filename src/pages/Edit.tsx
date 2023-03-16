@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 // Components
-import Editor from "components/edit/Editor";
-import Assign from "components/edit/Assign";
+import ToolsPanel from "components/edit/ToolsPanel";
+import Viewer from "components/edit/Viewer";
 
 // Type
 import { ContentList, ContentItem } from "type/contentDataType";
@@ -51,9 +51,9 @@ function Edit({ data, setContentData }: Props) {
 
   return (
     <Container>
-      <Viewer ref={viewRef}>
+      <CanvasPanel ref={viewRef}>
         {data.map((item) => (
-          <Assign
+          <Viewer
             key={item.id}
             data={item}
             onSetIdHandler={onSetIdHandler}
@@ -61,8 +61,8 @@ function Edit({ data, setContentData }: Props) {
             onUpdateHandler={onUpdateHandler}
           />
         ))}
-      </Viewer>
-      <Editor
+      </CanvasPanel>
+      <ToolsPanel
         data={data}
         // isSelect={isSelect}
         onCreateHandler={onCreateHandler}
@@ -78,7 +78,7 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Viewer = styled.div`
+const CanvasPanel = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
