@@ -4,28 +4,28 @@ import useContentValue from "context/useContentValue";
 import useContentAction from "context/useContentAction";
 
 function Editor() {
-  const setData = useContentAction();
-  const data = useContentValue();
+  // const setData = useContentAction();
+  // const data = useContentValue();
 
-  useEffect(() => {
-    console.log("data", data);
-    setData([
-      {
-        id: "0",
-        sort: "TITLE",
-        content: {
-          text: "dd",
-          url: "",
-        },
-        option: {
-          size: "X",
-          margin: "XL",
-          aline: "CENTER",
-        },
-      },
-    ]);
-  }, []);
-  console.log("data", data);
+  // useEffect(() => {
+  //   console.log("data", data);
+  //   setData([
+  //     {
+  //       id: "0",
+  //       sort: "TITLE",
+  //       content: {
+  //         text: "dd",
+  //         url: "",
+  //       },
+  //       option: {
+  //         size: "X",
+  //         margin: "XL",
+  //         aline: "CENTER",
+  //       },
+  //     },
+  //   ]);
+  // }, []);
+  // console.log("data", data);
   return <Container>Editor</Container>;
 }
 

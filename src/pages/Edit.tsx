@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import useContentValue from "context/useContentValue";
+import useContentAction from "context/useContentAction";
 
 // Components
 import ToolsPanel from "components/edit/ToolsPanel";
@@ -8,24 +10,22 @@ import Viewer from "components/edit/Viewer";
 // Type
 import { ContentList, ContentItem } from "type/contentDataType";
 
-interface Props {
-  data: ContentList;
-  setContentData: React.Dispatch<React.SetStateAction<ContentList>>;
-}
-
-function Edit({ data, setContentData }: Props) {
+function Edit() {
+  const action = useContentAction();
+  const data = useContentValue();
   const viewRef = useRef<HTMLDivElement | null>(null);
   const [selectItem, setSelectItem] = useState<ContentItem | null>(null);
 
   const onCreateHandler = (createData: ContentItem) => {
-    const copyData = data;
-    const selectIndex = copyData.findIndex(
-      (item) => item.id === selectItem?.id
-    );
-    const startPoint = selectItem ? selectIndex + 1 : copyData.length;
-    copyData.splice(startPoint, 0, createData);
+    // const copyData = data;
+    // const selectIndex = copyData.findIndex(
+    //   (item) => item.id === selectItem?.id
+    // );
+    // const startPoint = selectItem ? selectIndex + 1 : copyData.length;
+    // copyData.splice(startPoint, 0, createData);
     setSelectItem(createData);
-    setContentData(copyData);
+    if (!selectItem) return;
+    action.onCreateHandler(createData, selectItem.id);
   };
 
   const onUpdateHandler = (updateData: ContentItem) => {
@@ -34,7 +34,7 @@ function Edit({ data, setContentData }: Props) {
       (item) => item.id === selectItem?.id
     );
     copyData[selectIndex] = updateData;
-    setContentData(copyData);
+    // setData(copyData);
     console.log("update:", data);
   };
 

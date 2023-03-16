@@ -5,7 +5,9 @@ function useContentAction() {
   const value = useContext(ContentActionContext);
 
   if (value === undefined) {
-    throw new Error("useContentData should be used within ContentDataProvider");
+    throw new Error(
+      "useContentAction should be used within ContentActionContext"
+    );
   }
   return value;
 }
