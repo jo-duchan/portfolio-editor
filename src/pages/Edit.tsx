@@ -8,28 +8,14 @@ import useCurrentItem from "context/useCurrentItem";
 import ToolsPanel from "components/edit/ToolsPanel";
 import Viewer from "components/edit/Viewer";
 
-// Type
-import { ContentItem } from "type/contentDataType";
-
 function Edit() {
   // const action = useContentAction();
   const data = useContentValue();
   const [currentItem, setCurrentItem] = useCurrentItem();
   const viewRef = useRef<HTMLDivElement | null>(null);
 
-  const onUpdateHandler = (updateData: ContentItem) => {
-    const copyData = data;
-    const selectIndex = copyData.findIndex(
-      (item) => item.id === currentItem?.id
-    );
-    copyData[selectIndex] = updateData;
-    // setData(copyData);
-    console.log("update:", data);
-  };
-
   useEffect(() => {
     if (viewRef.current) {
-      // const clearIdHandler = () => setSelectItem(null);
       const clearIdHandler = () => setCurrentItem(null);
       viewRef.current.addEventListener("click", clearIdHandler);
     }
@@ -39,7 +25,7 @@ function Edit() {
     <Container>
       <CanvasPanel ref={viewRef}>
         {data.map((item) => (
-          <Viewer key={item.id} data={item} onUpdateHandler={onUpdateHandler} />
+          <Viewer key={item.id} data={item} />
         ))}
       </CanvasPanel>
       <ToolsPanel />

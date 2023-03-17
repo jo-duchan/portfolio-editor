@@ -20,6 +20,15 @@ function TitleElement({ data, onUpdateHandler }: Props) {
     const updateItme = data;
     updateItme.content.text = e.currentTarget.textContent;
     onUpdateHandler(updateItme);
+    console.log(e.currentTarget.textContent, updateItme.content.text);
+    e.currentTarget.focus();
+    const range = document.createRange();
+    range.selectNodeContents(e.currentTarget);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel?.removeAllRanges();
+    sel?.addRange(range);
+    console.log("sel?", sel);
   };
 
   return (

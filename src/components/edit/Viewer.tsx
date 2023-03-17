@@ -12,7 +12,6 @@ import { ContentItem } from "type/contentDataType";
 
 interface Props {
   data: ContentItem;
-  onUpdateHandler: (updateData: ContentItem) => void;
 }
 
 interface StyledProps {
@@ -45,6 +44,7 @@ function Viewer({ data }: Props) {
   const onUpdateHandler = (updateData: ContentItem) => {
     if (!currentItem) return;
     action.update(updateData, currentItem.id);
+    // console.log("update");
   };
 
   const setSelectItemHandler = (
