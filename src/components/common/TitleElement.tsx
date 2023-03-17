@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
+import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 
 // Type
 import { ContentItem, Size, Aline } from "type/contentDataType";
@@ -16,19 +17,23 @@ interface StyledProps {
 }
 
 function TitleElement({ data, onUpdateHandler }: Props) {
-  const onChangeHandler = (e: React.FormEvent<HTMLParagraphElement>) => {
+  const text = useRef(data.content.text as string);
+  // const onChangeHandler = (e: React.FormEvent<HTMLParagraphElement>) => {
+  //   const updateItme = data;
+  //   updateItme.content.text = e.currentTarget.textContent;
+  //   onUpdateHandler(updateItme);
+  //   console.log(e.currentTarget.textContent, updateItme.content.text);
+  // };
+  const onChangeHandler = (ev: ContentEditableEvent) => {
+    console.log(ev.target.value);
+    text.current = ev.target.value;
+  };
+
+  const handleBlur = () => {
     const updateItme = data;
-    updateItme.content.text = e.currentTarget.textContent;
+    updateItme.content.text = text.current;
     onUpdateHandler(updateItme);
-    console.log(e.currentTarget.textContent, updateItme.content.text);
-    e.currentTarget.focus();
-    const range = document.createRange();
-    range.selectNodeContents(e.currentTarget);
-    range.collapse(false);
-    const sel = window.getSelection();
-    sel?.removeAllRanges();
-    sel?.addRange(range);
-    console.log("sel?", sel);
+    console.log(text, data); // incorrect value
   };
 
   return (
@@ -37,13 +42,20 @@ function TitleElement({ data, onUpdateHandler }: Props) {
       margin={data.option.margin}
       aline={data.option.aline}
     >
-      <Content
+      {/* <Content
         contentEditable
         suppressContentEditableWarning
-        onInput={onChangeHandler}
+        // onInput={onChangeHandler}
       >
         {data.content.text}
-      </Content>
+      </Content> */}
+      <ContentEditable
+        html={text.current}
+        disabled={false}
+        onChange={onChangeHandler}
+        onBlur={handleBlur}
+        tagName="p"
+      />
     </Container>
   );
 }
@@ -53,11 +65,6 @@ export default TitleElement;
 const Container = styled.div<StyledProps>`
   display: flex;
   text-align: ${(props) => props.aline};
-  width: 100%;
-`;
-
-const Content = styled.p<StyledProps>`
-  display: block;
   width: 100%;
   font-size: ${(props) => {
     switch (props.size) {
@@ -90,7 +97,7 @@ const Content = styled.p<StyledProps>`
     }
   }};
   line-height: 20px;
-  &:focus {
+  & p:focus {
     outline: none;
   }
 `;

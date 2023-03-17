@@ -13,11 +13,7 @@ function Editor() {
     console.log(data, currentItem);
   };
 
-  return (
-    <Container onClick={onClickHandler}>
-      Editor: {currentItem?.content.text}
-    </Container>
-  );
+  return <Container onClick={onClickHandler}>Editor:</Container>;
 }
 
 export default Editor;
