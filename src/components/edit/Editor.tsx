@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
 // Type
-import { ContentItem } from "type/contentDataType";
+import { ContentItem, FontSize } from "type/contentDataType";
 
 function Editor() {
   const action = useContentAction();
@@ -13,7 +13,7 @@ function Editor() {
   const onChangeSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (!currentItem) return;
     const updateItme = currentItem;
-    updateItme.option.size = e.currentTarget.value;
+    updateItme.option.size = e.currentTarget.value as FontSize;
     onChangeHandler(updateItme, currentItem.id);
   };
 

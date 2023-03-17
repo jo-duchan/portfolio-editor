@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 
 // Type
-import { ContentItem, Size, Aline } from "type/contentDataType";
+import { ContentItem, FontSize, MarginSize, Aline } from "type/contentDataType";
 
 interface Props {
   data: ContentItem;
@@ -11,8 +11,8 @@ interface Props {
 }
 
 interface StyledProps {
-  size: string;
-  margin: Size;
+  size?: FontSize;
+  margin?: MarginSize;
   aline: Aline;
 }
 

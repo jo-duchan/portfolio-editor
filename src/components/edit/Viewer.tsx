@@ -28,7 +28,7 @@ function Viewer({ data }: Props) {
         return <TitleElement data={data} onUpdateHandler={onUpdateHandler} />;
       }
       case "TEXT": {
-        return <TextElement data={data} />;
+        return <TextElement data={data} onUpdateHandler={onUpdateHandler} />;
       }
       case "IMG": {
         return <div>IMG</div>;

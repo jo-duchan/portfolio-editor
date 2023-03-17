@@ -23,7 +23,6 @@ export const ContentActionContext = createContext<
 function ContentDataProvider({ children }: Props) {
   const [contentData, setContentData] = useState<ContentList>([]);
 
-  // 리듀서로 수정 예정
   const actions = useMemo(
     () => ({
       create(createData: ContentItem, currentId: string) {

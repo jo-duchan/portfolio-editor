@@ -1,5 +1,6 @@
 export type ContentSort = "TITLE" | "TEXT" | "IMG" | "GAP";
-export type Size = "XL" | "L" | "M" | "S" | "XS" | "NONE";
+export type FontSize = "XL" | "L" | "M" | "S" | "XS";
+export type MarginSize = "XL" | "L" | "M" | "S" | "XS" | "NONE";
 export type Aline = "LEFT" | "CENTER" | "RIGHT";
 
 export interface ContentItem {
@@ -10,8 +11,8 @@ export interface ContentItem {
     url: string | undefined | null;
   };
   option: {
-    size: string;
-    margin: Size;
+    size: FontSize;
+    margin: MarginSize;
     aline: Aline;
   };
 }
