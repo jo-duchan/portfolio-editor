@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 
 // Type
@@ -11,29 +11,22 @@ interface Props {
 }
 
 interface StyledProps {
-  size?: string;
-  margin?: Size;
-  aline?: Aline;
+  size: string;
+  margin: Size;
+  aline: Aline;
 }
 
 function TitleElement({ data, onUpdateHandler }: Props) {
   const text = useRef(data.content.text as string);
-  // const onChangeHandler = (e: React.FormEvent<HTMLParagraphElement>) => {
-  //   const updateItme = data;
-  //   updateItme.content.text = e.currentTarget.textContent;
-  //   onUpdateHandler(updateItme);
-  //   console.log(e.currentTarget.textContent, updateItme.content.text);
-  // };
+
   const onChangeHandler = (ev: ContentEditableEvent) => {
-    console.log(ev.target.value);
     text.current = ev.target.value;
   };
 
-  const handleBlur = () => {
+  const onBlurHandler = () => {
     const updateItme = data;
     updateItme.content.text = text.current;
     onUpdateHandler(updateItme);
-    console.log(text, data); // incorrect value
   };
 
   return (
@@ -42,18 +35,11 @@ function TitleElement({ data, onUpdateHandler }: Props) {
       margin={data.option.margin}
       aline={data.option.aline}
     >
-      {/* <Content
-        contentEditable
-        suppressContentEditableWarning
-        // onInput={onChangeHandler}
-      >
-        {data.content.text}
-      </Content> */}
       <ContentEditable
         html={text.current}
         disabled={false}
         onChange={onChangeHandler}
-        onBlur={handleBlur}
+        onBlur={onBlurHandler}
         tagName="p"
       />
     </Container>
@@ -66,18 +52,33 @@ const Container = styled.div<StyledProps>`
   display: flex;
   text-align: ${(props) => props.aline};
   width: 100%;
-  font-size: ${(props) => {
+  line-height: 1.193em;
+  ${(props) => {
     switch (props.size) {
       case "XS":
-        return "14px";
+        return css`
+          font-size: 24px;
+        `;
       case "S":
-        return "16px";
+        return css`
+          font-size: 36px;
+        `;
       case "M":
-        return "18px";
+        return css`
+          font-size: 48px;
+        `;
       case "L":
-        return "20px";
+        return css`
+          font-size: 60px;
+        `;
       case "XL":
-        return "24px";
+        return css`
+          font-size: 72px;
+        `;
+      default:
+        return css`
+          font-size: 24px;
+        `;
     }
   }};
   margin-inline: ${(props) => {
@@ -96,8 +97,8 @@ const Container = styled.div<StyledProps>`
         return "360px";
     }
   }};
-  line-height: 20px;
-  & p:focus {
+
+  & > *:focus {
     outline: none;
   }
 `;

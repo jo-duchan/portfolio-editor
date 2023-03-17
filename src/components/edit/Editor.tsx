@@ -1,19 +1,42 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import useContentValue from "context/useContentValue";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
+// Type
+import { ContentItem } from "type/contentDataType";
+
 function Editor() {
-  const data = useContentValue();
+  const action = useContentAction();
   const [currentItem, setCurrentItem] = useCurrentItem();
 
   const onClickHandler = () => {
-    if (!currentItem) return;
-    console.log(data, currentItem);
+    console.log(currentItem?.content?.text);
   };
 
-  return <Container onClick={onClickHandler}>Editor:</Container>;
+  const onChangeSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (!currentItem) return;
+    const updateItme = currentItem;
+    updateItme.option.size = e.currentTarget.value;
+    onChangeHandler(updateItme, currentItem.id);
+  };
+
+  const onChangeHandler = (updateItme: ContentItem, id: string) => {
+    action.update(updateItme, id);
+  };
+
+  return (
+    <Container onClick={onClickHandler}>
+      Editor:
+      <select value={currentItem?.option?.size} onChange={onChangeSize}>
+        <option value="XS">XS</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+      </select>
+    </Container>
+  );
 }
 
 export default Editor;
