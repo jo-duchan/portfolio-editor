@@ -4,7 +4,6 @@ import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
 // Components
-import TitleElement from "components/common/TitleElement";
 import TextElement from "components/common/TextElement";
 
 // Type
@@ -25,7 +24,7 @@ function Viewer({ data }: Props) {
   const onRanderElement = () => {
     switch (data.sort) {
       case "TITLE": {
-        return <TitleElement data={data} onUpdateHandler={onUpdateHandler} />;
+        return <TextElement data={data} onUpdateHandler={onUpdateHandler} />;
       }
       case "TEXT": {
         return <TextElement data={data} onUpdateHandler={onUpdateHandler} />;

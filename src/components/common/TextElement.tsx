@@ -1,6 +1,10 @@
 import React, { useRef } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
+
+// Style
+import { TitleSizePC, TextSizePC } from "styles/typography";
+import { marginStylePC } from "styles/margin";
 
 // Type
 import { ContentItem, FontSize, MarginSize, Aline } from "type/contentDataType";
@@ -11,13 +15,15 @@ interface Props {
 }
 
 interface StyledProps {
-  size?: FontSize;
-  margin?: MarginSize;
-  aline?: Aline;
+  sort: "h4" | "p";
+  size: FontSize;
+  margin: MarginSize;
+  aline: Aline;
 }
 
-function TextElement({ data, onUpdateHandler }: Props) {
+function TitleElement({ data, onUpdateHandler }: Props) {
   const text = useRef(data.content.text as string);
+  const componentSort = data.sort === "TITLE" ? "h4" : "p";
 
   const onChangeHandler = (ev: ContentEditableEvent) => {
     text.current = ev.target.value;
@@ -31,6 +37,7 @@ function TextElement({ data, onUpdateHandler }: Props) {
 
   return (
     <Container
+      sort={componentSort}
       size={data.option.size}
       margin={data.option.margin}
       aline={data.option.aline}
@@ -40,67 +47,23 @@ function TextElement({ data, onUpdateHandler }: Props) {
         disabled={false}
         onChange={onChangeHandler}
         onBlur={onBlurHandler}
-        tagName="p"
+        tagName={componentSort}
       />
     </Container>
   );
 }
 
-export default TextElement;
+export default TitleElement;
 
 const Container = styled.div<StyledProps>`
   display: flex;
   text-align: ${(props) => props.aline};
   width: 100%;
-  ${(props) => {
-    switch (props.size) {
-      case "XS":
-        return css`
-          font-size: 14px;
-          line-height: 1.429em;
-        `;
-      case "S":
-        return css`
-          font-size: 16px;
-          line-height: 1.5em;
-        `;
-      case "M":
-        return css`
-          font-size: 18px;
-          line-height: 1.444em;
-        `;
-      case "L":
-        return css`
-          font-size: 20px;
-          line-height: 1.4em;
-        `;
-      case "XL":
-        return css`
-          font-size: 24px;
-          line-height: 1.417em;
-        `;
-      default:
-        return css`
-          font-size: 14px;
-        `;
-    }
-  }};
-  margin-inline: ${(props) => {
-    switch (props.margin) {
-      case "NONE":
-        return "0";
-      case "XS":
-        return "84px";
-      case "S":
-        return "156px";
-      case "M":
-        return "228px";
-      case "L":
-        return "300px";
-      case "XL":
-        return "360px";
-    }
-  }};
+  ${(props) =>
+    props.sort === "h4"
+      ? `${TitleSizePC(props.size)}`
+      : `${TextSizePC(props.size)}`};
+  margin-inline: ${(props) => `${marginStylePC(props.margin)}`};
 
   & > *:focus {
     outline: none;

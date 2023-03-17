@@ -11,9 +11,8 @@ function Creator() {
   const [currentItem, setCurrentItem] = useCurrentItem();
 
   const onCreateHandler = (createData: ContentItem) => {
+    action.create(createData, currentItem?.id);
     setCurrentItem(createData);
-    if (!currentItem) return;
-    action.create(createData, currentItem.id);
   };
 
   const onCreateText = (sort: ContentSort) => {

@@ -10,6 +10,10 @@ html, body {
     background: fff;
 };
 
+#root * {
+    font-family: Pretendard;  
+}
+
 `;
 
-export { GlobalStyle };
+export default GlobalStyle;

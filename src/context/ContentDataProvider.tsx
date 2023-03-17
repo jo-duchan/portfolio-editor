@@ -8,7 +8,7 @@ interface Props {
 }
 
 type ContentActionType = {
-  create(createData: ContentItem, currentId: string): void;
+  create(createData: ContentItem, currentId: string | null | undefined): void;
   update(updateData: ContentItem, currentId: string): void;
   delete(currentId: string): void;
 };
@@ -25,7 +25,7 @@ function ContentDataProvider({ children }: Props) {
 
   const actions = useMemo(
     () => ({
-      create(createData: ContentItem, currentId: string) {
+      create(createData: ContentItem, currentId: string | null | undefined) {
         setContentData((prevData) => {
           const newData = [...prevData];
           const selectIndex = newData.findIndex(
