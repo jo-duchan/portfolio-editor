@@ -10,10 +10,6 @@ function Editor() {
   const action = useContentAction();
   const [currentItem, setCurrentItem] = useCurrentItem();
 
-  const onClickHandler = () => {
-    console.log(currentItem?.content?.text);
-  };
-
   const onChangeSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (!currentItem) return;
     const updateItme = currentItem;
@@ -25,8 +21,14 @@ function Editor() {
     action.update(updateItme, id);
   };
 
+  const onDeletHandler = () => {
+    if (!currentItem) return console.log("대상없음");
+    action.delete(currentItem.id);
+    console.log("삭제");
+  };
+
   return (
-    <Container onClick={onClickHandler}>
+    <Container>
       Editor:
       <select value={currentItem?.option?.size} onChange={onChangeSize}>
         <option value="XS">XS</option>
@@ -35,6 +37,10 @@ function Editor() {
         <option value="L">L</option>
         <option value="XL">XL</option>
       </select>
+      {/* 삭제는 viewer 밑에 컴포넌트로 이동시키자 */}
+      <button type="button" onClick={onDeletHandler}>
+        삭제
+      </button>
     </Container>
   );
 }
