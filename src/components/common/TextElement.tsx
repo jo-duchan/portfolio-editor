@@ -57,8 +57,8 @@ export default TitleElement;
 
 const Container = styled.div<StyledProps>`
   display: flex;
-  text-align: ${(props) => props.aline};
-  width: 100%;
+  width: auto;
+  justify-content: ${(props) => props.aline};
   ${(props) =>
     props.sort === "h4"
       ? `${TitleSizePC(props.size)}`

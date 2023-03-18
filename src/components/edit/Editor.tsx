@@ -4,7 +4,7 @@ import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
 // Type
-import { ContentItem, FontSize } from "type/contentDataType";
+import { ContentItem, FontSize, MarginSize, Aline } from "type/contentDataType";
 
 function Editor() {
   const action = useContentAction();
@@ -20,7 +20,14 @@ function Editor() {
   const onChangeMargin = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (!currentItem) return;
     const updateItme = currentItem;
-    updateItme.option.margin = e.currentTarget.value as FontSize;
+    updateItme.option.margin = e.currentTarget.value as MarginSize;
+    onChangeHandler(updateItme, currentItem.id);
+  };
+
+  const onChangeAline = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (!currentItem) return;
+    const updateItme = currentItem;
+    updateItme.option.aline = e.currentTarget.value as Aline;
     onChangeHandler(updateItme, currentItem.id);
   };
 
@@ -38,7 +45,11 @@ function Editor() {
     <Container>
       <div className="size">
         <span>Size</span>
-        <select value={currentItem?.option?.size} onChange={onChangeFontSize}>
+        <select
+          value={currentItem?.option?.size}
+          onChange={onChangeFontSize}
+          disabled={!currentItem}
+        >
           <option value="XS">XS</option>
           <option value="S">S</option>
           <option value="M">M</option>
@@ -48,7 +59,11 @@ function Editor() {
       </div>
       <div className="margin">
         <span>margin</span>
-        <select value={currentItem?.option?.margin} onChange={onChangeMargin}>
+        <select
+          value={currentItem?.option?.margin}
+          onChange={onChangeMargin}
+          disabled={!currentItem}
+        >
           <option value="NONE">NONE</option>
           <option value="XS">XS</option>
           <option value="S">S</option>
@@ -57,8 +72,19 @@ function Editor() {
           <option value="XL">XL</option>
         </select>
       </div>
-      {/* 삭제는 viewer 밑에 컴포넌트로 이동시키자 */}
-      <button type="button" onClick={onDeletHandler}>
+      <div className="margin">
+        <span>aline</span>
+        <select
+          value={currentItem?.option?.aline}
+          onChange={onChangeAline}
+          disabled={!currentItem}
+        >
+          <option value="LEFT">Left</option>
+          <option value="CENTER">Center</option>
+          <option value="RIGHT">Right</option>
+        </select>
+      </div>
+      <button type="button" onClick={onDeletHandler} disabled={!currentItem}>
         삭제
       </button>
     </Container>

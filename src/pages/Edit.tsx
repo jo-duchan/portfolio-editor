@@ -36,11 +36,15 @@ function Edit() {
 export default Edit;
 
 const Container = styled.div`
+  position: relative;
   display: flex;
+  padding: 30px;
+  box-sizing: border-box;
 `;
 
 const CanvasPanel = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
+  width: calc(100% - 230px);
+  background: #fff;
 `;

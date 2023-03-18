@@ -17,8 +17,11 @@ function ToolsPanel() {
 export default ToolsPanel;
 
 const Container = styled.div`
+  position: fixed;
+  top: 30px;
+  right: 30px;
   margin-left: auto;
   width: 200px;
-  height: 100vh;
-  background: blue;
+  height: calc(100vh - 60px);
+  background: gray;
 `;
