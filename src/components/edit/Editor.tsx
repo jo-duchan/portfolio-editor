@@ -6,28 +6,32 @@ import useCurrentItem from "context/useCurrentItem";
 // Type
 import { ContentItem, FontSize, MarginSize, Aline } from "type/contentDataType";
 
+type Option = "FONT" | "MARGIN" | "ALINE";
+
 function Editor() {
   const action = useContentAction();
   const [currentItem, setCurrentItem] = useCurrentItem();
 
-  const onChangeFontSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChangeValue = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    type: Option
+  ) => {
     if (!currentItem) return;
     const updateItme = currentItem;
-    updateItme.option.size = e.currentTarget.value as FontSize;
-    onChangeHandler(updateItme, currentItem.id);
-  };
-
-  const onChangeMargin = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (!currentItem) return;
-    const updateItme = currentItem;
-    updateItme.option.margin = e.currentTarget.value as MarginSize;
-    onChangeHandler(updateItme, currentItem.id);
-  };
-
-  const onChangeAline = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (!currentItem) return;
-    const updateItme = currentItem;
-    updateItme.option.aline = e.currentTarget.value as Aline;
+    switch (type) {
+      case "FONT": {
+        updateItme.option.size = e.currentTarget.value as FontSize;
+        break;
+      }
+      case "MARGIN": {
+        updateItme.option.margin = e.currentTarget.value as MarginSize;
+        break;
+      }
+      case "ALINE": {
+        updateItme.option.aline = e.currentTarget.value as Aline;
+        break;
+      }
+    }
     onChangeHandler(updateItme, currentItem.id);
   };
 
@@ -42,12 +46,13 @@ function Editor() {
   };
 
   return (
-    <Container>
+    <Container onClick={(e) => e.stopPropagation()}>
+      {/* Select Component로 만들자 onClick 이벤트 버블링 컴포넌트로 넣기*/}
       <div className="size">
         <span>Size</span>
         <select
           value={currentItem?.option?.size}
-          onChange={onChangeFontSize}
+          onChange={(e) => onChangeValue(e, "FONT")}
           disabled={!currentItem}
         >
           <option value="XS">XS</option>
@@ -61,7 +66,7 @@ function Editor() {
         <span>margin</span>
         <select
           value={currentItem?.option?.margin}
-          onChange={onChangeMargin}
+          onChange={(e) => onChangeValue(e, "MARGIN")}
           disabled={!currentItem}
         >
           <option value="NONE">NONE</option>
@@ -76,7 +81,7 @@ function Editor() {
         <span>aline</span>
         <select
           value={currentItem?.option?.aline}
-          onChange={onChangeAline}
+          onChange={(e) => onChangeValue(e, "ALINE")}
           disabled={!currentItem}
         >
           <option value="LEFT">Left</option>

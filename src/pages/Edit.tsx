@@ -15,10 +15,12 @@ function Edit() {
   const viewRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (viewRef.current) {
-      const clearIdHandler = () => setCurrentItem(null);
-      viewRef.current.addEventListener("click", clearIdHandler);
-    }
+    const clearIdHandler = () => setCurrentItem(null);
+    window.addEventListener("click", clearIdHandler);
+
+    return () => {
+      window.removeEventListener("click", clearIdHandler);
+    };
   }, []);
 
   return (
@@ -46,5 +48,7 @@ const CanvasPanel = styled.div`
   display: flex;
   flex-direction: column;
   width: calc(100% - 230px);
+  height: fit-content;
+  min-height: calc(100vh - 60px);
   background: #fff;
 `;
