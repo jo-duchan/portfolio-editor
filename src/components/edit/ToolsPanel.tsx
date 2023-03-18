@@ -7,7 +7,7 @@ import Editor from "components/edit/Editor";
 
 function ToolsPanel() {
   return (
-    <Container>
+    <Container onClick={(e) => e.stopPropagation()}>
       <Creator />
       <Editor />
     </Container>
@@ -20,8 +20,9 @@ const Container = styled.div`
   position: fixed;
   top: 30px;
   right: 30px;
-  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
   width: 200px;
-  height: calc(100vh - 60px);
-  background: gray;
+  height: fit-content;
 `;

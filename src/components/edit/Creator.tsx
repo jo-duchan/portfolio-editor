@@ -21,22 +21,41 @@ function Creator() {
       sort: sort,
       content: {
         text: `Enter the ${sort} here.`,
-        url: "",
+        url: undefined,
       },
       option: {
         size: "S",
         margin: "NONE",
         aline: "LEFT",
+        gap: undefined,
+      },
+    };
+    onCreateHandler(CreateData);
+  };
+
+  const onCreateGap = () => {
+    const CreateData: ContentItem = {
+      id: Math.random().toString(),
+      sort: "GAP",
+      content: {
+        text: undefined,
+        url: undefined,
+      },
+      option: {
+        size: undefined,
+        margin: undefined,
+        aline: undefined,
+        gap: "XS",
       },
     };
     onCreateHandler(CreateData);
   };
 
   return (
-    <Container onClick={(e) => e.stopPropagation()}>
+    <Container>
       <Button onClick={() => onCreateText("TITLE")}>Title</Button>
       <Button onClick={() => onCreateText("TEXT")}>Text</Button>
-      <Button>Gap</Button>
+      <Button onClick={onCreateGap}>Gap</Button>
       <Button>Image</Button>
     </Container>
   );

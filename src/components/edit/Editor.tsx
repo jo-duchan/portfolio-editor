@@ -4,9 +4,15 @@ import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
 // Type
-import { ContentItem, FontSize, MarginSize, Aline } from "type/contentDataType";
+import {
+  ContentItem,
+  FontSize,
+  MarginSize,
+  Aline,
+  Gap,
+} from "type/contentDataType";
 
-type Option = "FONT" | "MARGIN" | "ALINE";
+type Option = "FONT" | "MARGIN" | "ALINE" | "GAP";
 
 function Editor() {
   const action = useContentAction();
@@ -31,6 +37,10 @@ function Editor() {
         updateItme.option.aline = e.currentTarget.value as Aline;
         break;
       }
+      case "GAP": {
+        updateItme.option.gap = e.currentTarget.value as Gap;
+        break;
+      }
     }
     onChangeHandler(updateItme, currentItem.id);
   };
@@ -46,14 +56,14 @@ function Editor() {
   };
 
   return (
-    <Container onClick={(e) => e.stopPropagation()}>
+    <Container>
       {/* Select Component로 만들자 onClick 이벤트 버블링 컴포넌트로 넣기*/}
       <div className="size">
         <span>Size</span>
         <select
           value={currentItem?.option?.size}
           onChange={(e) => onChangeValue(e, "FONT")}
-          disabled={!currentItem}
+          disabled={!currentItem?.option?.size}
         >
           <option value="XS">XS</option>
           <option value="S">S</option>
@@ -67,7 +77,7 @@ function Editor() {
         <select
           value={currentItem?.option?.margin}
           onChange={(e) => onChangeValue(e, "MARGIN")}
-          disabled={!currentItem}
+          disabled={!currentItem?.option?.margin}
         >
           <option value="NONE">NONE</option>
           <option value="XS">XS</option>
@@ -77,16 +87,30 @@ function Editor() {
           <option value="XL">XL</option>
         </select>
       </div>
-      <div className="margin">
+      <div className="aline">
         <span>aline</span>
         <select
           value={currentItem?.option?.aline}
           onChange={(e) => onChangeValue(e, "ALINE")}
-          disabled={!currentItem}
+          disabled={!currentItem?.option?.aline}
         >
           <option value="LEFT">Left</option>
           <option value="CENTER">Center</option>
           <option value="RIGHT">Right</option>
+        </select>
+      </div>
+      <div className="gap">
+        <span>gap</span>
+        <select
+          value={currentItem?.option?.gap}
+          onChange={(e) => onChangeValue(e, "GAP")}
+          disabled={!currentItem?.option?.gap}
+        >
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
         </select>
       </div>
       <button type="button" onClick={onDeletHandler} disabled={!currentItem}>
@@ -99,14 +123,14 @@ function Editor() {
 export default Editor;
 
 const Container = styled.div`
-  padding: 10px;
+  background: gray;
+  padding: 15px;
   color: #fff;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-top: 30px;
 
-  & :is(.size, .margin) {
+  & :is(.size, .margin, .aline, .gap) {
     display: flex;
     gap: 10px;
   }

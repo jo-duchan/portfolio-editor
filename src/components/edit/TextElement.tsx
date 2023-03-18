@@ -38,9 +38,9 @@ function TitleElement({ data, onUpdateHandler }: Props) {
   return (
     <Container
       sort={componentSort}
-      size={data.option.size}
-      margin={data.option.margin}
-      aline={data.option.aline}
+      size={data.option.size!}
+      margin={data.option.margin!}
+      aline={data.option.aline!}
     >
       <ContentEditable
         html={text.current}

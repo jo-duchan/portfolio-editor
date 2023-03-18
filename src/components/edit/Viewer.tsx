@@ -4,7 +4,8 @@ import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
 // Components
-import TextElement from "components/common/TextElement";
+import TextElement from "components/edit/TextElement";
+import GapElement from "components/edit/GapElement";
 
 // Type
 import { ContentItem } from "type/contentDataType";
@@ -33,7 +34,7 @@ function Viewer({ data }: Props) {
         return <div>IMG</div>;
       }
       case "GAP": {
-        return <div>GAP</div>;
+        return <GapElement data={data} />;
       }
       default:
         return <>not found contents</>;
