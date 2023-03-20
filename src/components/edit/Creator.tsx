@@ -28,6 +28,8 @@ function Creator() {
         margin: "NONE",
         aline: "LEFT",
         gap: undefined,
+        color: "000",
+        fill: "",
       },
     };
     onCreateHandler(CreateData);
@@ -46,6 +48,8 @@ function Creator() {
         margin: undefined,
         aline: undefined,
         gap: "XS",
+        color: undefined,
+        fill: "",
       },
     };
     onCreateHandler(CreateData);
@@ -70,6 +74,8 @@ function Creator() {
           margin: "NONE",
           aline: undefined,
           gap: undefined,
+          color: undefined,
+          fill: "",
         },
       };
       onCreateHandler(CreateData);

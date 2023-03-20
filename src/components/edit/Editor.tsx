@@ -12,14 +12,14 @@ import {
   Gap,
 } from "type/contentDataType";
 
-type Option = "FONT" | "MARGIN" | "ALINE" | "GAP";
+type Option = "FONT" | "MARGIN" | "ALINE" | "GAP" | "COLOR" | "FILL";
 
 function Editor() {
   const action = useContentAction();
   const [currentItem, setCurrentItem] = useCurrentItem();
 
   const onChangeValue = (
-    e: React.ChangeEvent<HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>,
     type: Option
   ) => {
     if (!currentItem) return;
@@ -39,6 +39,14 @@ function Editor() {
       }
       case "GAP": {
         updateItme.option.gap = e.currentTarget.value as Gap;
+        break;
+      }
+      case "FILL": {
+        updateItme.option.fill = e.currentTarget.value as string;
+        break;
+      }
+      case "COLOR": {
+        updateItme.option.color = e.currentTarget.value as string;
         break;
       }
     }
@@ -113,6 +121,28 @@ function Editor() {
           <option value="XL">XL</option>
         </select>
       </div>
+      <div className="fill">
+        <label>
+          fill
+          <input
+            type="text"
+            value={currentItem?.option?.fill || ""}
+            onChange={(e) => onChangeValue(e, "FILL")}
+            // disabled={!currentItem?.option?.fill}
+          />
+        </label>
+      </div>
+      <div className="color">
+        <label>
+          color
+          <input
+            type="text"
+            value={currentItem?.option?.color || ""}
+            onChange={(e) => onChangeValue(e, "COLOR")}
+            // disabled={!currentItem?.option?.fill}
+          />
+        </label>
+      </div>
       <button type="button" onClick={onDeletHandler} disabled={!currentItem}>
         삭제
       </button>
@@ -139,6 +169,15 @@ const Container = styled.div`
   & :is(.size, .margin, .aline, .gap) {
     display: flex;
     gap: 10px;
+  }
+
+  & :is(.fill, .color) label {
+    display: flex;
+    gap: 10px;
+  }
+
+  & :is(.fill, .color) label input {
+    width: 60px;
   }
 
   & div select {

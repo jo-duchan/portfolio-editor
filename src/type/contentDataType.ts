@@ -16,6 +16,8 @@ export interface ContentItem {
     margin: MarginSize | undefined;
     aline: Aline | undefined;
     gap: Gap | undefined;
+    color: string | undefined;
+    fill: string | undefined;
   };
 }
 

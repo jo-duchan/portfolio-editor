@@ -14,11 +14,16 @@ interface Props {
   onUpdateHandler: (updateData: ContentItem) => void;
 }
 
-interface StyledProps {
+interface StyledContainer {
+  fill: string;
+}
+
+interface StyledContentWrapper {
   sort: "h4" | "p";
   size: FontSize;
   margin: MarginSize;
   aline: Aline;
+  color: string;
 }
 
 function TitleElement({ data, onUpdateHandler }: Props) {
@@ -29,7 +34,6 @@ function TitleElement({ data, onUpdateHandler }: Props) {
 
   const onChangeHandler = (ev: ContentEditableEvent) => {
     text.current = ev.target.value;
-    console.log(inner.current);
   };
 
   const onBlurHandler = () => {
@@ -45,31 +49,37 @@ function TitleElement({ data, onUpdateHandler }: Props) {
   };
 
   return (
-    <Container
-      onClick={onHidePlaceholder}
-      sort={componentSort}
-      size={data.option.size!}
-      margin={data.option.margin!}
-      aline={data.option.aline!}
-    >
-      <ContentEditable
-        html={text.current}
-        innerRef={inner}
-        disabled={false}
-        onChange={onChangeHandler}
-        onBlur={onBlurHandler}
-        tagName={componentSort}
-      />
-      {isPlaceholder && (
-        <Placeholder>{`Enter the ${data.sort} here.`}</Placeholder>
-      )}
+    <Container onClick={onHidePlaceholder} fill={data.option.fill!}>
+      <ContentWrapper
+        sort={componentSort}
+        size={data.option.size!}
+        margin={data.option.margin!}
+        aline={data.option.aline!}
+        color={data.option.color!}
+      >
+        <ContentEditable
+          html={text.current}
+          innerRef={inner}
+          disabled={false}
+          onChange={onChangeHandler}
+          onBlur={onBlurHandler}
+          tagName={componentSort}
+        />
+        {isPlaceholder && (
+          <Placeholder>{`Enter the ${data.sort} here.`}</Placeholder>
+        )}
+      </ContentWrapper>
     </Container>
   );
 }
 
 export default TitleElement;
 
-const Container = styled.div<StyledProps>`
+const Container = styled.div<StyledContainer>`
+  background: ${(props) => `#${props.fill}`};
+`;
+
+const ContentWrapper = styled.div<StyledContentWrapper>`
   display: flex;
   width: auto;
   justify-content: ${(props) => props.aline};
@@ -77,8 +87,8 @@ const Container = styled.div<StyledProps>`
     props.sort === "h4"
       ? `${TitleSizePC(props.size)}`
       : `${TextSizePC(props.size)}`};
+  color: ${(props) => `#${props.color}`};
   margin-inline: ${(props) => `${marginStylePC(props.margin)}`};
-
   & > *:focus {
     outline: none;
   }

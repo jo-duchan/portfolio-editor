@@ -11,26 +11,32 @@ interface Props {
   data: ContentItem;
 }
 
-interface StyledProps {
+interface StyledContainer {
+  fill: string;
+}
+
+interface StyledContent {
   margin: MarginSize;
 }
 
 function ImageElement({ data }: Props) {
   return (
-    <Container margin={data.option.margin!}>
-      <Content src={data.content.url!} />
+    <Container fill={data.option.fill!}>
+      <Content src={data.content.url!} margin={data.option.margin!} />
     </Container>
   );
 }
 
 export default ImageElement;
 
-const Container = styled.div<StyledProps>`
+const Container = styled.div<StyledContainer>`
   display: flex;
   width: auto;
-  margin-inline: ${(props) => `${marginStylePC(props.margin)}`};
+  background: ${(props) => `#${props.fill}`};
 `;
 
-const Content = styled.img`
+const Content = styled.img<StyledContent>`
   width: 100%;
+  padding-inline: ${(props) => `${marginStylePC(props.margin)}`};
+  box-sizing: border-box;
 `;

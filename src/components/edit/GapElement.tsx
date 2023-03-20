@@ -13,14 +13,16 @@ interface Props {
 
 interface StyledProps {
   gap: Gap;
+  fill: string;
 }
 
 function GapElement({ data }: Props) {
-  return <Container gap={data.option.gap!} />;
+  return <Container gap={data.option.gap!} fill={data.option.fill!} />;
 }
 
 export default GapElement;
 
 const Container = styled.div<StyledProps>`
-  margin-bottom: ${(props) => `${GapStylePC(props.gap)}`};
+  padding-bottom: ${(props) => `${GapStylePC(props.gap)}`};
+  background: ${(props) => `#${props.fill}`};
 `;

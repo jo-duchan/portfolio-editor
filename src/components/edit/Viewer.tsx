@@ -67,5 +67,18 @@ function Viewer({ data }: Props) {
 export default Viewer;
 
 const Container = styled.div<StyledProps>`
-  background: ${(props) => props.focus && "red"};
+  position: relative;
+  &::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 2px solid red;
+    box-sizing: border-box;
+    opacity: ${(props) => (props.focus ? 1 : 0)};
+    z-index: 999;
+    pointer-events: none;
+  }
 `;
