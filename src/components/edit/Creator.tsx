@@ -55,32 +55,50 @@ function Creator() {
     onCreateHandler(CreateData);
   };
 
-  const fileInput = useRef<HTMLInputElement | null>(null);
+  // const fileInput = useRef<HTMLInputElement | null>(null);
 
-  const onCreateImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileList = e.target.files;
-    if (fileList) {
-      const url = URL.createObjectURL(fileList[0]);
+  const onCreateImage = () => {
+    // const onCreateImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // const fileList = e.target.files;
+    // if (fileList) {
+    //   const url = URL.createObjectURL(fileList[0]);
 
-      const CreateData: ContentItem = {
-        id: Math.random().toString(),
-        sort: "IMG",
-        content: {
-          text: undefined,
-          url: url,
-        },
-        option: {
-          size: undefined,
-          margin: "NONE",
-          aline: undefined,
-          gap: undefined,
-          color: undefined,
-          fill: "",
-        },
-      };
-      onCreateHandler(CreateData);
-      e.target.value = "";
-    }
+    //   const CreateData: ContentItem = {
+    //     id: Math.random().toString(),
+    //     sort: "IMG",
+    //     content: {
+    //       text: undefined,
+    //       url: url,
+    //     },
+    //     option: {
+    //       size: undefined,
+    //       margin: "NONE",
+    //       aline: undefined,
+    //       gap: undefined,
+    //       color: undefined,
+    //       fill: "",
+    //     },
+    //   };
+    //   onCreateHandler(CreateData);
+    //   e.target.value = "";
+    // }
+    const CreateData: ContentItem = {
+      id: Math.random().toString(),
+      sort: "IMG",
+      content: {
+        text: undefined,
+        url: "",
+      },
+      option: {
+        size: undefined,
+        margin: "NONE",
+        aline: undefined,
+        gap: undefined,
+        color: undefined,
+        fill: "",
+      },
+    };
+    onCreateHandler(CreateData);
   };
 
   return (
@@ -88,7 +106,8 @@ function Creator() {
       <Button onClick={() => onCreateText("TITLE")}>Title</Button>
       <Button onClick={() => onCreateText("TEXT")}>Text</Button>
       <Button onClick={onCreateGap}>Gap</Button>
-      <label className="FileButton">
+      <Button onClick={onCreateImage}>Image</Button>
+      {/* <label className="FileButton">
         image
         <input
           ref={fileInput}
@@ -97,7 +116,7 @@ function Creator() {
           className="File"
           onChange={onCreateImage}
         />
-      </label>
+      </label> */}
     </Container>
   );
 }

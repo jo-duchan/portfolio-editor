@@ -13,6 +13,7 @@ interface Props {
 
 interface StyledContainer {
   fill: string;
+  margin: MarginSize;
 }
 
 interface StyledContent {
@@ -21,8 +22,9 @@ interface StyledContent {
 
 function ImageElement({ data }: Props) {
   return (
-    <Container fill={data.option.fill!}>
-      <Content src={data.content.url!} margin={data.option.margin!} />
+    <Container fill={data.option.fill!} margin={data.option.margin!}>
+      <UploadButton></UploadButton>
+      {/* <Content src={data.content.url!} margin={data.option.margin!} /> */}
     </Container>
   );
 }
@@ -33,10 +35,18 @@ const Container = styled.div<StyledContainer>`
   display: flex;
   width: auto;
   background: ${(props) => `#${props.fill}`};
+  padding-inline: ${(props) => `${marginStylePC(props.margin)}`};
+  box-sizing: border-box;
 `;
 
 const Content = styled.img<StyledContent>`
   width: 100%;
   padding-inline: ${(props) => `${marginStylePC(props.margin)}`};
   box-sizing: border-box;
+`;
+
+const UploadButton = styled.div`
+  width: 100%;
+  height: 400px;
+  background: gray;
 `;
