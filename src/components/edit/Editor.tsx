@@ -116,6 +116,12 @@ function Editor() {
       <button type="button" onClick={onDeletHandler} disabled={!currentItem}>
         삭제
       </button>
+      <button type="button" disabled>
+        미리보기
+      </button>
+      <button type="button" disabled>
+        저장하기
+      </button>
     </Container>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
@@ -51,12 +51,33 @@ function Creator() {
     onCreateHandler(CreateData);
   };
 
+  const fileInput = useRef<HTMLInputElement | null>(null);
+  const [fileImage, setFileImage] = useState<string>("");
+
+  const onUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+    if (!fileList) return;
+    console.log(URL.createObjectURL(fileList[0]), e.target.files, "dd");
+    setFileImage(URL.createObjectURL(fileList[0]));
+  };
+
   return (
     <Container>
       <Button onClick={() => onCreateText("TITLE")}>Title</Button>
       <Button onClick={() => onCreateText("TEXT")}>Text</Button>
       <Button onClick={onCreateGap}>Gap</Button>
-      <Button>Image</Button>
+      {/* <Button>Image</Button> */}
+      <label className="FileButton">
+        image
+        <input
+          ref={fileInput}
+          type="file"
+          accept="image/jpg, image/jpeg, image/png"
+          className="File"
+          onChange={onUploadHandler}
+        />
+      </label>
+      <img src={fileImage} alt="tt" />
     </Container>
   );
 }
@@ -64,12 +85,33 @@ function Creator() {
 export default Creator;
 
 const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
   width: 100%;
   height: auto;
+  background: gray;
+  padding: 4px;
+  box-sizing: border-box;
+  & .File {
+    display: none;
+  }
+
+  & .FileButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 94px;
+    height: 94px;
+    box-sizing: border-box;
+    background: #ececec;
+  }
 `;
 
 const Button = styled.button`
-  width: 100px;
-  height: 100px;
+  width: 94px;
+  height: 94px;
   box-sizing: border-box;
+  background: #ececec;
+  border: none;
 `;
