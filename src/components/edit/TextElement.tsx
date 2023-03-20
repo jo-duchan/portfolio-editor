@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 
@@ -23,20 +23,30 @@ interface StyledProps {
 
 function TitleElement({ data, onUpdateHandler }: Props) {
   const text = useRef(data.content.text as string);
+  const inner = useRef<HTMLHeadingElement | HTMLParagraphElement | null>(null);
+  const [isPlaceholder, setIsPlaceholder] = useState<boolean>(true);
   const componentSort = data.sort === "TITLE" ? "h4" : "p";
 
   const onChangeHandler = (ev: ContentEditableEvent) => {
     text.current = ev.target.value;
+    console.log(inner.current);
   };
 
   const onBlurHandler = () => {
+    if (text.current === "") setIsPlaceholder(true);
     const updateItme = data;
     updateItme.content.text = text.current;
     onUpdateHandler(updateItme);
   };
 
+  const onHidePlaceholder = () => {
+    inner.current?.focus();
+    setIsPlaceholder(false);
+  };
+
   return (
     <Container
+      onClick={onHidePlaceholder}
       sort={componentSort}
       size={data.option.size!}
       margin={data.option.margin!}
@@ -44,11 +54,15 @@ function TitleElement({ data, onUpdateHandler }: Props) {
     >
       <ContentEditable
         html={text.current}
+        innerRef={inner}
         disabled={false}
         onChange={onChangeHandler}
         onBlur={onBlurHandler}
         tagName={componentSort}
       />
+      {isPlaceholder && (
+        <Placeholder>{`Enter the ${data.sort} here.`}</Placeholder>
+      )}
     </Container>
   );
 }
@@ -68,4 +82,8 @@ const Container = styled.div<StyledProps>`
   & > *:focus {
     outline: none;
   }
+`;
+
+const Placeholder = styled.span`
+  color: #aaa;
 `;

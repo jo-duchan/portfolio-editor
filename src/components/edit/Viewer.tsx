@@ -6,6 +6,7 @@ import useCurrentItem from "context/useCurrentItem";
 // Components
 import TextElement from "components/edit/TextElement";
 import GapElement from "components/edit/GapElement";
+import ImageElement from "components/edit//ImageElement";
 
 // Type
 import { ContentItem } from "type/contentDataType";
@@ -31,7 +32,7 @@ function Viewer({ data }: Props) {
         return <TextElement data={data} onUpdateHandler={onUpdateHandler} />;
       }
       case "IMG": {
-        return <div>IMG</div>;
+        return <ImageElement data={data} />;
       }
       case "GAP": {
         return <GapElement data={data} />;

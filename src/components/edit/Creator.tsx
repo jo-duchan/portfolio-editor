@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
@@ -20,7 +20,7 @@ function Creator() {
       id: Math.random().toString(),
       sort: sort,
       content: {
-        text: `Enter the ${sort} here.`,
+        text: "",
         url: undefined,
       },
       option: {
@@ -52,13 +52,29 @@ function Creator() {
   };
 
   const fileInput = useRef<HTMLInputElement | null>(null);
-  const [fileImage, setFileImage] = useState<string>("");
 
-  const onUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onCreateImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
-    if (!fileList) return;
-    console.log(URL.createObjectURL(fileList[0]), e.target.files, "dd");
-    setFileImage(URL.createObjectURL(fileList[0]));
+    if (fileList) {
+      const url = URL.createObjectURL(fileList[0]);
+
+      const CreateData: ContentItem = {
+        id: Math.random().toString(),
+        sort: "IMG",
+        content: {
+          text: undefined,
+          url: url,
+        },
+        option: {
+          size: undefined,
+          margin: "NONE",
+          aline: undefined,
+          gap: undefined,
+        },
+      };
+      onCreateHandler(CreateData);
+      e.target.value = "";
+    }
   };
 
   return (
@@ -66,7 +82,6 @@ function Creator() {
       <Button onClick={() => onCreateText("TITLE")}>Title</Button>
       <Button onClick={() => onCreateText("TEXT")}>Text</Button>
       <Button onClick={onCreateGap}>Gap</Button>
-      {/* <Button>Image</Button> */}
       <label className="FileButton">
         image
         <input
@@ -74,10 +89,9 @@ function Creator() {
           type="file"
           accept="image/jpg, image/jpeg, image/png"
           className="File"
-          onChange={onUploadHandler}
+          onChange={onCreateImage}
         />
       </label>
-      <img src={fileImage} alt="tt" />
     </Container>
   );
 }
