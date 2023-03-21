@@ -32,7 +32,7 @@ function Viewer({ data }: Props) {
         return <TextElement data={data} onUpdateHandler={onUpdateHandler} />;
       }
       case "IMG": {
-        return <ImageElement data={data} />;
+        return <ImageElement data={data} onUpdateHandler={onUpdateHandler} />;
       }
       case "GAP": {
         return <GapElement data={data} />;
@@ -43,8 +43,7 @@ function Viewer({ data }: Props) {
   };
 
   const onUpdateHandler = (updateData: ContentItem) => {
-    if (!currentItem) return;
-    action.update(updateData, currentItem.id);
+    action.update(updateData, data.id);
   };
 
   const setSelectItemHandler = (

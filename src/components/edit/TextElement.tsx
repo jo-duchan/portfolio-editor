@@ -38,9 +38,9 @@ function TitleElement({ data, onUpdateHandler }: Props) {
 
   const onBlurHandler = () => {
     if (text.current === "") setIsPlaceholder(true);
-    const updateItme = data;
-    updateItme.content.text = text.current;
-    onUpdateHandler(updateItme);
+    const updateItem = data;
+    updateItem.content.text = text.current;
+    onUpdateHandler(updateItem);
   };
 
   const onHidePlaceholder = () => {

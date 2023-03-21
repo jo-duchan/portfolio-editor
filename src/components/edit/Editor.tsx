@@ -10,9 +10,10 @@ import {
   MarginSize,
   Aline,
   Gap,
+  Colume,
 } from "type/contentDataType";
 
-type Option = "FONT" | "MARGIN" | "ALINE" | "GAP" | "COLOR" | "FILL";
+type Option = "FONT" | "MARGIN" | "ALINE" | "GAP" | "COLOR" | "FILL" | "COLUMN";
 
 function Editor() {
   const action = useContentAction();
@@ -47,6 +48,10 @@ function Editor() {
       }
       case "COLOR": {
         updateItme.option.color = e.currentTarget.value as string;
+        break;
+      }
+      case "COLUMN": {
+        updateItme.option.column = e.currentTarget.value as Colume;
         break;
       }
     }
@@ -119,6 +124,17 @@ function Editor() {
           <option value="M">M</option>
           <option value="L">L</option>
           <option value="XL">XL</option>
+        </select>
+      </div>
+      <div className="column">
+        <span>column</span>
+        <select
+          value={currentItem?.option?.column}
+          onChange={(e) => onChangeValue(e, "COLUMN")}
+          disabled={!currentItem?.option?.column}
+        >
+          <option value="1">1</option>
+          <option value="2">2</option>
         </select>
       </div>
       <div className="fill">

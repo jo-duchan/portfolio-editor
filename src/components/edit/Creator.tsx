@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
@@ -21,7 +21,7 @@ function Creator() {
       sort: sort,
       content: {
         text: "",
-        url: undefined,
+        image: undefined,
       },
       option: {
         size: "S",
@@ -30,6 +30,7 @@ function Creator() {
         gap: undefined,
         color: "000",
         fill: "",
+        column: undefined,
       },
     };
     onCreateHandler(CreateData);
@@ -41,7 +42,7 @@ function Creator() {
       sort: "GAP",
       content: {
         text: undefined,
-        url: undefined,
+        image: undefined,
       },
       option: {
         size: undefined,
@@ -50,44 +51,25 @@ function Creator() {
         gap: "XS",
         color: undefined,
         fill: "",
+        column: undefined,
       },
     };
     onCreateHandler(CreateData);
   };
 
-  // const fileInput = useRef<HTMLInputElement | null>(null);
-
   const onCreateImage = () => {
-    // const onCreateImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const fileList = e.target.files;
-    // if (fileList) {
-    //   const url = URL.createObjectURL(fileList[0]);
-
-    //   const CreateData: ContentItem = {
-    //     id: Math.random().toString(),
-    //     sort: "IMG",
-    //     content: {
-    //       text: undefined,
-    //       url: url,
-    //     },
-    //     option: {
-    //       size: undefined,
-    //       margin: "NONE",
-    //       aline: undefined,
-    //       gap: undefined,
-    //       color: undefined,
-    //       fill: "",
-    //     },
-    //   };
-    //   onCreateHandler(CreateData);
-    //   e.target.value = "";
-    // }
     const CreateData: ContentItem = {
       id: Math.random().toString(),
       sort: "IMG",
       content: {
         text: undefined,
-        url: "",
+        image: [
+          {
+            file: {} as File,
+            preview: "",
+            type: "",
+          },
+        ],
       },
       option: {
         size: undefined,
@@ -96,6 +78,7 @@ function Creator() {
         gap: undefined,
         color: undefined,
         fill: "",
+        column: "2",
       },
     };
     onCreateHandler(CreateData);
@@ -107,16 +90,6 @@ function Creator() {
       <Button onClick={() => onCreateText("TEXT")}>Text</Button>
       <Button onClick={onCreateGap}>Gap</Button>
       <Button onClick={onCreateImage}>Image</Button>
-      {/* <label className="FileButton">
-        image
-        <input
-          ref={fileInput}
-          type="file"
-          accept="image/jpg, image/jpeg, image/png"
-          className="File"
-          onChange={onCreateImage}
-        />
-      </label> */}
     </Container>
   );
 }
