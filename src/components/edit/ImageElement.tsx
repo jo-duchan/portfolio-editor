@@ -98,7 +98,12 @@ const UploadButton = styled.div`
   justify-content: center;
   width: 100%;
   height: 400px;
-  background: gray;
+  background: #bbb;
+
+  & label {
+    font-size: 60px;
+    cursor: pointer;
+  }
 
   & input {
     display: none;

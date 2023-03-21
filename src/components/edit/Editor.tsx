@@ -182,7 +182,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: 20px;
 
-  & :is(.size, .margin, .aline, .gap) {
+  & :is(.size, .margin, .aline, .gap, .column) {
     display: flex;
     gap: 10px;
   }
