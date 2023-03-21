@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 // Style
@@ -26,7 +26,6 @@ function ImageElement({ data, onUpdateHandler }: Props) {
 
   const onCreateImage = (e: React.ChangeEvent<HTMLInputElement>, i: number) => {
     const getFile = e.target.files;
-    console.log(getFile);
     if (!getFile) return;
     const url = URL.createObjectURL(getFile[0]);
     const typeLength = getFile[0].type.length;
@@ -39,6 +38,14 @@ function ImageElement({ data, onUpdateHandler }: Props) {
     updateItem.content.image![i] = newImage;
     onUpdateHandler(updateItem);
   };
+
+  useEffect(() => {
+    if (data.option.column === "1" && data.content.image?.length === 2) {
+      const updateItem = data;
+      updateItem.content.image?.splice(1, 1);
+      onUpdateHandler(updateItem);
+    }
+  }, [data.option.column]);
 
   return (
     <Container fill={data.option.fill!} margin={data.option.margin!}>
