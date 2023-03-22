@@ -39,7 +39,7 @@ function Select({
   onChange,
 }: Props) {
   const [isClick, setIsClick] = useState<boolean>(false);
-  const [selectValue, setSelectValue] = useState<string>("");
+  const [selectValue, setSelectValue] = useState<string>(value);
 
   // Show & Hide Option
   const handleClick = useCallback(
@@ -64,6 +64,7 @@ function Select({
   }, [selectValue]);
 
   useEffect(() => {
+    if (value === selectValue) return;
     setSelectValue(value);
   }, [value]);
 
@@ -85,7 +86,7 @@ function Select({
 
   return (
     <Container width={width}>
-      {label && <Label onClick={handleClick}>{label}</Label>}
+      <Label onClick={handleClick}>{label}</Label>
       <InputWrapper>
         <InputOuter onClick={handleClick} focused={isClick} states={states}>
           <InputElement
@@ -129,7 +130,7 @@ const Container = styled.div<StyledProps>`
   width: ${(props) => `${props.width}px`};
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   & :is(div, span) {
     cursor: pointer;
     user-select: none;
@@ -139,7 +140,7 @@ const Container = styled.div<StyledProps>`
 const Label = styled.span`
   width: fit-content;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 const HelpText = styled.span`

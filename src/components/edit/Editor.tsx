@@ -5,6 +5,7 @@ import useCurrentItem from "context/useCurrentItem";
 
 // UI Components
 import Select from "components/ui/Select";
+import PillTab from "components/ui/PillTab";
 
 // Type
 import {
@@ -29,9 +30,19 @@ function Editor() {
     sort: string
   ) => {
     console.log(value);
-    if (!currentItem || !value) return;
+    if (!currentItem || value === undefined) return;
     const updateItme = currentItem;
-    updateItme.option.size = value as FontSize;
+
+    switch (sort) {
+      case "Size": {
+        updateItme.option.size = value as FontSize;
+        break;
+      }
+      case "Margin": {
+        updateItme.option.margin = value as MarginSize;
+        break;
+      }
+    }
     // if (!currentItem) return;
     // const updateItme = currentItem;
     // switch (type) {
@@ -80,15 +91,39 @@ function Editor() {
 
   return (
     <Container>
-      {/* Select Component로 만들자 onClick 이벤트 버블링 컴포넌트로 넣기*/}
+      {/* Select Component로 만들자 onClick 이벤트 버블링 컴포넌트로 넣기*/}{" "}
       <Select
         label="Size"
         width={240}
         placeholder="사이즈를 선택하세요."
         option={["XS", "S", "M", "L", "XL"]}
         value={currentItem?.option?.size as string}
+        states={currentItem?.option?.size ? "DEFAULT" : "DISABLED"}
         onChange={onChangeValue}
       />
+      <Select
+        label="Margin"
+        width={240}
+        placeholder="사이즈를 선택하세요."
+        option={["NONE", "XS", "S", "M", "L", "XL"]}
+        value={currentItem?.option?.margin as string}
+        states={currentItem?.option?.margin ? "DEFAULT" : "DISABLED"}
+        onChange={onChangeValue}
+      />
+      <PillTab
+        label="Aline"
+        option={["LEFT", "CENTER", "RIGHT"]}
+        onChange={(val) => console.log(val)}
+      />
+      {/* <Select
+        label="Aline"
+        width={240}
+        placeholder="사이즈를 선택하세요."
+        option={["NONE", "XS", "S", "M", "L", "XL"]}
+        value={currentItem?.option?.margin as string}
+        states={currentItem?.option?.margin ? "DEFAULT" : "DISABLED"}
+        onChange={onChangeValue}
+      /> */}
       {/* <div className="size">
         <span>Size</span>
         <select
@@ -201,22 +236,5 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-
-  & :is(.size, .margin, .aline, .gap, .column) {
-    display: flex;
-    gap: 10px;
-  }
-
-  & :is(.fill, .color) label {
-    display: flex;
-    gap: 10px;
-  }
-
-  & :is(.fill, .color) label input {
-    width: 60px;
-  }
-
-  & div select {
-    width: 60px;
-  }
+  height: 400px;
 `;
