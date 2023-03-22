@@ -14,6 +14,10 @@ html, body {
     font-family: Pretendard;  
 }
 
+button, input {
+    all: unset;
+};
+
 `;
 
 export default GlobalStyle;

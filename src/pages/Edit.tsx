@@ -47,7 +47,7 @@ const Container = styled.div`
 const CanvasPanel = styled.div`
   display: flex;
   flex-direction: column;
-  width: calc(100% - 230px);
+  width: calc(100% - 330px);
   height: fit-content;
   min-height: calc(100vh - 60px);
   background: #fff;

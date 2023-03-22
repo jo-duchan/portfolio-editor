@@ -3,6 +3,9 @@ import styled from "styled-components";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
+// UI Components
+import Select from "components/ui/Select";
+
 // Type
 import {
   ContentItem,
@@ -20,41 +23,48 @@ function Editor() {
   const [currentItem, setCurrentItem] = useCurrentItem();
 
   const onChangeValue = (
-    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>,
-    type: Option
+    // e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>,
+    // type: Option
+    value: string,
+    sort: string
   ) => {
-    if (!currentItem) return;
+    console.log(value);
+    if (!currentItem || !value) return;
     const updateItme = currentItem;
-    switch (type) {
-      case "FONT": {
-        updateItme.option.size = e.currentTarget.value as FontSize;
-        break;
-      }
-      case "MARGIN": {
-        updateItme.option.margin = e.currentTarget.value as MarginSize;
-        break;
-      }
-      case "ALINE": {
-        updateItme.option.aline = e.currentTarget.value as Aline;
-        break;
-      }
-      case "GAP": {
-        updateItme.option.gap = e.currentTarget.value as Gap;
-        break;
-      }
-      case "FILL": {
-        updateItme.option.fill = e.currentTarget.value as string;
-        break;
-      }
-      case "COLOR": {
-        updateItme.option.color = e.currentTarget.value as string;
-        break;
-      }
-      case "COLUMN": {
-        updateItme.option.column = e.currentTarget.value as Colume;
-        break;
-      }
-    }
+    updateItme.option.size = value as FontSize;
+    // if (!currentItem) return;
+    // const updateItme = currentItem;
+    // switch (type) {
+    //   case "FONT": {
+    //     updateItme.option.size = e.currentTarget.value as FontSize;
+    //     break;
+    //   }
+    //   case "MARGIN": {
+    //     updateItme.option.margin = e.currentTarget.value as MarginSize;
+    //     break;
+    //   }
+    //   case "ALINE": {
+    //     updateItme.option.aline = e.currentTarget.value as Aline;
+    //     break;
+    //   }
+    //   case "GAP": {
+    //     updateItme.option.gap = e.currentTarget.value as Gap;
+    //     break;
+    //   }
+    //   case "FILL": {
+    //     updateItme.option.fill = e.currentTarget.value as string;
+    //     break;
+    //   }
+    //   case "COLOR": {
+    //     updateItme.option.color = e.currentTarget.value as string;
+    //     break;
+    //   }
+    //   case "COLUMN": {
+    //     updateItme.option.column = e.currentTarget.value as Colume;
+    //     break;
+    //   }
+    // }
+    // onChangeHandler(updateItme, currentItem.id);
     onChangeHandler(updateItme, currentItem.id);
   };
 
@@ -71,9 +81,18 @@ function Editor() {
   return (
     <Container>
       {/* Select Component로 만들자 onClick 이벤트 버블링 컴포넌트로 넣기*/}
-      <div className="size">
+      <Select
+        label="Size"
+        width={240}
+        placeholder="사이즈를 선택하세요."
+        option={["XS", "S", "M", "L", "XL"]}
+        value={currentItem?.option?.size as string}
+        onChange={onChangeValue}
+      />
+      {/* <div className="size">
         <span>Size</span>
         <select
+          className="ss"
           value={currentItem?.option?.size}
           onChange={(e) => onChangeValue(e, "FONT")}
           disabled={!currentItem?.option?.size}
@@ -158,7 +177,7 @@ function Editor() {
             // disabled={!currentItem?.option?.fill}
           />
         </label>
-      </div>
+      </div> */}
       <button type="button" onClick={onDeletHandler} disabled={!currentItem}>
         삭제
       </button>
@@ -175,9 +194,10 @@ function Editor() {
 export default Editor;
 
 const Container = styled.div`
-  background: gray;
   padding: 15px;
-  color: #fff;
+  /* color: #fff;
+  background: gray; */
+  background: #fff;
   display: flex;
   flex-direction: column;
   gap: 20px;

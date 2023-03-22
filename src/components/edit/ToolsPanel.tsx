@@ -23,6 +23,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
-  width: 200px;
+  width: 270px;
   height: fit-content;
 `;
