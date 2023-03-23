@@ -3,7 +3,6 @@ import styled, { css, keyframes } from "styled-components";
 
 // Style
 import ColorSystem from "styles/color-system";
-// import { Text } from "styles/typography";
 
 // Components
 import IconSet from "components/ui/IconSet";

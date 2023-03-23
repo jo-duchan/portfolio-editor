@@ -3,6 +3,12 @@ import styled from "styled-components";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
+// Style
+import ColorSystem from "styles/color-system";
+
+// Components
+import IconSet from "components/ui/IconSet";
+
 // Type
 import { ContentItem, ContentSort } from "type/contentDataType";
 
@@ -86,10 +92,18 @@ function Creator() {
 
   return (
     <Container>
-      <Button onClick={() => onCreateText("TITLE")}>Title</Button>
-      <Button onClick={() => onCreateText("TEXT")}>Text</Button>
-      <Button onClick={onCreateGap}>Gap</Button>
-      <Button onClick={onCreateImage}>Image</Button>
+      <Button onClick={() => onCreateText("TITLE")}>
+        <IconSet type="TITLE" />
+      </Button>
+      <Button onClick={() => onCreateText("TEXT")}>
+        <IconSet type="TEXT" />
+      </Button>
+      <Button onClick={onCreateGap}>
+        <IconSet type="GAP" />
+      </Button>
+      <Button onClick={onCreateImage}>
+        <IconSet type="IMG" />
+      </Button>
     </Container>
   );
 }
@@ -102,28 +116,39 @@ const Container = styled.div`
   gap: 4px;
   width: 100%;
   height: auto;
-  background: gray;
-  padding: 4px;
+  background: ${ColorSystem.Neutral[0]};
+  padding: 12px;
+  border-radius: 6px;
   box-sizing: border-box;
-  & .File {
-    display: none;
-  }
-
-  & .FileButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 94px;
-    height: 94px;
-    box-sizing: border-box;
-    background: #ececec;
-  }
 `;
 
 const Button = styled.button`
-  width: 94px;
-  height: 94px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 126px;
+  height: 126px;
   box-sizing: border-box;
-  background: #ececec;
+  background: ${ColorSystem.Neutral[100]};
   border: none;
+  transition: 200ms ease-in-out;
+  transition-property: background;
+
+  & svg path {
+    fill: ${ColorSystem.Neutral[500]};
+    transition: 200ms ease-in-out;
+    transition-property: fill;
+  }
+
+  &:hover {
+    background: ${ColorSystem.Neutral[200]};
+  }
+
+  &:hover svg path {
+    fill: ${ColorSystem.Primary[600]};
+  }
+
+  &:active svg path {
+    fill: ${ColorSystem.Primary[700]};
+  }
 `;
