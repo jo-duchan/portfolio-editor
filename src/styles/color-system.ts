@@ -12,17 +12,16 @@ const ColorSystem = {
     900: "#202327",
   },
   Primary: {
-    100: "#FFF0F1",
-    200: "#FFDBDF",
-    500: "#FF2941",
-    600: "#FF0420",
-    700: "#EB001A",
-  },
-  Secondary: {
     100: "#EDF4FC",
     200: "#D7E6F9",
     600: "#2173DF",
     700: "#1C65C4",
+  },
+  Secondary: {
+    100: "#FFF0F1",
+    200: "#FFDBDF",
+    600: "#FF0420",
+    700: "#EB001A",
   },
   Success: {
     100: "#EEF6EE",

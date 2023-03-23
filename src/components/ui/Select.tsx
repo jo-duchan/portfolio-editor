@@ -76,7 +76,7 @@ function Select({
     }
 
     if (isClick) {
-      window.addEventListener("click", handleOuter);
+      window.addEventListener("click", handleOuter, true);
     }
 
     return () => {
@@ -183,7 +183,7 @@ const InputOuter = styled.div<StyledProps>`
     css`
       padding: 13px 15px 13px 17px;
       border-width: 0;
-      outline: 2px solid ${ColorSystem.Secondary[600]};
+      outline: 2px solid ${ColorSystem.Primary[600]};
 
       & svg {
         transform: rotate(180deg);

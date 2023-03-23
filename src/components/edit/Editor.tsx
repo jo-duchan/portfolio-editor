@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import useContentValue from "context/useContentValue";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
@@ -7,6 +8,7 @@ import useCurrentItem from "context/useCurrentItem";
 import Select from "components/ui/Select";
 import PillTab from "components/ui/PillTab";
 import Input from "components/ui/Input";
+import Button from "components/ui/Button";
 
 // Type
 import {
@@ -19,6 +21,7 @@ import {
 } from "type/contentDataType";
 
 function Editor() {
+  const data = useContentValue();
   const action = useContentAction();
   const [currentItem, setCurrentItem] = useCurrentItem();
 
@@ -65,8 +68,13 @@ function Editor() {
 
   const onDeletHandler = () => {
     if (!currentItem) return console.log("대상없음");
-    action.delete(currentItem.id);
-    console.log("삭제");
+    data.forEach((item, idx) => {
+      if (item.id === currentItem.id) {
+        action.delete(currentItem.id);
+        setCurrentItem(data[idx - 1]);
+        return;
+      }
+    });
   };
 
   return (
@@ -142,7 +150,24 @@ function Editor() {
           onChange={onChangeValue}
         />
       )}
-      <button type="button" onClick={onDeletHandler} disabled={!currentItem}>
+      <div className="action-wrapper">
+        <Button
+          label="Delete"
+          btnType="SECONDARY"
+          states={currentItem ? "DEFAULT" : "DISABLED"}
+          size="MEDIUM"
+          onClick={onDeletHandler}
+          fixedWidth
+        />
+        <Button
+          label="Save"
+          btnType="PRIMARY"
+          size="MEDIUM"
+          onClick={() => console.log("Click")}
+          fixedWidth
+        />
+      </div>
+      {/* <button type="button" onClick={onDeletHandler} disabled={!currentItem}>
         삭제
       </button>
       <button type="button" disabled>
@@ -150,7 +175,7 @@ function Editor() {
       </button>
       <button type="button" disabled>
         저장하기
-      </button>
+      </button> */}
     </Container>
   );
 }
@@ -158,12 +183,18 @@ function Editor() {
 export default Editor;
 
 const Container = styled.div`
-  padding: 30px 15px;
-  /* color: #fff;
-  background: gray; */
+  position: relative;
+  padding: 30px 20px;
   background: #fff;
   display: flex;
   flex-direction: column;
   gap: 20px;
   height: fit-content;
+  border-radius: 6px;
+
+  & .action-wrapper {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
 `;

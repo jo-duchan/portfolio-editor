@@ -28,8 +28,8 @@ function Creator() {
         margin: "NONE",
         aline: "LEFT",
         gap: undefined,
-        color: "000",
-        fill: "",
+        color: "000000",
+        fill: "FFFFFF",
         column: undefined,
       },
     };
@@ -50,7 +50,7 @@ function Creator() {
         aline: undefined,
         gap: "XS",
         color: undefined,
-        fill: "",
+        fill: "FFFFFF",
         column: undefined,
       },
     };
@@ -77,7 +77,7 @@ function Creator() {
         aline: undefined,
         gap: undefined,
         color: undefined,
-        fill: "",
+        fill: "FFFFFF",
         column: "2",
       },
     };

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import useContentValue from "context/useContentValue";
-// import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
 // Components
@@ -9,9 +8,8 @@ import ToolsPanel from "components/edit/ToolsPanel";
 import Viewer from "components/edit/Viewer";
 
 function Edit() {
-  // const action = useContentAction();
   const data = useContentValue();
-  const [currentItem, setCurrentItem] = useCurrentItem();
+  const [, setCurrentItem] = useCurrentItem();
   const viewRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

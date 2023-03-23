@@ -110,7 +110,7 @@ const InputElm = styled.input`
   &:focus {
     padding: 13px 17px;
     border-width: 0px;
-    outline: 2px solid ${ColorSystem.Secondary[600]};
+    outline: 2px solid ${ColorSystem.Primary[600]};
   }
 
   &:disabled {

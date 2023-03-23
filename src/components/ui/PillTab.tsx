@@ -176,7 +176,7 @@ const Option = styled.span<StyledProps>`
       ? css`
           font-size: 12px;
           font-weight: 600;
-          color: ${ColorSystem.Secondary[600]};
+          color: ${ColorSystem.Primary[600]};
         `
       : css`
           font-size: 12px;
