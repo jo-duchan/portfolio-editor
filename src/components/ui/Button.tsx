@@ -38,6 +38,12 @@ function Button({
   label,
   onClick,
 }: ButtonProps) {
+  const onClickHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    onClick();
+  };
   return (
     <Container
       btnType={btnType === "PRIMARY"}
@@ -45,7 +51,7 @@ function Button({
       size={size}
       fixedWidth={fixedWidth}
       disabled={states === "DISABLED"}
-      onClick={onClick}
+      onClick={(e) => onClickHandler(e)}
     >
       {states === "LOADING" ? (
         <LoadingMotion>

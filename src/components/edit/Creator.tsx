@@ -11,6 +11,7 @@ import IconSet from "components/ui/IconSet";
 
 // Type
 import { ContentItem, ContentSort } from "type/contentDataType";
+export type EventType = React.MouseEvent<HTMLButtonElement, MouseEvent>;
 
 function Creator() {
   const action = useContentAction();
@@ -21,7 +22,8 @@ function Creator() {
     setCurrentItem(createData);
   };
 
-  const onCreateText = (sort: ContentSort) => {
+  const onCreateText = (e: EventType, sort: ContentSort) => {
+    e.stopPropagation();
     const CreateData: ContentItem = {
       id: Math.random().toString(),
       sort: sort,
@@ -42,7 +44,8 @@ function Creator() {
     onCreateHandler(CreateData);
   };
 
-  const onCreateGap = () => {
+  const onCreateGap = (e: EventType) => {
+    e.stopPropagation();
     const CreateData: ContentItem = {
       id: Math.random().toString(),
       sort: "GAP",
@@ -63,7 +66,8 @@ function Creator() {
     onCreateHandler(CreateData);
   };
 
-  const onCreateImage = () => {
+  const onCreateImage = (e: EventType) => {
+    e.stopPropagation();
     const CreateData: ContentItem = {
       id: Math.random().toString(),
       sort: "IMG",
@@ -92,16 +96,16 @@ function Creator() {
 
   return (
     <Container>
-      <Button onClick={() => onCreateText("TITLE")}>
+      <Button onClick={(e) => onCreateText(e, "TITLE")}>
         <IconSet type="TITLE" />
       </Button>
-      <Button onClick={() => onCreateText("TEXT")}>
+      <Button onClick={(e) => onCreateText(e, "TEXT")}>
         <IconSet type="TEXT" />
       </Button>
-      <Button onClick={onCreateGap}>
+      <Button onClick={(e) => onCreateGap(e)}>
         <IconSet type="GAP" />
       </Button>
-      <Button onClick={onCreateImage}>
+      <Button onClick={(e) => onCreateImage(e)}>
         <IconSet type="IMG" />
       </Button>
     </Container>
@@ -133,6 +137,7 @@ const Button = styled.button`
   border: none;
   transition: 200ms ease-in-out;
   transition-property: background;
+  cursor: pointer;
 
   & svg path {
     fill: ${ColorSystem.Neutral[500]};

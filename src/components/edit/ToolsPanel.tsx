@@ -7,7 +7,8 @@ import Editor from "components/edit/Editor";
 
 function ToolsPanel() {
   return (
-    <Container onClick={(e) => e.stopPropagation()}>
+    // <Container onClick={(e) => e.stopPropagation()}>
+    <Container>
       <Creator />
       <Editor />
     </Container>

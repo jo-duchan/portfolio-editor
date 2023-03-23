@@ -44,7 +44,6 @@ function Select({
   // Show & Hide Option
   const handleClick = useCallback(
     (e: EventType) => {
-      e.stopPropagation();
       if (states === "DISABLED") return;
       setIsClick(!isClick);
     },
@@ -53,7 +52,6 @@ function Select({
 
   // Select Option
   const handleOption = useCallback((e: EventType, optionValue: string) => {
-    e.stopPropagation();
     setIsClick(false);
     setSelectValue(optionValue);
   }, []);
@@ -70,13 +68,13 @@ function Select({
 
   // Outer Click, Remove Option Area
   useEffect(() => {
-    function handleOuter() {
+    function handleOuter(e: MouseEvent) {
       setIsClick(false);
       window.removeEventListener("click", handleOuter);
     }
 
     if (isClick) {
-      window.addEventListener("click", handleOuter, true);
+      window.addEventListener("click", handleOuter);
     }
 
     return () => {
@@ -85,7 +83,7 @@ function Select({
   }, [isClick]);
 
   return (
-    <Container width={width}>
+    <Container width={width} onClick={(e) => e.stopPropagation()}>
       <Label onClick={handleClick}>{label}</Label>
       <InputWrapper>
         <InputOuter onClick={handleClick} focused={isClick} states={states}>
