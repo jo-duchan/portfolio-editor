@@ -12,7 +12,7 @@ export type States = "DEFAULT" | "DISABLED";
 export type EventType = React.MouseEvent<HTMLDivElement, MouseEvent>;
 
 interface Props {
-  width?: number;
+  width?: string;
   states?: States;
   label: string;
   placeholder?: string;
@@ -23,7 +23,7 @@ interface Props {
 }
 
 interface StyledProps {
-  width?: number;
+  width?: string;
   focused?: boolean;
   states?: States;
 }
@@ -119,8 +119,8 @@ function Select({
 export default Select;
 
 Select.defaultProps = {
-  width: 264,
   states: "DEFAULT",
+  width: "264px",
   placeholder: undefined,
   helpText: undefined,
 };

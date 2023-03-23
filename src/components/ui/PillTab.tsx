@@ -10,7 +10,8 @@ export type LineType = "LEFT" | "RIGHT" | "NONE";
 interface Props {
   label: string;
   option: string[];
-  onChange: (value: string) => void;
+  value: string;
+  onChange: (value: string, label: string) => void;
 }
 
 interface StyledProps {
@@ -19,13 +20,22 @@ interface StyledProps {
   line?: LineType;
 }
 
-function PillTab({ label, option, onChange }: Props) {
+function PillTab({ label, option, value, onChange }: Props) {
   const [posIdx, setPosIdx] = useState<number>(0);
 
   const handleClick = (item: string, index: number) => {
     setPosIdx(index);
-    onChange(item);
+    onChange(item, label);
   };
+
+  useEffect(() => {
+    option.forEach((item, idx) => {
+      if (item === value) {
+        setPosIdx(idx);
+        return;
+      }
+    });
+  }, [value]);
 
   const calcDirection = (index: number): LineType => {
     if (index !== 0 && index + 1 !== option.length && index < posIdx) {
