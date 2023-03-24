@@ -90,12 +90,7 @@ function Select({
                 {optionValue}
               </Option>
             ))}
-            <Outer
-              onClick={() => {
-                setIsClick(false);
-                console.log("????");
-              }}
-            />
+            <Outer onClick={() => setIsClick(false)} />
           </OptionWrapper>
         )}
       </InputWrapper>
