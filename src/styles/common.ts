@@ -1,5 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+// Style
+import ColorSystem from "styles/color-system";
 
 const GlobalStyle = createGlobalStyle`
 ${reset};
@@ -7,7 +9,7 @@ ${reset};
 html, body {
     width: 100%;
     height: 100%;
-    background: #ccc;
+    background: ${ColorSystem.Neutral[800]};
 };
 
 #root * {

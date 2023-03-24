@@ -3,6 +3,9 @@ import styled from "styled-components";
 import useContentValue from "context/useContentValue";
 import useCurrentItem from "context/useCurrentItem";
 
+// Style
+import ColorSystem from "styles/color-system";
+
 // Components
 import ToolsPanel from "components/edit/ToolsPanel";
 import Viewer from "components/edit/Viewer";
@@ -48,5 +51,7 @@ const CanvasPanel = styled.div`
   width: calc(100% - 330px);
   height: fit-content;
   min-height: calc(100vh - 60px);
-  background: #fff;
+  background: ${ColorSystem.Neutral[0]};
+  border-radius: 6px;
+  overflow: hidden;
 `;

@@ -4,6 +4,9 @@ import useContentValue from "context/useContentValue";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
+// Style
+import ColorSystem from "styles/color-system";
+
 // UI Components
 import Select from "components/ui/Select";
 import PillTab from "components/ui/PillTab";
@@ -79,6 +82,7 @@ function Editor() {
 
   return (
     <Container>
+      {/* 스위치문으로 정리해서 가자 */}
       {(currentItem?.sort === "TITLE" || currentItem?.sort === "TEXT") && (
         <PillTab
           label="Aline"
@@ -167,15 +171,6 @@ function Editor() {
           fixedWidth
         />
       </div>
-      {/* <button type="button" onClick={onDeletHandler} disabled={!currentItem}>
-        삭제
-      </button>
-      <button type="button" disabled>
-        미리보기
-      </button>
-      <button type="button" disabled>
-        저장하기
-      </button> */}
     </Container>
   );
 }
@@ -185,7 +180,7 @@ export default Editor;
 const Container = styled.div`
   position: relative;
   padding: 30px 20px;
-  background: #fff;
+  background: ${ColorSystem.Neutral[0]};
   display: flex;
   flex-direction: column;
   gap: 20px;

@@ -66,24 +66,8 @@ function Select({
     setSelectValue(value);
   }, [value]);
 
-  // Outer Click, Remove Option Area
-  useEffect(() => {
-    function handleOuter(e: MouseEvent) {
-      setIsClick(false);
-      window.removeEventListener("click", handleOuter);
-    }
-
-    if (isClick) {
-      window.addEventListener("click", handleOuter);
-    }
-
-    return () => {
-      window.removeEventListener("click", handleOuter);
-    };
-  }, [isClick]);
-
   return (
-    <Container width={width} onClick={(e) => e.stopPropagation()}>
+    <Container width={width}>
       <Label onClick={handleClick}>{label}</Label>
       <InputWrapper>
         <InputOuter onClick={handleClick} focused={isClick} states={states}>
@@ -106,6 +90,12 @@ function Select({
                 {optionValue}
               </Option>
             ))}
+            <Outer
+              onClick={() => {
+                setIsClick(false);
+                console.log("????");
+              }}
+            />
           </OptionWrapper>
         )}
       </InputWrapper>
@@ -135,6 +125,15 @@ const Container = styled.div<StyledProps>`
   }
 `;
 
+const Outer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  z-index: -1;
+`;
 const Label = styled.span`
   width: fit-content;
   font-size: 16px;

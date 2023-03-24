@@ -49,7 +49,7 @@ function PillTab({ label, option, value, onChange }: Props) {
     return "NONE";
   };
   return (
-    <Container onClick={(e) => e.stopPropagation()}>
+    <Container>
       <Label>{label}</Label>
       <Innerwrapper>
         <Tab>

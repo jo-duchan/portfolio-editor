@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 
 // Style
+import ColorSystem from "styles/color-system";
 import { TitleSizePC, TextSizePC } from "styles/typography";
 import { marginStylePC } from "styles/margin";
 
@@ -45,6 +46,7 @@ function TitleElement({ data, onUpdateHandler }: Props) {
 
   const onHidePlaceholder = () => {
     inner.current?.focus();
+    inner.current?.setAttribute("spellcheck", "false");
     setIsPlaceholder(false);
   };
 
@@ -95,5 +97,5 @@ const ContentWrapper = styled.div<StyledContentWrapper>`
 `;
 
 const Placeholder = styled.span`
-  color: #aaa;
+  color: ${ColorSystem.Neutral[300]};
 `;

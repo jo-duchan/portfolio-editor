@@ -40,7 +40,7 @@ function Input({
   }, [states]);
 
   return (
-    <Container width={width} onClick={(e) => e.stopPropagation()}>
+    <Container width={width}>
       <Label htmlFor={label}>
         {label}
         <InputElm

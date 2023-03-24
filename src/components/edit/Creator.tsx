@@ -22,8 +22,7 @@ function Creator() {
     setCurrentItem(createData);
   };
 
-  const onCreateText = (e: EventType, sort: ContentSort) => {
-    e.stopPropagation();
+  const onCreateText = (sort: ContentSort) => {
     const CreateData: ContentItem = {
       id: Math.random().toString(),
       sort: sort,
@@ -44,8 +43,7 @@ function Creator() {
     onCreateHandler(CreateData);
   };
 
-  const onCreateGap = (e: EventType) => {
-    e.stopPropagation();
+  const onCreateGap = () => {
     const CreateData: ContentItem = {
       id: Math.random().toString(),
       sort: "GAP",
@@ -66,8 +64,7 @@ function Creator() {
     onCreateHandler(CreateData);
   };
 
-  const onCreateImage = (e: EventType) => {
-    e.stopPropagation();
+  const onCreateImage = () => {
     const CreateData: ContentItem = {
       id: Math.random().toString(),
       sort: "IMG",
@@ -96,16 +93,16 @@ function Creator() {
 
   return (
     <Container>
-      <Button onClick={(e) => onCreateText(e, "TITLE")}>
+      <Button onClick={() => onCreateText("TITLE")}>
         <IconSet type="TITLE" />
       </Button>
-      <Button onClick={(e) => onCreateText(e, "TEXT")}>
+      <Button onClick={() => onCreateText("TEXT")}>
         <IconSet type="TEXT" />
       </Button>
-      <Button onClick={(e) => onCreateGap(e)}>
+      <Button onClick={onCreateGap}>
         <IconSet type="GAP" />
       </Button>
-      <Button onClick={(e) => onCreateImage(e)}>
+      <Button onClick={onCreateImage}>
         <IconSet type="IMG" />
       </Button>
     </Container>

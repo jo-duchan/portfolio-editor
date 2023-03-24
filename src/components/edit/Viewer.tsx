@@ -3,6 +3,9 @@ import styled from "styled-components";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
+// Style
+import ColorSystem from "styles/color-system";
+
 // Components
 import TextElement from "components/edit/TextElement";
 import GapElement from "components/edit/GapElement";
@@ -74,9 +77,10 @@ const Container = styled.div<StyledProps>`
     position: absolute;
     top: 0;
     left: 0;
-    border: 2px solid red;
+    border: 2px solid rgb(15, 129, 230);
     box-sizing: border-box;
     opacity: ${(props) => (props.focus ? 1 : 0)};
+    background: rgba(15, 129, 230, 0.1);
     z-index: 999;
     pointer-events: none;
   }

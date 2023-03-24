@@ -38,10 +38,7 @@ function Button({
   label,
   onClick,
 }: ButtonProps) {
-  const onClickHandler = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.stopPropagation();
+  const onClickHandler = () => {
     onClick();
   };
   return (
@@ -51,7 +48,7 @@ function Button({
       size={size}
       fixedWidth={fixedWidth}
       disabled={states === "DISABLED"}
-      onClick={(e) => onClickHandler(e)}
+      onClick={onClickHandler}
     >
       {states === "LOADING" ? (
         <LoadingMotion>
