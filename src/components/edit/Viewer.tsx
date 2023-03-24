@@ -3,9 +3,6 @@ import styled from "styled-components";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 
-// Style
-import ColorSystem from "styles/color-system";
-
 // Components
 import TextElement from "components/edit/TextElement";
 import GapElement from "components/edit/GapElement";
@@ -49,10 +46,7 @@ function Viewer({ data }: Props) {
     action.update(updateData, data.id);
   };
 
-  const setSelectItemHandler = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    e.stopPropagation();
+  const setSelectItemHandler = () => {
     setCurrentItem(data);
   };
 
@@ -80,7 +74,7 @@ const Container = styled.div<StyledProps>`
     border: 2px solid rgb(15, 129, 230);
     box-sizing: border-box;
     opacity: ${(props) => (props.focus ? 1 : 0)};
-    background: rgba(15, 129, 230, 0.1);
+    background: rgba(15, 129, 230, 0.05);
     z-index: 999;
     pointer-events: none;
   }

@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
+// Components
+import IconSet from "components/ui/IconSet";
+
 // Style
+import ColorSystem from "styles/color-system";
 import { marginStylePC } from "styles/margin";
 
 // Type
@@ -48,7 +52,11 @@ function ImageElement({ data, onUpdateHandler }: Props) {
   }, [data.option.column]);
 
   return (
-    <Container fill={data.option.fill!} margin={data.option.margin!}>
+    <Container
+      fill={data.option.fill!}
+      margin={data.option.margin!}
+      onClickCapture={(e) => e.stopPropagation()}
+    >
       {[...Array(columnNumber)].map((x, i) => (
         <Content key={Math.random() * i} cloumn={columnNumber}>
           {data.content.image![i]?.preview ? (
@@ -56,7 +64,7 @@ function ImageElement({ data, onUpdateHandler }: Props) {
           ) : (
             <UploadButton>
               <label>
-                +
+                <IconSet type="ADD_IMG" />
                 <input
                   type="file"
                   accept="image/jpg, image/jpeg, image/png, image/webp"
@@ -81,6 +89,7 @@ const Container = styled.div<StyledContainer>`
   background: ${(props) => `#${props.fill}`};
   padding-inline: ${(props) => `${marginStylePC(props.margin)}`};
   box-sizing: border-box;
+  pointer-events: none;
 `;
 
 const Content = styled.div<StyledContent>`
@@ -98,11 +107,26 @@ const UploadButton = styled.div`
   justify-content: center;
   width: 100%;
   height: 400px;
-  background: #bbb;
+  background: ${ColorSystem.Neutral[200]};
 
   & label {
-    font-size: 60px;
+    pointer-events: all;
+    padding: 10px;
     cursor: pointer;
+  }
+
+  & label svg path {
+    fill: ${ColorSystem.Neutral[500]};
+    transition: 200ms ease-in-out;
+    transition-property: fill;
+  }
+
+  & label:hover svg path {
+    fill: ${ColorSystem.Primary[600]};
+  }
+
+  & label:active svg path {
+    fill: ${ColorSystem.Primary[700]};
   }
 
   & input {
