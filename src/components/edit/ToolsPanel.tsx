@@ -7,7 +7,7 @@ import Editor from "components/edit/Editor";
 
 function ToolsPanel() {
   return (
-    <Container onClick={(e) => e.stopPropagation()}>
+    <Container>
       <Creator />
       <Editor />
     </Container>
@@ -25,4 +25,5 @@ const Container = styled.div`
   gap: 30px;
   width: 280px;
   height: fit-content;
+  z-index: 100;
 `;

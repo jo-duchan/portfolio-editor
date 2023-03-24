@@ -14,14 +14,10 @@ function Edit() {
   const data = useContentValue();
   const [, setCurrentItem] = useCurrentItem();
   const viewRef = useRef<HTMLDivElement | null>(null);
+  const clearIdHandler = () => setCurrentItem(null);
 
   useEffect(() => {
-    const clearIdHandler = () => setCurrentItem(null);
-    window.addEventListener("click", clearIdHandler);
-
-    return () => {
-      window.removeEventListener("click", clearIdHandler);
-    };
+    viewRef.current?.addEventListener("click", clearIdHandler);
   }, []);
 
   return (
@@ -32,6 +28,7 @@ function Edit() {
         ))}
       </CanvasPanel>
       <ToolsPanel />
+      <Background onClick={clearIdHandler} />
     </Container>
   );
 }
@@ -54,4 +51,15 @@ const CanvasPanel = styled.div`
   background: ${ColorSystem.Neutral[0]};
   border-radius: 6px;
   overflow: hidden;
+  z-index: 100;
+`;
+
+const Background = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 0;
 `;

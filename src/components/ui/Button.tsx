@@ -38,9 +38,6 @@ function Button({
   label,
   onClick,
 }: ButtonProps) {
-  const onClickHandler = () => {
-    onClick();
-  };
   return (
     <Container
       btnType={btnType === "PRIMARY"}
@@ -48,7 +45,7 @@ function Button({
       size={size}
       fixedWidth={fixedWidth}
       disabled={states === "DISABLED"}
-      onClick={onClickHandler}
+      onClick={onClick}
     >
       {states === "LOADING" ? (
         <LoadingMotion>

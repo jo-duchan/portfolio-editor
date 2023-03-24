@@ -44,6 +44,7 @@ function Select({
   // Show & Hide Option
   const handleClick = useCallback(
     (e: EventType) => {
+      e.stopPropagation();
       if (states === "DISABLED") return;
       setIsClick(!isClick);
     },
@@ -52,6 +53,7 @@ function Select({
 
   // Select Option
   const handleOption = useCallback((e: EventType, optionValue: string) => {
+    e.stopPropagation();
     setIsClick(false);
     setSelectValue(optionValue);
   }, []);
@@ -66,11 +68,27 @@ function Select({
     setSelectValue(value);
   }, [value]);
 
+  //Outer Click Hide Option
+  useEffect(() => {
+    const onClearHandler = () => {
+      setIsClick(!isClick);
+      window.removeEventListener("click", onClearHandler);
+    };
+
+    if (isClick) {
+      window.addEventListener("click", onClearHandler);
+    }
+  }, [isClick]);
+
   return (
     <Container width={width}>
       <Label onClick={handleClick}>{label}</Label>
       <InputWrapper>
-        <InputOuter onClick={handleClick} focused={isClick} states={states}>
+        <InputOuter
+          onClickCapture={handleClick}
+          focused={isClick}
+          states={states}
+        >
           <InputElement
             placeholder={placeholder}
             value={selectValue || ""}
@@ -83,14 +101,13 @@ function Select({
             {option.map((optionValue, index) => (
               <Option
                 key={index}
-                onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-                  handleOption(e, optionValue)
-                }
+                onClickCapture={(
+                  e: React.MouseEvent<HTMLDivElement, MouseEvent>
+                ) => handleOption(e, optionValue)}
               >
                 {optionValue}
               </Option>
             ))}
-            <Outer onClick={() => setIsClick(false)} />
           </OptionWrapper>
         )}
       </InputWrapper>
@@ -120,15 +137,6 @@ const Container = styled.div<StyledProps>`
   }
 `;
 
-const Outer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: transparent;
-  z-index: -1;
-`;
 const Label = styled.span`
   width: fit-content;
   font-size: 16px;
