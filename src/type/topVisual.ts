@@ -8,7 +8,7 @@ export type TopVisual = {
   title: string;
   description: string;
   work: string;
-  clientLogo: Image;
-  backgroundPC: Image;
-  backgroundMO: Image;
+  clientLogo: Image | undefined;
+  backgroundPC: Image | undefined;
+  backgroundMO: Image | undefined;
 };

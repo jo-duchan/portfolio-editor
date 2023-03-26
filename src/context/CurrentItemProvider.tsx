@@ -1,4 +1,10 @@
-import React, { ReactNode, createContext, useState, Dispatch } from "react";
+import {
+  ReactNode,
+  createContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
 // Type
 import { ContentItem } from "type/contentList";
@@ -9,7 +15,7 @@ interface Props {
 
 type CurrentItemStateType = [
   ContentItem | null,
-  Dispatch<React.SetStateAction<ContentItem | null>>
+  Dispatch<SetStateAction<ContentItem | null>>
 ];
 
 export const CurrentItemContext = createContext<

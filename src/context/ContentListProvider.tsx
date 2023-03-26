@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useMemo, useState } from "react";
+import { ReactNode, createContext, useMemo, useState } from "react";
 
 // Type
 import { ContentList, ContentItem } from "type/contentList";
@@ -20,7 +20,7 @@ export const ContentActionContext = createContext<
   ContentActionType | undefined
 >(undefined);
 
-function ContentDataProvider({ children }: Props) {
+function ContentListProvider({ children }: Props) {
   const [contentData, setContentData] = useState<ContentList>([]);
 
   const actions = useMemo(
@@ -69,4 +69,4 @@ function ContentDataProvider({ children }: Props) {
   );
 }
 
-export default ContentDataProvider;
+export default ContentListProvider;

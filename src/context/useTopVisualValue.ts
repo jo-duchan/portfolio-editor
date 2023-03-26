@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { ContentValueContext } from "context/ContentListProvider";
+import { TopVisualValueContext } from "context/TopVisualProvider";
 
-function useContentValue() {
-  const value = useContext(ContentValueContext);
+function useTopVisualValue() {
+  const value = useContext(TopVisualValueContext);
 
   if (value === undefined) {
     throw new Error(
@@ -12,4 +12,4 @@ function useContentValue() {
   return value;
 }
 
-export default useContentValue;
+export default useTopVisualValue;
