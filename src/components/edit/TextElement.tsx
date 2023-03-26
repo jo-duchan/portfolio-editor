@@ -8,7 +8,7 @@ import { TitleSizePC, TextSizePC } from "styles/typography";
 import { marginStylePC } from "styles/margin";
 
 // Type
-import { ContentItem, FontSize, MarginSize, Aline } from "type/contentDataType";
+import { ContentItem, FontSize, MarginSize, Aline } from "type/contentList";
 
 interface Props {
   data: ContentItem;

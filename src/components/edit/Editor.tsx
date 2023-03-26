@@ -21,7 +21,7 @@ import {
   Aline,
   Gap,
   Colume,
-} from "type/contentDataType";
+} from "type/contentList";
 
 function Editor() {
   const data = useContentValue();
@@ -80,8 +80,20 @@ function Editor() {
     });
   };
 
+  const onSaveHandler = () => {
+    const portfolioItem = {
+      // 나중에 UUID로 수정
+      id: Math.random().toString(),
+      topVisual: undefined,
+      contentList: data,
+    };
+
+    console.log("Save :", portfolioItem);
+  };
+
   return (
     <Container>
+      {/* 전체 color, bg-color 수정 input */}
       {currentItem?.option?.aline && (
         <PillTab
           label="Aline"
@@ -160,7 +172,7 @@ function Editor() {
           label="Save"
           btnType="PRIMARY"
           size="MEDIUM"
-          onClick={() => console.log(data)}
+          onClick={onSaveHandler}
           fixedWidth
         />
       </div>

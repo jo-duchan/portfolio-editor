@@ -9,7 +9,7 @@ import ColorSystem from "styles/color-system";
 import { marginStylePC } from "styles/margin";
 
 // Type
-import { ContentItem, MarginSize, Image } from "type/contentDataType";
+import { ContentItem, MarginSize, Image } from "type/contentList";
 
 interface Props {
   data: ContentItem;

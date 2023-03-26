@@ -10,7 +10,7 @@ import ColorSystem from "styles/color-system";
 import IconSet from "components/ui/IconSet";
 
 // Type
-import { ContentItem, ContentSort } from "type/contentDataType";
+import { ContentItem, ContentSort } from "type/contentList";
 export type EventType = React.MouseEvent<HTMLButtonElement, MouseEvent>;
 
 function Creator() {

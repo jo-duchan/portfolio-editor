@@ -29,3 +29,9 @@ export interface ContentItem {
 }
 
 export type ContentList = ContentItem[];
+
+// export interface PortfolioItem {
+//   id: string;
+//   topVisual: TopVisual;
+//   contentList: ContentList;
+// }

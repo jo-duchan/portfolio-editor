@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { GapStylePC } from "styles/gap";
 
 // Type
-import { ContentItem, Gap } from "type/contentDataType";
+import { ContentItem, Gap } from "type/contentList";
 
 interface Props {
   data: ContentItem;

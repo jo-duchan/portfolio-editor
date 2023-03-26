@@ -1,5 +1,5 @@
 import { css } from "styled-components";
-import { FontSize } from "type/contentDataType";
+import { FontSize } from "type/contentList";
 
 function TitleSizePC(size: FontSize) {
   switch (size) {

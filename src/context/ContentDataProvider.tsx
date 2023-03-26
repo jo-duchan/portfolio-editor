@@ -1,7 +1,7 @@
 import React, { ReactNode, createContext, useMemo, useState } from "react";
 
 // Type
-import { ContentList, ContentItem } from "type/contentDataType";
+import { ContentList, ContentItem } from "type/contentList";
 
 interface Props {
   children: ReactNode;

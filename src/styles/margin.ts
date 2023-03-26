@@ -1,4 +1,4 @@
-import { MarginSize } from "type/contentDataType";
+import { MarginSize } from "type/contentList";
 
 function marginStylePC(size: MarginSize) {
   switch (size) {

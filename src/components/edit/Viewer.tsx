@@ -9,7 +9,7 @@ import GapElement from "components/edit/GapElement";
 import ImageElement from "components/edit//ImageElement";
 
 // Type
-import { ContentItem } from "type/contentDataType";
+import { ContentItem } from "type/contentList";
 
 interface Props {
   data: ContentItem;
