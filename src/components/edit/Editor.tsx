@@ -82,8 +82,7 @@ function Editor() {
 
   return (
     <Container>
-      {/* 스위치문으로 정리해서 가자 */}
-      {(currentItem?.sort === "TITLE" || currentItem?.sort === "TEXT") && (
+      {currentItem?.option?.aline && (
         <PillTab
           label="Aline"
           option={["LEFT", "CENTER", "RIGHT"]}
@@ -91,7 +90,7 @@ function Editor() {
           onChange={onChangeValue}
         />
       )}
-      {currentItem?.sort === "IMG" && (
+      {currentItem?.option?.column && (
         <PillTab
           label="Column"
           option={["1", "2"]}
@@ -99,7 +98,7 @@ function Editor() {
           onChange={onChangeValue}
         />
       )}
-      {(currentItem?.sort === "TITLE" || currentItem?.sort === "TEXT") && (
+      {currentItem?.option?.size && (
         <Select
           label="Size"
           width="240"
@@ -109,20 +108,17 @@ function Editor() {
           onChange={onChangeValue}
         />
       )}
-      {currentItem?.sort === "GAP" && (
+      {currentItem?.option?.gap && (
         <Select
           label="Gap"
           width="240"
           placeholder="공백을 선택하세요."
           option={["XS", "S", "M", "L", "XL"]}
           value={currentItem?.option?.gap as string}
-          states={currentItem?.option?.gap ? "DEFAULT" : "DISABLED"}
           onChange={onChangeValue}
         />
       )}
-      {(currentItem?.sort === "TITLE" ||
-        currentItem?.sort === "TEXT" ||
-        currentItem?.sort === "IMG") && (
+      {currentItem?.option?.margin && (
         <Select
           label="Margin"
           width="240"
@@ -133,7 +129,7 @@ function Editor() {
         />
       )}
 
-      {(currentItem?.sort === "TITLE" || currentItem?.sort === "TEXT") && (
+      {currentItem?.option?.color && (
         <Input
           label="Color"
           width="240"
@@ -142,10 +138,7 @@ function Editor() {
           onChange={onChangeValue}
         />
       )}
-      {(currentItem?.sort === "TITLE" ||
-        currentItem?.sort === "TEXT" ||
-        currentItem?.sort === "IMG" ||
-        currentItem?.sort === "GAP") && (
+      {currentItem?.option?.fill && (
         <Input
           label="Fill"
           width="240"
@@ -167,7 +160,7 @@ function Editor() {
           label="Save"
           btnType="PRIMARY"
           size="MEDIUM"
-          onClick={() => console.log("Click")}
+          onClick={() => console.log(data)}
           fixedWidth
         />
       </div>
