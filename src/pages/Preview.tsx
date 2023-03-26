@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 function Preview() {
-  // Visual Edit
   return <Container>Preview</Container>;
 }
 

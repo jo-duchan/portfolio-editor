@@ -24,9 +24,10 @@ export const TopVisualActionContext = createContext<
 
 function TopVisualProvider({ children }: Props) {
   const [value, setValue] = useState<TopVisual>({
-    title: "",
-    description: "",
-    work: "",
+    title: "Project Title",
+    description:
+      "Lorem ipsum dolor sit amet, cont. \nUt enim ad quis nostrud exercitation ullamco laboris",
+    work: "UX Design \nDevelopment \n3D Motion",
     clientLogo: undefined,
     backgroundPC: undefined,
     backgroundMO: undefined,

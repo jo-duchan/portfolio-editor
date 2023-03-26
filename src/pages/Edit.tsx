@@ -7,6 +7,7 @@ import useCurrentItem from "context/useCurrentItem";
 import ColorSystem from "styles/color-system";
 
 // Components
+import TopVisual from "components/edit/TopVisual";
 import ToolsPanel from "components/edit/ToolsPanel";
 import Viewer from "components/edit/Viewer";
 
@@ -18,11 +19,17 @@ function Edit() {
 
   useEffect(() => {
     viewRef.current?.addEventListener("click", clearIdHandler);
+    document.body.style.background = ColorSystem.Neutral[800];
+
+    return () => {
+      document.body.style.background = "";
+    };
   }, []);
 
   return (
     <Container>
       <CanvasPanel ref={viewRef}>
+        <TopVisual />
         {data.map((item) => (
           <Viewer key={item.id} data={item} />
         ))}
