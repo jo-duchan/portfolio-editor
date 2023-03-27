@@ -141,7 +141,7 @@ function Editor() {
         />
       )}
 
-      {currentItem?.option?.color && (
+      {currentItem?.option?.color !== undefined && (
         <Input
           label="Color"
           width="240"
@@ -151,7 +151,7 @@ function Editor() {
           onChange={onChangeValue}
         />
       )}
-      {currentItem?.option?.fill && (
+      {currentItem?.option?.fill !== undefined && (
         <Input
           label="Fill"
           width="240"

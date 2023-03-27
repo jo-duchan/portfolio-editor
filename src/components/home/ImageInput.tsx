@@ -156,7 +156,7 @@ const Uploader = styled.div`
     justify-content: center;
     width: 100px;
     height: 100%;
-    background: ${ColorSystem.Neutral[300]};
+    background: ${ColorSystem.Neutral[250]};
     border-radius: 6px;
     cursor: pointer;
   }

@@ -49,7 +49,7 @@ function Home() {
     action({
       title: "",
       description: "",
-      work: "",
+      work: [] as string[],
       assets: {
         clientLogo: {
           label: "Client Logo",

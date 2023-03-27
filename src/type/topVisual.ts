@@ -8,7 +8,7 @@ export type Image = {
 export type TopVisual = {
   title: string;
   description: string;
-  work: string;
+  work: string[];
   assets: {
     [key: string]: Image;
     clientLogo: Image;

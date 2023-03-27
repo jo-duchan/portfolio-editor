@@ -1,38 +1,77 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
+import useTopVisualValue from "context/useTopVisualValue";
 
 // Style
 import ColorSystem from "styles/color-system";
 
 //Type
+import { TopVisual } from "type/topVisual";
 export type ChipSize = "SMALL" | "MEDIUM";
 
 interface Props {
+  index: number;
+  onUpdateHandler: (update: TopVisual) => void;
   icon?: string | undefined;
-  text?: string;
   size?: ChipSize;
 }
 interface StyledProps {
-  active: boolean;
+  isFocus?: boolean;
   paddingLeft: boolean;
   size: ChipSize | undefined;
 }
 
-function Chip({ icon, text, size }: Props) {
-  const [isActive, setIsActive] = useState<boolean>(false);
+function Chip({ index, onUpdateHandler, size, icon }: Props) {
+  const value = useTopVisualValue();
+  const text = useRef(value.work[index] as string);
+  const inner = useRef<HTMLSpanElement | null>(null);
+  const [isFocus, setIsFocus] = useState<boolean>(false);
 
-  const onSelectHandler = () => {
-    setIsActive(!isActive);
+  const onChangeHandler = (ev: ContentEditableEvent) => {
+    text.current = ev.target.value;
   };
+
+  const onBlurHandler = () => {
+    if (text.current === "") return;
+    const copyData = value;
+    copyData.work[index] = text.current;
+    onUpdateHandler(copyData);
+    setIsFocus(false);
+  };
+
+  const onClickHandler = () => {
+    inner.current?.focus();
+    inner.current?.setAttribute("spellcheck", "false");
+    setIsFocus(true);
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(inner.current!);
+    range.collapse(false);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+  };
+
+  useEffect(() => {
+    if (text.current === "") inner.current?.focus();
+    if (document.activeElement === inner.current) setIsFocus(true);
+  }, []);
 
   return (
     <Container
+      isFocus={isFocus}
       size={size}
-      active={isActive}
       paddingLeft={!icon}
-      onClick={onSelectHandler}
+      onClick={onClickHandler}
     >
-      <TextWrapper>{text}</TextWrapper>
+      <ContentEditable
+        html={text.current}
+        innerRef={inner}
+        disabled={false}
+        onChange={onChangeHandler}
+        onBlur={onBlurHandler}
+        tagName="span"
+      />
     </Container>
   );
 }
@@ -41,13 +80,8 @@ export default Chip;
 
 Chip.defaultProps = {
   icon: undefined,
-  text: "Text",
   size: "SMALL",
 };
-
-const TextWrapper = styled.span`
-  /* color: ${ColorSystem.Neutral[900]}; */
-`;
 
 const Container = styled.div<StyledProps>`
   position: relative;
@@ -56,28 +90,23 @@ const Container = styled.div<StyledProps>`
   align-items: center;
   gap: 8px;
   width: fit-content;
+  min-width: 50px;
   padding: ${(props) => (props.paddingLeft ? "8px 20px 8px 16px" : "8px 20px")};
   box-sizing: border-box;
   transition: 200ms ease-in-out;
   transition-property: background, color;
   cursor: pointer;
   user-select: none;
-  ${(props) =>
-    props.active
-      ? css`
-          color: ${ColorSystem.Neutral[0]};
-          background: ${ColorSystem.Primary[600]};
-          &:hover {
-            background: ${ColorSystem.Primary[700]};
-          }
-        `
-      : css`
-          color: ${ColorSystem.Neutral[900]};
-          background: ${ColorSystem.Neutral[200]};
-          &:hover {
-            background: ${ColorSystem.Neutral[300]};
-          }
-        `}
+  color: ${ColorSystem.Neutral[900]};
+  background: ${ColorSystem.Neutral[200]};
+
+  & span {
+    outline: initial;
+  }
+
+  &:hover {
+    background: ${ColorSystem.Neutral[250]};
+  }
 
   ${(props) => {
     switch (props.size) {
@@ -85,22 +114,33 @@ const Container = styled.div<StyledProps>`
         return css`
           height: 36px;
           border-radius: 18px;
-          ${TextWrapper} {
-            font-size: 14px;
-            font-weight: 400;
-          }
+          font-size: 14px;
+          font-weight: 400;
         `;
       case "MEDIUM":
         return css`
           height: 40px;
           border-radius: 20px;
-          ${TextWrapper} {
-            font-size: 16px;
-            font-weight: 400;
-          }
+          font-size: 16px;
+          font-weight: 400;
         `;
       default:
         return css``;
     }
   }}
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+    outline: 2px solid ${ColorSystem.Primary[600]};
+    border-radius: 24px;
+    opacity: ${(props) => (props.isFocus ? 1 : 0)};
+    transition: 200ms ease-in-out;
+    transition-property: opacity;
+  }
 `;

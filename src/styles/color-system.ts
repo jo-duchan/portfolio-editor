@@ -3,6 +3,7 @@ const ColorSystem = {
     0: "#FFFFFF",
     100: "#F1F4F9",
     200: "#E2E8F0",
+    250: "#DAE0E7",
     300: "#CBD5E0",
     400: "#A9B9CC",
     500: "#8496AE",

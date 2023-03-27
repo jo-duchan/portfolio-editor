@@ -26,7 +26,7 @@ function TopVisualProvider({ children }: Props) {
   const [value, setValue] = useState<TopVisual>({
     title: "",
     description: "",
-    work: "",
+    work: [] as string[],
     assets: {
       clientLogo: {
         label: "Client Logo",

@@ -28,9 +28,9 @@ function TopVisual() {
         <Title>{value.title}</Title>
         <Description>{value.description}</Description>
         <Work>
-          모션,
-          <br /> 개발,
-          <br /> 디자인
+          {value.work.map((item) => (
+            <span key={item}>{item}</span>
+          ))}
         </Work>
       </Content>
       <Background src={value.assets.visualPC?.preview} alt="이미지" />
@@ -94,8 +94,12 @@ const Description = styled.div`
   white-space: break-spaces;
 `;
 const Work = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   margin-top: 200px;
-  ${TextSizePC("M")}
   margin-bottom: auto;
-  white-space: break-spaces;
+  & span {
+    ${TextSizePC("M")}
+  }
 `;
