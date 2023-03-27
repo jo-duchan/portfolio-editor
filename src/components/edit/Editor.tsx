@@ -3,6 +3,7 @@ import styled from "styled-components";
 import useContentValue from "context/useContentValue";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
+import useTopVisualValue from "context/useTopVisualValue";
 
 // Style
 import ColorSystem from "styles/color-system";
@@ -24,6 +25,7 @@ import {
 } from "type/contentList";
 
 function Editor() {
+  const topVisualData = useTopVisualValue();
   const data = useContentValue();
   const action = useContentAction();
   const [currentItem, setCurrentItem] = useCurrentItem();
@@ -84,7 +86,7 @@ function Editor() {
     const portfolioItem = {
       // 나중에 UUID로 수정
       id: Math.random().toString(),
-      topVisual: undefined,
+      topVisual: topVisualData,
       contentList: data,
     };
 
