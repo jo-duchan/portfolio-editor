@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import useTopVisualValue from "context/useTopVisualValue";
 
+// Components
+import IconSet from "components/ui/IconSet";
+
 // Style
 import ColorSystem from "styles/color-system";
 import { TitleSizePC, TextSizePC } from "styles/typography";
@@ -14,12 +17,23 @@ function TopVisual() {
   return (
     <Container>
       <Content>
-        <LogoSection></LogoSection>
+        <LogoSection>
+          <img
+            className="client"
+            src={value.assets.clientLogo?.preview}
+            alt="client"
+          />
+          <IconSet type="WACKY" />
+        </LogoSection>
         <Title>{value.title}</Title>
         <Description>{value.description}</Description>
-        <Work>{value.work}</Work>
+        <Work>
+          모션,
+          <br /> 개발,
+          <br /> 디자인
+        </Work>
       </Content>
-      <Background src={value.backgroundPC?.preview} alt="이미지" />
+      <Background src={value.assets.visualPC?.preview} alt="이미지" />
     </Container>
   );
 }
@@ -30,16 +44,15 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   height: fit-content;
-  max-width: 1920px;
   max-height: 1080px;
   background: ${ColorSystem.Neutral[100]};
+  overflow: hidden;
 `;
 
 const Content = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   text-align: center;
@@ -47,19 +60,29 @@ const Content = styled.div`
 `;
 
 const Background = styled.img`
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
+  display: block;
   width: 100%;
   object-fit: contain;
   z-index: 0;
 `;
 
 const LogoSection = styled.div`
+  display: flex;
+  justify-content: space-between;
   width: 100%;
   height: 30px;
-  background: ${ColorSystem.Secondary[200]};
   margin-top: 150px;
+  padding-inline: 292px;
+  box-sizing: border-box;
+
+  & :is(img, svg) {
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+  }
 `;
 const Title = styled.div`
   margin-top: 150px;
@@ -73,6 +96,6 @@ const Description = styled.div`
 const Work = styled.div`
   margin-top: 200px;
   ${TextSizePC("M")}
-  margin-bottom: 266px;
+  margin-bottom: auto;
   white-space: break-spaces;
 `;

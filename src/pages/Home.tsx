@@ -8,10 +8,12 @@ import useTopVisualAction from "context/useTopVisualAction";
 import ColorSystem from "styles/color-system";
 import { TitleSizePC } from "styles/typography";
 
-// UI Components
+// Components
 import Input from "components/ui/Input";
 import Textarea from "components/ui/Textarea";
 import Button from "components/ui/Button";
+import ImageInput from "components/home/ImageInput";
+import WorkChips from "components/home/WorkChips";
 
 // Type
 import { Image } from "type/topVisual";
@@ -42,29 +44,23 @@ function Home() {
       // }
     }
   };
-  const onCreateImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const getFile = e.target.files;
-    if (!getFile) return;
-    const url = URL.createObjectURL(getFile[0]);
-    const typeLength = getFile[0].type.length;
-    const newImage = {
-      file: getFile[0],
-      preview: url,
-      type: getFile[0].type.slice(6, typeLength),
-    } as Image;
-    action((prev) => {
-      return { ...prev, backgroundPC: newImage };
-    });
-  };
 
   const onCancelHandler = () => {
     action({
       title: "",
       description: "",
       work: "",
-      clientLogo: undefined,
-      backgroundPC: undefined,
-      backgroundMO: undefined,
+      assets: {
+        clientLogo: {
+          label: "Client Logo",
+        } as Image,
+        visualPC: {
+          label: "Visual PC",
+        } as Image,
+        visualMO: {
+          label: "Visual MO",
+        } as Image,
+      },
     });
   };
 
@@ -88,15 +84,8 @@ function Home() {
           value={value.description}
           onChange={onChangeHandler}
         />
-        {/* <input
-          type="file"
-          accept="image/jpg, image/jpeg, image/png, image/webp"
-          onChange={onCreateImage}
-        /> */}
-        <ImageInput>
-          <Label>Upload</Label>
-          <ContentWrapper></ContentWrapper>
-        </ImageInput>
+        <WorkChips />
+        <ImageInput />
         <div className="button-wrapper">
           <Button
             label="Cancel"
@@ -142,21 +131,6 @@ const Title = styled.h3`
   ${TitleSizePC("S")}
 `;
 
-const ImageInput = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-`;
-
-const Label = styled.span``;
-
-const ContentWrapper = styled.div`
-  width: 100%;
-  height: 100px;
-  background: gray;
-  border-radius: 12px;
-`;
-
 const FrontEditor = styled.div`
   position: relative;
   top: 50%;
@@ -167,7 +141,7 @@ const FrontEditor = styled.div`
   border-radius: 6px;
   padding: 30px 20px;
   box-sizing: border-box;
-  background: #fff;
+  background: ${ColorSystem.Neutral[0]};
   z-index: 100;
   display: flex;
   flex-direction: column;

@@ -2,13 +2,17 @@ export type Image = {
   file: File;
   preview: string;
   type: string;
+  label: string;
 };
 
 export type TopVisual = {
   title: string;
   description: string;
   work: string;
-  clientLogo: Image | undefined;
-  backgroundPC: Image | undefined;
-  backgroundMO: Image | undefined;
+  assets: {
+    [key: string]: Image;
+    clientLogo: Image;
+    visualPC: Image;
+    visualMO: Image;
+  };
 };

@@ -7,7 +7,7 @@ import {
 } from "react";
 
 // Type
-import { TopVisual } from "type/topVisual";
+import { TopVisual, Image } from "type/topVisual";
 
 interface Props {
   children: ReactNode;
@@ -24,13 +24,20 @@ export const TopVisualActionContext = createContext<
 
 function TopVisualProvider({ children }: Props) {
   const [value, setValue] = useState<TopVisual>({
-    title: "Project Title",
-    description:
-      "Lorem ipsum dolor sit amet, cont. \nUt enim ad quis nostrud exercitation ullamco laboris",
-    work: "UX Design \nDevelopment \n3D Motion",
-    clientLogo: undefined,
-    backgroundPC: undefined,
-    backgroundMO: undefined,
+    title: "",
+    description: "",
+    work: "",
+    assets: {
+      clientLogo: {
+        label: "Client Logo",
+      } as Image,
+      visualPC: {
+        label: "Visual PC",
+      } as Image,
+      visualMO: {
+        label: "Visual MO",
+      } as Image,
+    },
   });
   return (
     <TopVisualActionContext.Provider value={setValue}>
