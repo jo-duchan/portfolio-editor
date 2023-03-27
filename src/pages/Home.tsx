@@ -6,6 +6,12 @@ import useTopVisualAction from "context/useTopVisualAction";
 
 // Style
 import ColorSystem from "styles/color-system";
+import { TitleSizePC } from "styles/typography";
+
+// UI Components
+import Input from "components/ui/Input";
+import Textarea from "components/ui/Textarea";
+import Button from "components/ui/Button";
 
 // Type
 import { Image } from "type/topVisual";
@@ -14,28 +20,26 @@ function Home() {
   const navigate = useNavigate();
   const value = useTopVisualValue();
   const action = useTopVisualAction();
-  const onChangeHandler = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    switch (e.target.name) {
-      case "title": {
+  const onChangeHandler = (value: string, label: string) => {
+    switch (label) {
+      case "Title": {
         action((prev) => {
-          return { ...prev, title: e.target.value };
+          return { ...prev, title: value };
         });
         break;
       }
-      case "description": {
+      case "Description": {
         action((prev) => {
-          return { ...prev, description: e.target.value };
+          return { ...prev, description: value };
         });
         break;
       }
-      case "work": {
-        action((prev) => {
-          return { ...prev, work: e.target.value };
-        });
-        break;
-      }
+      // case "work": {
+      //   action((prev) => {
+      //     return { ...prev, work: e.target.value };
+      //   });
+      //   break;
+      // }
     }
   };
   const onCreateImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,29 +75,45 @@ function Home() {
   return (
     <Container>
       <FrontEditor>
-        <input
-          type="text"
-          name="title"
+        <Title>포트폴리오 생성</Title>
+        <Input
+          label="Title"
+          placeholder="제목을 입력하세요."
           value={value.title}
           onChange={onChangeHandler}
         />
-        <textarea
+        <Textarea
+          label="Description"
+          placeholder="내용을 입력하세요."
           value={value.description}
-          name="description"
           onChange={onChangeHandler}
         />
-        <textarea value={value.work} name="work" onChange={onChangeHandler} />
-        <input
+        {/* <input
           type="file"
           accept="image/jpg, image/jpeg, image/png, image/webp"
           onChange={onCreateImage}
-        />
-        <button type="button" onClick={onCancelHandler}>
-          Cancel
-        </button>
-        <button type="button" onClick={onSubmitHandler}>
-          go
-        </button>
+        /> */}
+        <ImageInput>
+          <Label>Upload</Label>
+          <ContentWrapper></ContentWrapper>
+        </ImageInput>
+        <div className="button-wrapper">
+          <Button
+            label="Cancel"
+            btnType="SECONDARY"
+            size="MEDIUM"
+            onClick={onCancelHandler}
+            fixedWidth
+          />
+          <Button
+            label="Next"
+            btnType="PRIMARY"
+            size="MEDIUM"
+            // states={currentItem ? "DEFAULT" : "DISABLED"}
+            onClick={onSubmitHandler}
+            fixedWidth
+          />
+        </div>
       </FrontEditor>
     </Container>
   );
@@ -118,23 +138,43 @@ const Container = styled.div`
   }
 `;
 
+const Title = styled.h3`
+  ${TitleSizePC("S")}
+`;
+
+const ImageInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`;
+
+const Label = styled.span``;
+
+const ContentWrapper = styled.div`
+  width: 100%;
+  height: 100px;
+  background: gray;
+  border-radius: 12px;
+`;
+
 const FrontEditor = styled.div`
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
-  width: 400px;
-  height: 400px;
+  width: 600px;
+  height: fit-content;
+  border-radius: 6px;
+  padding: 30px 20px;
+  box-sizing: border-box;
   background: #fff;
   z-index: 100;
   display: flex;
   flex-direction: column;
   gap: 30px;
 
-  & input,
-  textarea {
-    margin: 0 20px;
-    border: 1px solid #000;
-    white-space: pre;
+  & .button-wrapper {
+    display: flex;
+    gap: 10px;
   }
 `;

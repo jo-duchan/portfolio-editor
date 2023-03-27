@@ -120,14 +120,14 @@ export default Select;
 
 Select.defaultProps = {
   states: "DEFAULT",
-  width: "264px",
+  width: undefined,
   placeholder: undefined,
   helpText: undefined,
 };
 
 const Container = styled.div<StyledProps>`
   position: relative;
-  width: ${(props) => `${props.width}px`};
+  width: ${(props) => (props.width ? `${props.width}px` : "100%")};
   display: flex;
   flex-direction: column;
   gap: 6px;

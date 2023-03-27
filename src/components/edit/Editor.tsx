@@ -146,6 +146,7 @@ function Editor() {
           label="Color"
           width="240"
           placeholder="글자색을 입력하세요."
+          maxLength={6}
           value={currentItem?.option?.color as string}
           onChange={onChangeValue}
         />
@@ -155,6 +156,7 @@ function Editor() {
           label="Fill"
           width="240"
           placeholder="배경색을 입력하세요."
+          maxLength={6}
           value={currentItem?.option?.fill as string}
           onChange={onChangeValue}
         />

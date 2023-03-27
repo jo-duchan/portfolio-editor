@@ -1,98 +1,85 @@
-import React, { useRef, useEffect } from "react";
-import styled from "styled-components";
+import React from "react";
+import styled, { css } from "styled-components";
 
 // Style
 import ColorSystem from "styles/color-system";
 
 // Type
+export type States = "DEFAULT" | "DISABLED";
 
-type States = "DEFAULT" | "FOCUSED" | "DISABLED";
+export type Sizes = "SMALL" | "MEDIUM" | "LARGE";
 
-interface Props {
+export interface Props {
   states?: States;
   width?: string;
+  size?: Sizes;
   label: string;
   placeholder?: string;
-  maxLength?: number;
   value: string;
   onChange: (value: string, label: string) => void;
 }
 
 interface StyledProps {
   width?: string;
+  size?: Sizes;
 }
 
-function Input({
+function Textarea({
   states,
   width,
+  size,
   label,
   placeholder,
-  maxLength,
   value,
   onChange,
 }: Props) {
-  const InputRef = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    if (!InputRef) return;
-
-    if (states === "FOCUSED") {
-      InputRef.current?.focus();
-    }
-  }, [states]);
-
   return (
     <Container width={width}>
       <Label>
         {label}
-        <InputElm
-          type="text"
+        <TextareaElm
+          size={size}
           placeholder={placeholder}
-          value={value || ""}
-          onChange={(e) => onChange(e.target.value, label)}
           disabled={states === "DISABLED"}
           autoComplete="off"
-          maxLength={maxLength && 6}
-          ref={InputRef}
+          value={value || ""}
+          onChange={(e) => onChange(e.target.value, label)}
         />
       </Label>
     </Container>
   );
 }
 
-export default Input;
+export default Textarea;
 
-Input.defaultProps = {
+Textarea.defaultProps = {
   states: "DEFAULT",
   width: undefined,
+  size: "SMALL",
   placeholder: "Placeholder",
-  maxLength: undefined,
-  errorText: "Error text",
 };
 
 const Container = styled.div<StyledProps>`
+  display: flex;
   width: ${(props) => (props.width ? `${props.width}px` : "100%")};
 `;
 
 const Label = styled.label`
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  width: 100%;
+  gap: 4px;
   font-size: 16px;
   font-weight: 600;
   color: ${ColorSystem.Neutral[900]};
-  cursor: pointer;
-  user-select: none;
 `;
 
-const InputElm = styled.input`
-  width: 100%;
-  height: 48px;
-  padding: 12px 16px;
+const TextareaElm = styled.textarea<StyledProps>`
   border-radius: 12px;
   border: 1px solid ${ColorSystem.Neutral[300]};
-  background: ${ColorSystem.Neutral[0]};
+  padding: 12px 16px;
   box-sizing: border-box;
+  resize: none;
   cursor: pointer;
   user-select: none;
   font-size: 16px;
@@ -121,7 +108,29 @@ const InputElm = styled.input`
     border-color: ${ColorSystem.Neutral[200]};
   }
 
-  &:disabled::placeholder {
-    color: ${ColorSystem.Neutral[400]};
-  }
+  ${(props) => {
+    switch (props.size) {
+      case "SMALL": {
+        return css`
+          width: 100%;
+          height: 120px;
+        `;
+      }
+      case "MEDIUM": {
+        return css`
+          width: 100%;
+          height: 160px;
+        `;
+      }
+      case "LARGE": {
+        return css`
+          width: 100%;
+          height: 200px;
+        `;
+      }
+      default: {
+        return css``;
+      }
+    }
+  }}
 `;
