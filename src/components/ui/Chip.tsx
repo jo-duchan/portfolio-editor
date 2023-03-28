@@ -32,6 +32,12 @@ function Chip({ index, onUpdateHandler, size, icon }: Props) {
     text.current = ev.target.value;
   };
 
+  const onPasteHandler = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    text.current = e.clipboardData.getData("text/plain");
+    onBlurHandler();
+  };
+
   const onBlurHandler = () => {
     if (text.current === "") return;
     const copyData = value;
@@ -69,9 +75,11 @@ function Chip({ index, onUpdateHandler, size, icon }: Props) {
         innerRef={inner}
         disabled={false}
         onChange={onChangeHandler}
+        onPaste={onPasteHandler}
         onBlur={onBlurHandler}
         tagName="span"
       />
+      <DeleteButton></DeleteButton>
     </Container>
   );
 }
@@ -143,4 +151,16 @@ const Container = styled.div<StyledProps>`
     transition: 200ms ease-in-out;
     transition-property: opacity;
   }
+`;
+
+const DeleteButton = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate3d(-30%, -30%, 0);
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background: red;
+  z-index: 50;
 `;

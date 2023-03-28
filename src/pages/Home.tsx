@@ -36,12 +36,6 @@ function Home() {
         });
         break;
       }
-      // case "work": {
-      //   action((prev) => {
-      //     return { ...prev, work: e.target.value };
-      //   });
-      //   break;
-      // }
     }
   };
 
@@ -54,11 +48,11 @@ function Home() {
         clientLogo: {
           label: "Client Logo",
         } as Image,
-        visualPC: {
-          label: "Visual PC",
+        CoverPC: {
+          label: "Cover IMG PC",
         } as Image,
-        visualMO: {
-          label: "Visual MO",
+        CoverMO: {
+          label: "Cover IMG MO",
         } as Image,
       },
     });

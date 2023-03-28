@@ -12,7 +12,7 @@ export type TopVisual = {
   assets: {
     [key: string]: Image;
     clientLogo: Image;
-    visualPC: Image;
-    visualMO: Image;
+    CoverPC: Image;
+    CoverMO: Image;
   };
 };

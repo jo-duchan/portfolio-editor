@@ -80,7 +80,9 @@ function ImageInput() {
           {Object.entries(value.assets).map(([key, item]) => (
             <Uploader key={key}>
               {item.preview ? (
-                <img src={item.preview} alt="이미지" />
+                <div className="img-wrapper">
+                  <img src={item.preview} alt="이미지" />
+                </div>
               ) : (
                 <label className="uploader">
                   <IconSet type="ADD_IMG" />
@@ -137,17 +139,22 @@ const Uploader = styled.div`
   gap: 4px;
   width: fit-content;
   height: 100%;
-  overflow: hidden;
 
   & input {
     display: none;
   }
 
-  & img {
-    width: auto;
+  & .img-wrapper {
     height: calc(100% - 16px);
+  }
+
+  & img {
+    display: block;
+    width: auto;
+    height: 100%;
     object-fit: contain;
     border-radius: 4px;
+    margin: 0 auto;
   }
 
   & .uploader {
@@ -177,6 +184,7 @@ const Uploader = styled.div`
 
   & .uploader-label {
     text-align: center;
+    margin: 0 auto;
     font-size: 12px;
     height: 12px;
     line-height: 12px;

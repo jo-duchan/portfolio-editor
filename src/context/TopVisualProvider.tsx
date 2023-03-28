@@ -31,11 +31,11 @@ function TopVisualProvider({ children }: Props) {
       clientLogo: {
         label: "Client Logo",
       } as Image,
-      visualPC: {
-        label: "Visual PC",
+      CoverPC: {
+        label: "Cover IMG PC",
       } as Image,
-      visualMO: {
-        label: "Visual MO",
+      CoverMO: {
+        label: "Cover IMG MO",
       } as Image,
     },
   });

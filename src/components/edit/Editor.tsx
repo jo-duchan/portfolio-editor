@@ -147,7 +147,7 @@ function Editor() {
         <Input
           label="Color"
           width="240"
-          placeholder="글자색을 입력하세요."
+          placeholder="000000"
           maxLength={6}
           value={currentItem?.option?.color as string}
           onChange={onChangeValue}
@@ -157,7 +157,7 @@ function Editor() {
         <Input
           label="Fill"
           width="240"
-          placeholder="배경색을 입력하세요."
+          placeholder="FFFFFF"
           maxLength={6}
           value={currentItem?.option?.fill as string}
           onChange={onChangeValue}

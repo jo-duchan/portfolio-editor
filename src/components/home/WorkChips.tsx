@@ -31,15 +31,17 @@ function WorkChips() {
     <Container>
       <Label>Topic</Label>
       <Chips>
-        {value.work.map((item, index) => (
-          <Chip
-            key={Math.random() * index}
-            index={index}
-            onUpdateHandler={onUpdateHandler}
-          />
-        ))}
-        <div className="add" onClick={onAddHandler}>
-          +
+        <div className="chips-inner">
+          {value.work.map((item, index) => (
+            <Chip
+              key={Math.random() * index}
+              index={index}
+              onUpdateHandler={onUpdateHandler}
+            />
+          ))}
+          <div className="add" onClick={onAddHandler}>
+            +
+          </div>
         </div>
       </Chips>
     </Container>
@@ -55,9 +57,17 @@ const Container = styled.div`
 `;
 
 const Chips = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  width: 100%;
+  height: fit-content;
+  /* overflow: auto hidden; */
+  overflow-x: auto;
+  & .chips-inner {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+  }
 
   & .add {
     width: 50px;
