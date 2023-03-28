@@ -1,15 +1,23 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import styled from "styled-components";
 
 // Components
 import Creator from "components/edit/Creator";
 import Editor from "components/edit/Editor";
 
-function ToolsPanel() {
+// Type
+import { RootOption } from "type/rootOption";
+
+interface Props {
+  rootOption: RootOption;
+  setRootOption: Dispatch<React.SetStateAction<RootOption>>;
+}
+
+function ToolsPanel({ rootOption, setRootOption }: Props) {
   return (
     <Container>
       <Creator />
-      <Editor />
+      <Editor rootOption={rootOption} setRootOption={setRootOption} />
     </Container>
   );
 }

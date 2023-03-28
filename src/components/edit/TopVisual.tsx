@@ -33,7 +33,7 @@ function TopVisual() {
           ))}
         </Work>
       </Content>
-      <Background src={value.assets.visualPC?.preview} alt="이미지" />
+      <Background src={value.assets.CoverPC.preview} alt="이미지" />
     </Container>
   );
 }

@@ -30,7 +30,21 @@ function ImageInput() {
       preview: url,
       type: getFile[0].type.slice(6, typeLength),
     } as Image;
+    onUpdateHandler(newImage, key);
+  };
 
+  const onDeleteHandler = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    key: string
+  ) => {
+    e.stopPropagation();
+    const newImage = {
+      label: value.assets[key].label,
+    } as Image;
+    onUpdateHandler(newImage, key);
+  };
+
+  const onUpdateHandler = (newData: Image, key: string) => {
     switch (key) {
       case "clientLogo": {
         action((prev) => {
@@ -38,38 +52,37 @@ function ImageInput() {
             ...prev,
             assets: {
               ...prev.assets,
-              clientLogo: newImage,
+              clientLogo: newData,
             },
           };
         });
         break;
       }
-      case "visualPC": {
+      case "CoverPC": {
         action((prev) => {
           return {
             ...prev,
             assets: {
               ...prev.assets,
-              visualPC: newImage,
+              CoverPC: newData,
             },
           };
         });
         break;
       }
-      case "visualMO": {
+      case "CoverMO": {
         action((prev) => {
           return {
             ...prev,
             assets: {
               ...prev.assets,
-              visualMO: newImage,
+              CoverMO: newData,
             },
           };
         });
         break;
       }
     }
-    console.log(value.assets);
   };
 
   return (
@@ -81,6 +94,9 @@ function ImageInput() {
             <Uploader key={key}>
               {item.preview ? (
                 <div className="img-wrapper">
+                  <DeleteButton onClick={(e) => onDeleteHandler(e, key)}>
+                    <IconSet type="CLOSE" />
+                  </DeleteButton>
                   <img src={item.preview} alt="이미지" />
                 </div>
               ) : (
@@ -145,12 +161,14 @@ const Uploader = styled.div`
   }
 
   & .img-wrapper {
+    position: relative;
     height: calc(100% - 16px);
   }
 
   & img {
     display: block;
     width: auto;
+    max-width: 150px;
     height: 100%;
     object-fit: contain;
     border-radius: 4px;
@@ -188,5 +206,42 @@ const Uploader = styled.div`
     font-size: 12px;
     height: 12px;
     line-height: 12px;
+  }
+`;
+
+const DeleteButton = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate3d(-30%, -30%, 0);
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: ${ColorSystem.Secondary[400]};
+  opacity: 0;
+  z-index: 50;
+  pointer-events: none;
+  transition: 200ms ease-in-out;
+  transition-property: opacity;
+  cursor: pointer;
+
+  & svg {
+    width: 10px;
+  }
+
+  & svg path {
+    fill: ${ColorSystem.Neutral[0]};
+  }
+
+  ${Uploader}:hover & {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  &:active {
+    background: ${ColorSystem.Secondary[600]};
   }
 `;

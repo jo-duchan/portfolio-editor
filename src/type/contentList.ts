@@ -30,8 +30,12 @@ export interface ContentItem {
 
 export type ContentList = ContentItem[];
 
-// export interface PortfolioItem {
-//   id: string;
-//   topVisual: TopVisual;
-//   contentList: ContentList;
-// }
+export interface PortfolioItem {
+  id: string;
+  // option: {
+  //   color: string;
+  //   fill: string;
+  // }
+  // topVisual: TopVisual;
+  contentList: ContentList;
+}

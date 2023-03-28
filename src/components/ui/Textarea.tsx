@@ -42,6 +42,7 @@ function Textarea({
           placeholder={placeholder}
           disabled={states === "DISABLED"}
           autoComplete="off"
+          spellCheck={false}
           value={value || ""}
           onChange={(e) => onChange(e.target.value, label)}
         />

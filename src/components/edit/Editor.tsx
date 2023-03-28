@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import styled from "styled-components";
 import useContentValue from "context/useContentValue";
 import useContentAction from "context/useContentAction";
@@ -23,8 +23,14 @@ import {
   Gap,
   Colume,
 } from "type/contentList";
+import { RootOption } from "type/rootOption";
 
-function Editor() {
+interface Props {
+  rootOption: RootOption;
+  setRootOption: Dispatch<React.SetStateAction<RootOption>>;
+}
+
+function Editor({ rootOption, setRootOption }: Props) {
   const topVisualData = useTopVisualValue();
   const data = useContentValue();
   const action = useContentAction();
@@ -71,6 +77,19 @@ function Editor() {
     action.update(updateItme, id);
   };
 
+  const onChangeRoot = (value: string, sort: string) => {
+    if (sort === "All Color") {
+      setRootOption((prev) => {
+        return { ...prev, color: value };
+      });
+    }
+    if (sort === "All Fill") {
+      setRootOption((prev) => {
+        return { ...prev, fill: value };
+      });
+    }
+  };
+
   const onDeletHandler = () => {
     if (!currentItem) return console.log("대상없음");
     data.forEach((item, idx) => {
@@ -86,6 +105,7 @@ function Editor() {
     const portfolioItem = {
       // 나중에 UUID로 수정
       id: Math.random().toString(),
+      option: rootOption,
       topVisual: topVisualData,
       contentList: data,
     };
@@ -96,6 +116,26 @@ function Editor() {
   return (
     <Container>
       {/* 전체 color, bg-color 수정 input */}
+      {currentItem === null && (
+        <Input
+          label="All Color"
+          width="240"
+          placeholder="000000"
+          maxLength={6}
+          value={rootOption.color as string}
+          onChange={onChangeRoot}
+        />
+      )}
+      {currentItem === null && (
+        <Input
+          label="All Fill"
+          width="240"
+          placeholder="FFFFFF"
+          maxLength={6}
+          value={rootOption.fill as string}
+          onChange={onChangeRoot}
+        />
+      )}
       {currentItem?.option?.aline && (
         <PillTab
           label="Aline"

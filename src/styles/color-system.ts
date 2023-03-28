@@ -21,6 +21,7 @@ const ColorSystem = {
   Secondary: {
     100: "#FFF0F1",
     200: "#FFDBDF",
+    400: "#FF5366",
     600: "#FF0420",
     700: "#EB001A",
   },

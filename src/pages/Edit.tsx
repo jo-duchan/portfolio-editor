@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import useContentValue from "context/useContentValue";
 import useCurrentItem from "context/useCurrentItem";
@@ -11,16 +11,24 @@ import TopVisual from "components/edit/TopVisual";
 import ToolsPanel from "components/edit/ToolsPanel";
 import Viewer from "components/edit/Viewer";
 
+// Type
+import { RootOption } from "type/rootOption";
+
+interface StyledProps {
+  fill: string;
+  color: string;
+}
+
 function Edit() {
   const data = useContentValue();
   const [, setCurrentItem] = useCurrentItem();
+  const [rootOption, setRootOption] = useState({} as RootOption);
   const viewRef = useRef<HTMLDivElement | null>(null);
   const clearIdHandler = () => setCurrentItem(null);
 
   useEffect(() => {
     viewRef.current?.addEventListener("click", clearIdHandler);
     document.body.style.background = ColorSystem.Neutral[800];
-
     return () => {
       document.body.style.background = "";
     };
@@ -28,13 +36,17 @@ function Edit() {
 
   return (
     <Container>
-      <CanvasPanel ref={viewRef}>
+      <CanvasPanel
+        ref={viewRef}
+        fill={rootOption.fill!}
+        color={rootOption.color!}
+      >
         <TopVisual />
         {data.map((item) => (
           <Viewer key={item.id} data={item} />
         ))}
       </CanvasPanel>
-      <ToolsPanel />
+      <ToolsPanel rootOption={rootOption} setRootOption={setRootOption} />
       <Background onClick={clearIdHandler} />
     </Container>
   );
@@ -49,13 +61,16 @@ const Container = styled.div`
   box-sizing: border-box;
 `;
 
-const CanvasPanel = styled.div`
+const CanvasPanel = styled.div<StyledProps>`
   display: flex;
   flex-direction: column;
   width: calc(100% - 330px);
   height: fit-content;
   min-height: calc(100vh - 60px);
-  background: ${ColorSystem.Neutral[0]};
+  background: ${(props) =>
+    props.fill ? `#${props.fill}` : `${ColorSystem.Neutral[0]}`};
+  color: ${(props) =>
+    props.color ? `#${props.color}` : `${ColorSystem.Neutral[900]}`};
   border-radius: 6px;
   overflow: hidden;
   z-index: 100;

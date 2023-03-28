@@ -1,18 +1,20 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
-import useTopVisualValue from "context/useTopVisualValue";
+import useTopVisualAction from "context/useTopVisualAction";
+
+// Components
+import IconSet from "components/ui/IconSet";
 
 // Style
 import ColorSystem from "styles/color-system";
 
 //Type
-import { TopVisual } from "type/topVisual";
 export type ChipSize = "SMALL" | "MEDIUM";
 
 interface Props {
+  value: string;
   index: number;
-  onUpdateHandler: (update: TopVisual) => void;
   icon?: string | undefined;
   size?: ChipSize;
 }
@@ -22,9 +24,9 @@ interface StyledProps {
   size: ChipSize | undefined;
 }
 
-function Chip({ index, onUpdateHandler, size, icon }: Props) {
-  const value = useTopVisualValue();
-  const text = useRef(value.work[index] as string);
+function Chip({ value, index, size, icon }: Props) {
+  const action = useTopVisualAction();
+  const text = useRef(value as string);
   const inner = useRef<HTMLSpanElement | null>(null);
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
@@ -39,11 +41,13 @@ function Chip({ index, onUpdateHandler, size, icon }: Props) {
   };
 
   const onBlurHandler = () => {
-    if (text.current === "") return;
-    const copyData = value;
-    copyData.work[index] = text.current;
-    onUpdateHandler(copyData);
     setIsFocus(false);
+    if (text.current === "") return;
+    action((prev) => {
+      const newData = { ...prev };
+      newData.work[index] = text.current;
+      return newData;
+    });
   };
 
   const onClickHandler = () => {
@@ -58,9 +62,20 @@ function Chip({ index, onUpdateHandler, size, icon }: Props) {
     selection?.addRange(range);
   };
 
+  const onDeleteHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+    action((prev) => {
+      const newData = { ...prev };
+      newData.work.splice(index, 1);
+      return newData;
+    });
+  };
+
   useEffect(() => {
     if (text.current === "") inner.current?.focus();
-    if (document.activeElement === inner.current) setIsFocus(true);
+    if (document.activeElement === inner.current) {
+      setIsFocus(true);
+    }
   }, []);
 
   return (
@@ -79,7 +94,9 @@ function Chip({ index, onUpdateHandler, size, icon }: Props) {
         onBlur={onBlurHandler}
         tagName="span"
       />
-      <DeleteButton></DeleteButton>
+      <DeleteButton onClick={onDeleteHandler}>
+        <IconSet type="CLOSE" />
+      </DeleteButton>
     </Container>
   );
 }
@@ -106,14 +123,14 @@ const Container = styled.div<StyledProps>`
   cursor: pointer;
   user-select: none;
   color: ${ColorSystem.Neutral[900]};
-  background: ${ColorSystem.Neutral[200]};
+  background: ${ColorSystem.Neutral[250]};
 
   & span {
     outline: initial;
   }
 
   &:hover {
-    background: ${ColorSystem.Neutral[250]};
+    background: ${ColorSystem.Neutral[300]};
   }
 
   ${(props) => {
@@ -160,7 +177,32 @@ const DeleteButton = styled.div`
   transform: translate3d(-30%, -30%, 0);
   width: 20px;
   height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 10px;
-  background: red;
+  background: ${ColorSystem.Secondary[400]};
+  opacity: 0;
   z-index: 50;
+  pointer-events: none;
+  transition: 200ms ease-in-out;
+  transition-property: opacity;
+  cursor: pointer;
+
+  & svg {
+    width: 10px;
+  }
+
+  & svg path {
+    fill: ${ColorSystem.Neutral[0]};
+  }
+
+  ${Container}:hover & {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  &:active {
+    background: ${ColorSystem.Secondary[600]};
+  }
 `;

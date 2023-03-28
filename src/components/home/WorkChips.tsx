@@ -9,35 +9,25 @@ import ColorSystem from "styles/color-system";
 // Components
 import Chip from "components/ui/Chip";
 
-// Type
-import { TopVisual } from "type/topVisual";
-
 function WorkChips() {
   const value = useTopVisualValue();
   const action = useTopVisualAction();
 
-  const onUpdateHandler = (update: TopVisual) => {
-    action(update);
-  };
-
   const onAddHandler = () => {
     action((prev) => {
-      const copydata = { ...prev };
-      copydata.work = [...copydata.work, ""];
-      return copydata;
+      const newdata = { ...prev };
+      newdata.work.push("");
+      return newdata;
     });
   };
+
   return (
     <Container>
       <Label>Topic</Label>
       <Chips>
         <div className="chips-inner">
           {value.work.map((item, index) => (
-            <Chip
-              key={Math.random() * index}
-              index={index}
-              onUpdateHandler={onUpdateHandler}
-            />
+            <Chip key={Math.random() * index} value={item} index={index} />
           ))}
           <div className="add" onClick={onAddHandler}>
             +
@@ -59,10 +49,12 @@ const Container = styled.div`
 const Chips = styled.div`
   width: 100%;
   height: fit-content;
-  /* overflow: auto hidden; */
   overflow-x: auto;
+  background: ${ColorSystem.Neutral[100]};
+  border-radius: 12px;
   & .chips-inner {
     width: fit-content;
+    min-width: fit-content;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -71,23 +63,24 @@ const Chips = styled.div`
 
   & .add {
     width: 50px;
+    min-width: 50px;
     height: 40px;
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: ${ColorSystem.Neutral[200]};
+    background: ${ColorSystem.Neutral[250]};
     cursor: pointer;
     transition: 200ms ease-in-out;
     transition-property: background;
   }
 
   & .add:hover {
-    background: ${ColorSystem.Neutral[250]};
+    background: ${ColorSystem.Neutral[300]};
   }
 
   & .add:active {
-    background: ${ColorSystem.Neutral[300]};
+    background: ${ColorSystem.Neutral[400]};
   }
 `;
 

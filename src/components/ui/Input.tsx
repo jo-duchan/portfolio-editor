@@ -52,6 +52,7 @@ function Input({
           onChange={(e) => onChange(e.target.value, label)}
           disabled={states === "DISABLED"}
           autoComplete="off"
+          spellCheck={false}
           maxLength={maxLength && 6}
           ref={InputRef}
         />

@@ -23,7 +23,7 @@ export const CurrentItemContext = createContext<
 >(undefined);
 
 function CurrentItemProvider({ children }: Props) {
-  const currentItem = useState<ContentItem | null>({} as ContentItem);
+  const currentItem = useState<ContentItem | null>(null);
   return (
     <CurrentItemContext.Provider value={currentItem}>
       {children}
