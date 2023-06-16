@@ -68,20 +68,13 @@ function Select({
     setSelectValue(value);
   }, [value]);
 
-  //Outer Click Hide Option
-  useEffect(() => {
-    const onClearHandler = () => {
-      setIsClick(!isClick);
-      window.removeEventListener("click", onClearHandler);
-    };
-
-    if (isClick) {
-      window.addEventListener("click", onClearHandler);
-    }
-  }, [isClick]);
+  //Mouse Leave Hide Option
+  const onClearHandler = () => {
+    setIsClick(false);
+  };
 
   return (
-    <Container width={width}>
+    <Container width={width} onMouseLeave={onClearHandler}>
       <Label onClick={handleClick}>{label}</Label>
       <InputWrapper>
         <InputOuter
@@ -98,16 +91,18 @@ function Select({
         </InputOuter>
         {isClick && (
           <OptionWrapper>
-            {option.map((optionValue, index) => (
-              <Option
-                key={index}
-                onClickCapture={(
-                  e: React.MouseEvent<HTMLDivElement, MouseEvent>
-                ) => handleOption(e, optionValue)}
-              >
-                {optionValue}
-              </Option>
-            ))}
+            <OptionInner>
+              {option.map((optionValue, index) => (
+                <Option
+                  key={index}
+                  onClickCapture={(
+                    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+                  ) => handleOption(e, optionValue)}
+                >
+                  {optionValue}
+                </Option>
+              ))}
+            </OptionInner>
           </OptionWrapper>
         )}
       </InputWrapper>
@@ -225,7 +220,11 @@ const InputElement = styled.input`
 
 const OptionWrapper = styled.div`
   position: absolute;
-  margin-top: 10px;
+  width: 100%;
+  height: fit-content;
+  padding-top: 10px;
+  z-index: 400;
+  /* margin-top: 10px;
   width: 100%;
   height: auto;
   padding: 12px 0;
@@ -233,7 +232,17 @@ const OptionWrapper = styled.div`
   box-sizing: border-box;
   background: ${ColorSystem.Neutral[0]};
   border: 1px solid ${ColorSystem.Neutral[300]};
-  z-index: 400;
+  z-index: 400; */
+`;
+
+const OptionInner = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 12px 0;
+  border-radius: 12px;
+  box-sizing: border-box;
+  background: ${ColorSystem.Neutral[0]};
+  border: 1px solid ${ColorSystem.Neutral[300]};
 `;
 
 const Option = styled.div`
