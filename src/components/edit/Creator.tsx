@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
+import { nanoid } from "nanoid";
 
 // Style
 import ColorSystem from "styles/color-system";
@@ -24,7 +25,7 @@ function Creator() {
 
   const onCreateText = (sort: ContentSort) => {
     const CreateData: ContentItem = {
-      id: Math.random().toString(),
+      id: nanoid(),
       sort: sort,
       content: {
         text: "",
@@ -45,7 +46,7 @@ function Creator() {
 
   const onCreateGap = () => {
     const CreateData: ContentItem = {
-      id: Math.random().toString(),
+      id: nanoid(),
       sort: "GAP",
       content: {
         text: undefined,
@@ -66,7 +67,7 @@ function Creator() {
 
   const onCreateImage = () => {
     const CreateData: ContentItem = {
-      id: Math.random().toString(),
+      id: nanoid(),
       sort: "IMG",
       content: {
         text: undefined,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
@@ -22,6 +22,7 @@ interface StyledProps {
 function Viewer({ data }: Props) {
   const action = useContentAction();
   const [currentItem, setCurrentItem] = useCurrentItem();
+  const [isFocus, setIsFocus] = useState(false);
 
   const onRanderElement = () => {
     switch (data.sort) {
@@ -47,14 +48,17 @@ function Viewer({ data }: Props) {
   };
 
   const setSelectItemHandler = () => {
+    if (isFocus) return;
+
     setCurrentItem(data);
   };
 
+  useEffect(() => {
+    setIsFocus(data.id === currentItem?.id);
+  }, [currentItem?.id]);
+
   return (
-    <Container
-      onClick={setSelectItemHandler}
-      focus={data.id === currentItem?.id}
-    >
+    <Container onClick={setSelectItemHandler} focus={isFocus}>
       {onRanderElement()}
     </Container>
   );

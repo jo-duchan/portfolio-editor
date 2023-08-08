@@ -155,7 +155,7 @@ const InputOuter = styled.div<StyledProps>`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: auto;
+  height: 48px;
   padding: 12px 14px 12px 16px;
   border-radius: 12px;
   box-sizing: border-box;
@@ -224,15 +224,6 @@ const OptionWrapper = styled.div`
   height: fit-content;
   padding-top: 10px;
   z-index: 400;
-  /* margin-top: 10px;
-  width: 100%;
-  height: auto;
-  padding: 12px 0;
-  border-radius: 12px;
-  box-sizing: border-box;
-  background: ${ColorSystem.Neutral[0]};
-  border: 1px solid ${ColorSystem.Neutral[300]};
-  z-index: 400; */
 `;
 
 const OptionInner = styled.div`

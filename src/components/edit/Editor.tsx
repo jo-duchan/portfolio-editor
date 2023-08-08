@@ -4,6 +4,7 @@ import useContentValue from "context/useContentValue";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 import useTopVisualValue from "context/useTopVisualValue";
+import { nanoid } from "nanoid";
 
 // Style
 import ColorSystem from "styles/color-system";
@@ -104,7 +105,7 @@ function Editor({ rootOption, setRootOption }: Props) {
   const onSaveHandler = () => {
     const portfolioItem = {
       // 나중에 UUID로 수정
-      id: Math.random().toString(),
+      id: nanoid(),
       option: rootOption,
       topVisual: topVisualData,
       contentList: data,

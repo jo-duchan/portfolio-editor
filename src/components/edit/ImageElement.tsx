@@ -58,7 +58,7 @@ function ImageElement({ data, onUpdateHandler }: Props) {
       onClickCapture={(e) => e.stopPropagation()}
     >
       {[...Array(columnNumber)].map((x, i) => (
-        <Content key={Math.random() * i} cloumn={columnNumber}>
+        <Content key={i} cloumn={columnNumber}>
           {data.content.image![i]?.preview ? (
             <img src={data.content.image![i].preview} alt="이미지" />
           ) : (

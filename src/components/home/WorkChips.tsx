@@ -27,7 +27,7 @@ function WorkChips() {
       <Chips>
         <div className="chips-inner">
           {value.work.map((item, index) => (
-            <Chip key={Math.random() * index} value={item} index={index} />
+            <Chip key={index} value={item} index={index} />
           ))}
           <div className="add" onClick={onAddHandler}>
             +
