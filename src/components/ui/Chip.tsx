@@ -67,6 +67,7 @@ function Chip({ value, index, size, icon }: Props) {
     action((prev) => {
       const newData = { ...prev };
       newData.topic.splice(index, 1);
+      text.current = newData.topic[index];
       return newData;
     });
   };

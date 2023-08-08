@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import useTopVisualValue from "context/useTopVisualValue";
 import useTopVisualAction from "context/useTopVisualAction";
@@ -33,10 +33,6 @@ function ImageInput() {
 
     onUpdateHandler(newImage, key);
   };
-
-  useEffect(() => {
-    console.log(value.assets);
-  }, [value.assets]);
 
   const onDeleteHandler = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,

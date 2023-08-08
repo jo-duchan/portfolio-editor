@@ -13,7 +13,7 @@ import Input from "components/ui/Input";
 import Textarea from "components/ui/Textarea";
 import Button from "components/ui/Button";
 import ImageInput from "components/home/ImageInput";
-import WorkChips from "components/home/TopicChips";
+import TopicChips from "components/home/TopicChips";
 
 // Type
 import { Image } from "type/topVisual";
@@ -98,7 +98,7 @@ function Home() {
           value={value.description}
           onChange={onChangeHandler}
         />
-        <WorkChips />
+        <TopicChips />
         <ImageInput />
         <div className="button-wrapper">
           <Button
