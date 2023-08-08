@@ -59,7 +59,26 @@ function Home() {
   };
 
   const onSubmitHandler = () => {
-    console.log("TopVisual :", value);
+    if (value.title.trim() === "") {
+      console.log("Title value is empty.");
+      return;
+    }
+
+    if (value.description.trim() === "") {
+      console.log("Description value is empty.");
+      return;
+    }
+
+    if (value.work.length === 0) {
+      console.log("Work value is empty.");
+      return;
+    }
+
+    if (Object.keys(value.assets).find((key) => !value.assets[key].file)) {
+      console.log("assets value is empty.");
+      return;
+    }
+
     navigate("/edit");
   };
   return (
