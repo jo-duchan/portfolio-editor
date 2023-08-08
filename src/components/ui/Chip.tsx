@@ -45,7 +45,7 @@ function Chip({ value, index, size, icon }: Props) {
     if (text.current === "") return;
     action((prev) => {
       const newData = { ...prev };
-      newData.work[index] = text.current;
+      newData.topic[index] = text.current;
       return newData;
     });
   };
@@ -66,7 +66,7 @@ function Chip({ value, index, size, icon }: Props) {
     e.stopPropagation();
     action((prev) => {
       const newData = { ...prev };
-      newData.work.splice(index, 1);
+      newData.topic.splice(index, 1);
       return newData;
     });
   };

@@ -1,6 +1,5 @@
 export type Image = {
-  file: File;
-  preview: string;
+  file: string;
   type: string;
   label: string;
 };
@@ -8,7 +7,7 @@ export type Image = {
 export type TopVisual = {
   title: string;
   description: string;
-  work: string[];
+  topic: string[];
   assets: {
     [key: string]: Image;
     clientLogo: Image;

@@ -13,7 +13,7 @@ import Input from "components/ui/Input";
 import Textarea from "components/ui/Textarea";
 import Button from "components/ui/Button";
 import ImageInput from "components/home/ImageInput";
-import WorkChips from "components/home/WorkChips";
+import WorkChips from "components/home/TopicChips";
 
 // Type
 import { Image } from "type/topVisual";
@@ -43,7 +43,7 @@ function Home() {
     action({
       title: "",
       description: "",
-      work: [] as string[],
+      topic: [] as string[],
       assets: {
         clientLogo: {
           label: "Client Logo",
@@ -60,25 +60,26 @@ function Home() {
 
   const onSubmitHandler = () => {
     if (value.title.trim() === "") {
-      console.log("Title value is empty.");
+      alert("Title을 작성해 주세요.");
       return;
     }
 
     if (value.description.trim() === "") {
-      console.log("Description value is empty.");
+      alert("Description을 작성해 주세요.");
       return;
     }
 
-    if (value.work.length === 0) {
-      console.log("Work value is empty.");
+    if (value.topic.length === 0) {
+      alert("Topic을 작성해 주세요.");
       return;
     }
 
     if (Object.keys(value.assets).find((key) => !value.assets[key].file)) {
-      console.log("assets value is empty.");
+      alert("Assets을 업로드해 주세요.");
       return;
     }
 
+    // TopVisual Context 사용할 필요없이 세션스토리지로 Post하고 Home에서는 세션스토리지에서 바로 Get으로 받아오자.
     navigate("/edit");
   };
   return (
@@ -111,7 +112,6 @@ function Home() {
             label="Next"
             btnType="PRIMARY"
             size="MEDIUM"
-            // states={currentItem ? "DEFAULT" : "DISABLED"}
             onClick={onSubmitHandler}
             fixedWidth
           />

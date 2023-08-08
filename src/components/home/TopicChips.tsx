@@ -9,14 +9,14 @@ import ColorSystem from "styles/color-system";
 // Components
 import Chip from "components/ui/Chip";
 
-function WorkChips() {
+function TopicChips() {
   const value = useTopVisualValue();
   const action = useTopVisualAction();
 
   const onAddHandler = () => {
     action((prev) => {
       const newdata = { ...prev };
-      newdata.work.push("");
+      newdata.topic.push("");
       return newdata;
     });
   };
@@ -26,7 +26,7 @@ function WorkChips() {
       <Label>Topic</Label>
       <Chips>
         <div className="chips-inner">
-          {value.work.map((item, index) => (
+          {value.topic.map((item, index) => (
             <Chip key={index} value={item} index={index} />
           ))}
           <div className="add" onClick={onAddHandler}>
@@ -38,7 +38,7 @@ function WorkChips() {
   );
 }
 
-export default WorkChips;
+export default TopicChips;
 
 const Container = styled.div`
   display: flex;

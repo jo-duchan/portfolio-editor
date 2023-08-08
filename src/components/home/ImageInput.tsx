@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import useTopVisualValue from "context/useTopVisualValue";
 import useTopVisualAction from "context/useTopVisualAction";
+import Utils from "utils/Utils";
 
 // Components
 import IconSet from "components/ui/IconSet";
@@ -16,22 +17,26 @@ function ImageInput() {
   const value = useTopVisualValue();
   const action = useTopVisualAction();
 
-  const onCreateImage = (
+  const onCreateImage = async (
     e: React.ChangeEvent<HTMLInputElement>,
     key: string
   ) => {
     const getFile = e.target.files;
     if (!getFile) return;
-    const url = URL.createObjectURL(getFile[0]);
+
     const typeLength = getFile[0].type.length;
     const newImage = {
       label: value.assets[key].label,
-      file: getFile[0],
-      preview: url,
+      file: await Utils.convertBase64(getFile[0]),
       type: getFile[0].type.slice(6, typeLength),
     } as Image;
+
     onUpdateHandler(newImage, key);
   };
+
+  useEffect(() => {
+    console.log(value.assets);
+  }, [value.assets]);
 
   const onDeleteHandler = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -45,44 +50,12 @@ function ImageInput() {
   };
 
   const onUpdateHandler = (newData: Image, key: string) => {
-    switch (key) {
-      case "clientLogo": {
-        action((prev) => {
-          return {
-            ...prev,
-            assets: {
-              ...prev.assets,
-              clientLogo: newData,
-            },
-          };
-        });
-        break;
-      }
-      case "CoverPC": {
-        action((prev) => {
-          return {
-            ...prev,
-            assets: {
-              ...prev.assets,
-              CoverPC: newData,
-            },
-          };
-        });
-        break;
-      }
-      case "CoverMO": {
-        action((prev) => {
-          return {
-            ...prev,
-            assets: {
-              ...prev.assets,
-              CoverMO: newData,
-            },
-          };
-        });
-        break;
-      }
-    }
+    action((prev) => {
+      const updateData = { ...prev };
+      updateData.assets[key] = newData;
+
+      return updateData;
+    });
   };
 
   return (
@@ -92,12 +65,13 @@ function ImageInput() {
         <ContentInner>
           {Object.entries(value.assets).map(([key, item]) => (
             <Uploader key={key}>
-              {item.preview ? (
+              {item.file ? (
                 <div className="img-wrapper">
                   <DeleteButton onClick={(e) => onDeleteHandler(e, key)}>
                     <IconSet type="CLOSE" />
                   </DeleteButton>
-                  <img src={item.preview} alt="이미지" />
+                  {/* <img src={item.preview} alt="이미지" /> */}
+                  <img src={item.file} alt="이미지" />
                 </div>
               ) : (
                 <label className="uploader">

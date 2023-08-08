@@ -20,20 +20,20 @@ function TopVisual() {
         <LogoSection>
           <img
             className="client"
-            src={value.assets.clientLogo?.preview}
+            src={value.assets.clientLogo?.file}
             alt="client"
           />
           <IconSet type="WACKY" />
         </LogoSection>
         <Title>{value.title}</Title>
         <Description>{value.description}</Description>
-        <Work>
-          {value.work.map((item) => (
+        <Topic>
+          {value.topic.map((item) => (
             <span key={item}>{item}</span>
           ))}
-        </Work>
+        </Topic>
       </Content>
-      <Background src={value.assets.CoverPC.preview} alt="이미지" />
+      <Background src={value.assets.CoverPC.file} alt="이미지" />
     </Container>
   );
 }
@@ -93,7 +93,7 @@ const Description = styled.div`
   ${TextSizePC("XL")}
   white-space: break-spaces;
 `;
-const Work = styled.div`
+const Topic = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
