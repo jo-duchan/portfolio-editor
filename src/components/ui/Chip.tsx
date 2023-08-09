@@ -66,6 +66,7 @@ function Chip({ value, index, size, icon, onUpdate, onRemove }: Props) {
       size={size}
       paddingLeft={!icon}
       onClick={onClickHandler}
+      onMouseLeave={() => inner.current?.blur()}
     >
       <ContentEditable
         html={text.current}
