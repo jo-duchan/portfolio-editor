@@ -26,15 +26,16 @@ function Create() {
   const [assets, setAssets] = useState<Assets>({} as Assets);
 
   useEffect(() => {
-    sessionStorage.setItem(
-      KEY_TOP_VISUAL,
-      JSON.stringify({
-        title: "",
-        description: "",
-        topic: [],
-        assets: {},
-      })
-    );
+    // sessionStorage.setItem(
+    //   KEY_TOP_VISUAL,
+    //   JSON.stringify({
+    //     title: "",
+    //     description: "",
+    //     topic: [],
+    //     assets: {},
+    //   })
+    // );
+    // 서버에서 받아오는걸로 수정 세션스토리지 용량 이슈
   }, []);
 
   const onChangeHandler = (value: string, label: string) => {
@@ -50,22 +51,10 @@ function Create() {
   };
 
   const onCancelHandler = () => {
-    // action({
-    //   title: "",
-    //   description: "",
-    //   topic: [] as string[],
-    //   assets: {
-    //     clientLogo: {
-    //       label: "Client Logo",
-    //     } as Image,
-    //     CoverPC: {
-    //       label: "Cover IMG PC",
-    //     } as Image,
-    //     CoverMO: {
-    //       label: "Cover IMG MO",
-    //     } as Image,
-    //   },
-    // });
+    setTitle("");
+    setDescription("");
+    setTopic([]);
+    setAssets({} as Assets);
   };
 
   const onSubmitHandler = () => {
@@ -91,7 +80,8 @@ function Create() {
 
     // TopVisual Context 사용할 필요없이 세션스토리지로 Post하고 Home에서는 세션스토리지에서 바로 Get으로 받아오자.
     console.log(title, description, topic, assets);
-    // navigate("/edit");
+
+    navigate("/edit");
   };
   return (
     <Container>

@@ -18,6 +18,14 @@ export interface ContentItem {
     image: Image[] | undefined;
   };
   option: {
+    [key: string]:
+      | FontSize
+      | MarginSize
+      | Aline
+      | Gap
+      | string
+      | Colume
+      | undefined;
     size: FontSize | undefined;
     margin: MarginSize | undefined;
     aline: Aline | undefined;

@@ -41,36 +41,39 @@ function Editor({ rootOption, setRootOption }: Props) {
     if (!currentItem || value === undefined) return;
     const updateItme = currentItem;
 
-    switch (sort) {
-      case "Size": {
-        updateItme.option.size = value as FontSize;
-        break;
-      }
-      case "Margin": {
-        updateItme.option.margin = value as MarginSize;
-        break;
-      }
-      case "Aline": {
-        updateItme.option.aline = value as Aline;
-        break;
-      }
-      case "Gap": {
-        updateItme.option.gap = value as Gap;
-        break;
-      }
-      case "Column": {
-        updateItme.option.column = value as Colume;
-        break;
-      }
-      case "Fill": {
-        updateItme.option.fill = value as string;
-        break;
-      }
-      case "Color": {
-        updateItme.option.color = value as string;
-        break;
-      }
-    }
+    const key = sort.toLocaleLowerCase();
+    updateItme.option[key] = value;
+    // CourrentItem도 id값만 저장하고 아이템리스트에서 검색해서 가져오는건 어떨까
+    // switch (sort) {
+    //   case "Size": {
+    //     updateItme.option.size = value as FontSize;
+    //     break;
+    //   }
+    //   case "Margin": {
+    //     updateItme.option.margin = value as MarginSize;
+    //     break;
+    //   }
+    //   case "Aline": {
+    //     updateItme.option.aline = value as Aline;
+    //     break;
+    //   }
+    //   case "Gap": {
+    //     updateItme.option.gap = value as Gap;
+    //     break;
+    //   }
+    //   case "Column": {
+    //     updateItme.option.column = value as Colume;
+    //     break;
+    //   }
+    //   case "Fill": {
+    //     updateItme.option.fill = value as string;
+    //     break;
+    //   }
+    //   case "Color": {
+    //     updateItme.option.color = value as string;
+    //     break;
+    //   }
+    // }
     onChangeHandler(updateItme, currentItem.id);
   };
 
