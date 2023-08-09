@@ -1,15 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
-import useTopVisualAction from "context/useTopVisualAction";
-
-// Components
 import IconSet from "components/ui/IconSet";
-
-// Style
 import ColorSystem from "styles/color-system";
-
-//Type
 export type ChipSize = "SMALL" | "MEDIUM";
 
 interface Props {
@@ -17,6 +10,11 @@ interface Props {
   index: number;
   icon?: string | undefined;
   size?: ChipSize;
+  onUpdate: (updateData: string, index: number) => void;
+  onRemove: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    index: number
+  ) => void;
 }
 interface StyledProps {
   isFocus?: boolean;
@@ -24,8 +22,7 @@ interface StyledProps {
   size: ChipSize | undefined;
 }
 
-function Chip({ value, index, size, icon }: Props) {
-  const action = useTopVisualAction();
+function Chip({ value, index, size, icon, onUpdate, onRemove }: Props) {
   const text = useRef(value as string);
   const inner = useRef<HTMLSpanElement | null>(null);
   const [isFocus, setIsFocus] = useState<boolean>(false);
@@ -43,11 +40,7 @@ function Chip({ value, index, size, icon }: Props) {
   const onBlurHandler = () => {
     setIsFocus(false);
     if (text.current === "") return;
-    action((prev) => {
-      const newData = { ...prev };
-      newData.topic[index] = text.current;
-      return newData;
-    });
+    onUpdate(text.current, index);
   };
 
   const onClickHandler = () => {
@@ -62,21 +55,9 @@ function Chip({ value, index, size, icon }: Props) {
     selection?.addRange(range);
   };
 
-  const onDeleteHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation();
-    action((prev) => {
-      const newData = { ...prev };
-      newData.topic.splice(index, 1);
-      text.current = newData.topic[index];
-      return newData;
-    });
-  };
-
   useEffect(() => {
     if (text.current === "") inner.current?.focus();
-    if (document.activeElement === inner.current) {
-      setIsFocus(true);
-    }
+    if (document.activeElement === inner.current) setIsFocus(true);
   }, []);
 
   return (
@@ -95,7 +76,7 @@ function Chip({ value, index, size, icon }: Props) {
         onBlur={onBlurHandler}
         tagName="span"
       />
-      <DeleteButton onClick={onDeleteHandler}>
+      <DeleteButton onClick={(e) => onRemove(e, index)}>
         <IconSet type="CLOSE" />
       </DeleteButton>
     </Container>

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import useTopVisualValue from "context/useTopVisualValue";
+// import useTopVisualValue from "context/useTopVisualValue";
 
 // Components
 import IconSet from "components/ui/IconSet";
@@ -12,7 +12,7 @@ import { TitleSizePC, TextSizePC } from "styles/typography";
 // Type
 
 function TopVisual() {
-  const value = useTopVisualValue();
+  // const value = useTopVisualValue();
 
   return (
     <Container>
@@ -20,20 +20,20 @@ function TopVisual() {
         <LogoSection>
           <img
             className="client"
-            src={value.assets.clientLogo?.file}
+            // src={value.assets.clientLogo?.file}
             alt="client"
           />
           <IconSet type="WACKY" />
         </LogoSection>
-        <Title>{value.title}</Title>
-        <Description>{value.description}</Description>
+        {/* <Title>{value.title}</Title>
+        <Description>{value.description}</Description> */}
         <Topic>
-          {value.topic.map((item) => (
+          {/* {value.topic.map((item) => (
             <span key={item}>{item}</span>
-          ))}
+          ))} */}
         </Topic>
       </Content>
-      <Background src={value.assets.CoverPC.file} alt="이미지" />
+      {/* <Background src={value.assets.CoverPC.file} alt="이미지" /> */}
     </Container>
   );
 }

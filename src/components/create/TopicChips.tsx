@@ -1,23 +1,39 @@
 import React from "react";
 import styled from "styled-components";
-import useTopVisualValue from "context/useTopVisualValue";
-import useTopVisualAction from "context/useTopVisualAction";
-
-// Style
+import { nanoid } from "nanoid";
 import ColorSystem from "styles/color-system";
-
-// Components
 import Chip from "components/ui/Chip";
 
-function TopicChips() {
-  const value = useTopVisualValue();
-  const action = useTopVisualAction();
+interface Props {
+  value: string[];
+  onUpdate: React.Dispatch<React.SetStateAction<string[]>>;
+}
 
-  const onAddHandler = () => {
-    action((prev) => {
-      const newdata = { ...prev };
-      newdata.topic.push("");
-      return newdata;
+function TopicChips({ value, onUpdate }: Props) {
+  const handleAddChip = () => {
+    onUpdate((prev) => {
+      return [...prev, ""];
+    });
+  };
+
+  const handleUpdateChip = (updateData: string, index: number) => {
+    onUpdate((prev) => {
+      const newDate = [...prev];
+      newDate[index] = updateData;
+      return newDate;
+    });
+  };
+
+  const handleRemoveChip = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    index: number
+  ) => {
+    e.stopPropagation();
+
+    onUpdate((prev) => {
+      const newData = [...prev];
+      newData.splice(index, 1);
+      return newData;
     });
   };
 
@@ -26,10 +42,16 @@ function TopicChips() {
       <Label>Topic</Label>
       <Chips>
         <div className="chips-inner">
-          {value.topic.map((item, index) => (
-            <Chip key={index} value={item} index={index} />
+          {value.map((chip, index) => (
+            <Chip
+              key={nanoid()}
+              value={chip}
+              index={index}
+              onUpdate={handleUpdateChip}
+              onRemove={handleRemoveChip}
+            />
           ))}
-          <div className="add" onClick={onAddHandler}>
+          <div className="add" onClick={handleAddChip}>
             +
           </div>
         </div>

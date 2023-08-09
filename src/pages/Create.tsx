@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import useTopVisualValue from "context/useTopVisualValue";
-import useTopVisualAction from "context/useTopVisualAction";
 
 // Style
 import ColorSystem from "styles/color-system";
@@ -12,75 +10,88 @@ import { TitleSizePC } from "styles/typography";
 import Input from "components/ui/Input";
 import Textarea from "components/ui/Textarea";
 import Button from "components/ui/Button";
-import ImageInput from "components/home/ImageInput";
-import TopicChips from "components/home/TopicChips";
+import ImageInput from "components/create/ImageInput";
+import TopicChips from "components/create/TopicChips";
 
 // Type
-import { Image } from "type/topVisual";
+import { Image, Assets } from "type/topVisual";
 
-function Home() {
+const KEY_TOP_VISUAL = "@topVisual";
+
+function Create() {
   const navigate = useNavigate();
-  const value = useTopVisualValue();
-  const action = useTopVisualAction();
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [topic, setTopic] = useState<string[]>([]);
+  const [assets, setAssets] = useState<Assets>({} as Assets);
+
+  useEffect(() => {
+    sessionStorage.setItem(
+      KEY_TOP_VISUAL,
+      JSON.stringify({
+        title: "",
+        description: "",
+        topic: [],
+        assets: {},
+      })
+    );
+  }, []);
+
   const onChangeHandler = (value: string, label: string) => {
-    switch (label) {
-      case "Title": {
-        action((prev) => {
-          return { ...prev, title: value };
-        });
-        break;
-      }
-      case "Description": {
-        action((prev) => {
-          return { ...prev, description: value };
-        });
-        break;
-      }
+    if (label === "Title") {
+      setTitle(value);
+      return;
+    }
+
+    if (label === "Description") {
+      setDescription(value);
+      return;
     }
   };
 
   const onCancelHandler = () => {
-    action({
-      title: "",
-      description: "",
-      topic: [] as string[],
-      assets: {
-        clientLogo: {
-          label: "Client Logo",
-        } as Image,
-        CoverPC: {
-          label: "Cover IMG PC",
-        } as Image,
-        CoverMO: {
-          label: "Cover IMG MO",
-        } as Image,
-      },
-    });
+    // action({
+    //   title: "",
+    //   description: "",
+    //   topic: [] as string[],
+    //   assets: {
+    //     clientLogo: {
+    //       label: "Client Logo",
+    //     } as Image,
+    //     CoverPC: {
+    //       label: "Cover IMG PC",
+    //     } as Image,
+    //     CoverMO: {
+    //       label: "Cover IMG MO",
+    //     } as Image,
+    //   },
+    // });
   };
 
   const onSubmitHandler = () => {
-    if (value.title.trim() === "") {
+    if (title.trim() === "") {
       alert("Title을 작성해 주세요.");
       return;
     }
 
-    if (value.description.trim() === "") {
+    if (description.trim() === "") {
       alert("Description을 작성해 주세요.");
       return;
     }
 
-    if (value.topic.length === 0) {
+    if (topic.length === 0) {
       alert("Topic을 작성해 주세요.");
       return;
     }
 
-    if (Object.keys(value.assets).find((key) => !value.assets[key].file)) {
+    if (Object.keys(assets).find((key) => !assets[key].file)) {
       alert("Assets을 업로드해 주세요.");
       return;
     }
 
     // TopVisual Context 사용할 필요없이 세션스토리지로 Post하고 Home에서는 세션스토리지에서 바로 Get으로 받아오자.
-    navigate("/edit");
+    console.log(title, description, topic, assets);
+    // navigate("/edit");
   };
   return (
     <Container>
@@ -89,17 +100,17 @@ function Home() {
         <Input
           label="Title"
           placeholder="제목을 입력하세요."
-          value={value.title}
+          value={title}
           onChange={onChangeHandler}
         />
         <Textarea
           label="Description"
           placeholder="내용을 입력하세요."
-          value={value.description}
+          value={description}
           onChange={onChangeHandler}
         />
-        <TopicChips />
-        <ImageInput />
+        <TopicChips value={topic} onUpdate={setTopic} />
+        <ImageInput value={assets} onUpdate={setAssets} />
         <div className="button-wrapper">
           <Button
             label="Cancel"
@@ -121,7 +132,7 @@ function Home() {
   );
 }
 
-export default Home;
+export default Create;
 
 const Container = styled.div`
   position: relative;

@@ -1,21 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import useTopVisualValue from "context/useTopVisualValue";
-import useTopVisualAction from "context/useTopVisualAction";
 import Utils from "utils/Utils";
-
-// Components
 import IconSet from "components/ui/IconSet";
-
-// Style
 import ColorSystem from "styles/color-system";
+import { Image, Assets } from "type/topVisual";
 
-// Type
-import { Image } from "type/topVisual";
+interface Props {
+  value: Assets;
+  onUpdate: React.Dispatch<React.SetStateAction<Assets>>;
+}
 
-function ImageInput() {
-  const value = useTopVisualValue();
-  const action = useTopVisualAction();
+type List = {
+  [key: string]: string;
+};
+
+const labelList: List = {
+  clientLogo: "Client Logo",
+  CoverPC: "Cover IMG PC",
+  CoverMO: "Cover IMG MO",
+};
+
+function ImageInput({ value, onUpdate }: Props) {
+  useEffect(() => {
+    // init
+    onUpdate({
+      clientLogo: {} as Image,
+      CoverPC: {} as Image,
+      CoverMO: {} as Image,
+    });
+  }, []);
 
   const onCreateImage = async (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -25,13 +38,12 @@ function ImageInput() {
     if (!getFile) return;
 
     const typeLength = getFile[0].type.length;
-    const newImage = {
-      label: value.assets[key].label,
+    const updateData = {
       file: await Utils.convertBase64(getFile[0]),
       type: getFile[0].type.slice(6, typeLength),
     } as Image;
 
-    onUpdateHandler(newImage, key);
+    onUpdateHandler(updateData, key);
   };
 
   const onDeleteHandler = (
@@ -39,18 +51,16 @@ function ImageInput() {
     key: string
   ) => {
     e.stopPropagation();
-    const newImage = {
-      label: value.assets[key].label,
-    } as Image;
-    onUpdateHandler(newImage, key);
+
+    onUpdateHandler({} as Image, key);
   };
 
-  const onUpdateHandler = (newData: Image, key: string) => {
-    action((prev) => {
-      const updateData = { ...prev };
-      updateData.assets[key] = newData;
+  const onUpdateHandler = (updateData: Image, key: string) => {
+    onUpdate((prev) => {
+      const newData = { ...prev };
+      newData[key] = updateData;
 
-      return updateData;
+      return newData;
     });
   };
 
@@ -59,14 +69,13 @@ function ImageInput() {
       <Label>Assets</Label>
       <ContentWrapper>
         <ContentInner>
-          {Object.entries(value.assets).map(([key, item]) => (
+          {Object.entries(value).map(([key, item]) => (
             <Uploader key={key}>
               {item.file ? (
                 <div className="img-wrapper">
                   <DeleteButton onClick={(e) => onDeleteHandler(e, key)}>
                     <IconSet type="CLOSE" />
                   </DeleteButton>
-                  {/* <img src={item.preview} alt="이미지" /> */}
                   <img src={item.file} alt="이미지" />
                 </div>
               ) : (
@@ -79,7 +88,7 @@ function ImageInput() {
                   />
                 </label>
               )}
-              <span className="uploader-label">{item.label}</span>
+              <span className="uploader-label">{labelList[key]}</span>
             </Uploader>
           ))}
         </ContentInner>
