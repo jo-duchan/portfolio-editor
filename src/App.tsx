@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Create />} />
         <Route
-          path="/edit"
+          path="/edit/:portfolioId"
           element={
             <ContentListProvider>
               <CurrentItemProvider>

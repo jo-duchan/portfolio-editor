@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
-// Style
 import ColorSystem from "styles/color-system";
 import { TitleSizePC } from "styles/typography";
-
-// Components
 import Input from "components/ui/Input";
 import Textarea from "components/ui/Textarea";
 import Button from "components/ui/Button";
 import ImageInput from "components/create/ImageInput";
 import TopicChips from "components/create/TopicChips";
-
-// Type
 import { Image, Assets } from "type/topVisual";
+import { nanoid } from "nanoid";
 
-const KEY_TOP_VISUAL = "@topVisual";
+interface CustomError {
+  code: string;
+  message: string;
+}
 
 function Create() {
   const navigate = useNavigate();
@@ -26,16 +24,7 @@ function Create() {
   const [assets, setAssets] = useState<Assets>({} as Assets);
 
   useEffect(() => {
-    // sessionStorage.setItem(
-    //   KEY_TOP_VISUAL,
-    //   JSON.stringify({
-    //     title: "",
-    //     description: "",
-    //     topic: [],
-    //     assets: {},
-    //   })
-    // );
-    // 서버에서 받아오는걸로 수정 세션스토리지 용량 이슈
+    // GET으로 받아오기
   }, []);
 
   const onChangeHandler = (value: string, label: string) => {
@@ -57,7 +46,7 @@ function Create() {
     setAssets({} as Assets);
   };
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = async () => {
     if (title.trim() === "") {
       alert("Title을 작성해 주세요.");
       return;
@@ -80,8 +69,40 @@ function Create() {
 
     // TopVisual Context 사용할 필요없이 세션스토리지로 Post하고 Home에서는 세션스토리지에서 바로 Get으로 받아오자.
     console.log(title, description, topic, assets);
+    const portfolioId = nanoid();
+    const portfolio = {
+      id: portfolioId,
+      topVisual: {
+        title,
+        description,
+        topic,
+        assets,
+      },
+      content: [],
+    };
 
-    navigate("/edit");
+    //useHttp만들어서 사용하자
+    const sendRequest = async () => {
+      const response = await fetch(
+        "https://portfolio-editor-1c789-default-rtdb.firebaseio.com/portfolio.json",
+        {
+          method: "PUT",
+          body: JSON.stringify([portfolio]),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Request failed!");
+      }
+    };
+
+    try {
+      await sendRequest();
+      navigate(`/edit/${portfolioId}`);
+    } catch (error) {
+      const err = error as CustomError;
+      console.log("err:", err.message);
+    }
   };
   return (
     <Container>

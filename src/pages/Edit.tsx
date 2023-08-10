@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import useContentValue from "context/useContentValue";
 import useCurrentItem from "context/useCurrentItem";
@@ -19,7 +20,13 @@ interface StyledProps {
   color: string;
 }
 
+interface CustomError {
+  code: string;
+  message: string;
+}
+
 function Edit() {
+  const { portfolioId } = useParams();
   const data = useContentValue();
   const [, setCurrentItem] = useCurrentItem();
   const [rootOption, setRootOption] = useState({} as RootOption);
@@ -27,8 +34,36 @@ function Edit() {
   const clearIdHandler = () => setCurrentItem(null);
 
   useEffect(() => {
+    // 임시로 전부 받아오자.
+    const fetchTopVisualData = async () => {
+      const fetchData = async () => {
+        const response = await fetch(
+          "https://portfolio-editor-1c789-default-rtdb.firebaseio.com/portfolio.json"
+        );
+
+        if (!response.ok) {
+          throw new Error("Could not fetch data!");
+        }
+
+        const data = await response.json();
+
+        return data;
+      };
+
+      try {
+        const data = await fetchData();
+        const test = data.find((item: any) => item.id === portfolioId);
+        console.log(test, portfolioId);
+      } catch (error) {
+        const err = error as CustomError;
+        console.log("err:", err.message);
+      }
+    };
+
+    fetchTopVisualData();
     viewRef.current?.addEventListener("click", clearIdHandler);
     document.body.style.background = ColorSystem.Neutral[800];
+
     return () => {
       document.body.style.background = "";
     };
