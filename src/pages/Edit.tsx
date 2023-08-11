@@ -3,17 +3,12 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import useContentValue from "context/useContentValue";
 import useCurrentItem from "context/useCurrentItem";
-
-// Style
 import ColorSystem from "styles/color-system";
-
-// Components
-import TopVisual from "components/edit/TopVisual";
+import TopVisualElement from "components/edit/TopVisual";
 import ToolsPanel from "components/edit/ToolsPanel";
 import Viewer from "components/edit/Viewer";
-
-// Type
 import { RootOption } from "type/rootOption";
+import { TopVisual } from "type/topVisual";
 
 interface StyledProps {
   fill: string;
@@ -32,6 +27,7 @@ function Edit() {
   const [rootOption, setRootOption] = useState({} as RootOption);
   const viewRef = useRef<HTMLDivElement | null>(null);
   const clearIdHandler = () => setCurrentItem(null);
+  const [topVisualData, setTopVisualData] = useState({} as TopVisual);
 
   useEffect(() => {
     // 임시로 전부 받아오자.
@@ -52,8 +48,11 @@ function Edit() {
 
       try {
         const data = await fetchData();
-        const test = data.find((item: any) => item.id === portfolioId);
-        console.log(test, portfolioId);
+        const findData = await data.find(
+          (item: any) => item.id === portfolioId
+        );
+        setTopVisualData(findData.topVisual);
+        console.log(findData.topVisual);
       } catch (error) {
         const err = error as CustomError;
         console.log("err:", err.message);
@@ -76,7 +75,7 @@ function Edit() {
         fill={rootOption.fill!}
         color={rootOption.color!}
       >
-        <TopVisual />
+        <TopVisualElement data={topVisualData} />
         {data.map((item) => (
           <Viewer key={item.id} data={item} />
         ))}

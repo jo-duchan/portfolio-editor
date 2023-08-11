@@ -1,44 +1,42 @@
 import React from "react";
 import styled from "styled-components";
-// import useTopVisualValue from "context/useTopVisualValue";
-
-// Components
 import IconSet from "components/ui/IconSet";
-
-// Style
 import ColorSystem from "styles/color-system";
 import { TitleSizePC, TextSizePC } from "styles/typography";
+import { TopVisual } from "type/topVisual";
 
-// Type
+interface Props {
+  data: TopVisual;
+}
 
-function TopVisual() {
-  // const value = useTopVisualValue();
+function TopVisualElement({ data }: Props) {
+  const { title, description, topic, assets } = data;
+
+  if (!data.assets || !data.topic) {
+    return <>Not Found Top Visual Data</>;
+  }
 
   return (
     <Container>
       <Content>
         <LogoSection>
-          <img
-            className="client"
-            // src={value.assets.clientLogo?.file}
-            alt="client"
-          />
+          <img className="client" src={assets.clientLogo.file} alt="client" />
           <IconSet type="WACKY" />
         </LogoSection>
-        {/* <Title>{value.title}</Title>
-        <Description>{value.description}</Description> */}
+        <Title>{title}</Title>
+        <Description>{description}</Description>
         <Topic>
-          {/* {value.topic.map((item) => (
+          {topic.map((item) => (
             <span key={item}>{item}</span>
-          ))} */}
+          ))}
         </Topic>
       </Content>
-      {/* <Background src={value.assets.CoverPC.file} alt="이미지" /> */}
+      <Background src={assets.CoverPC.file} alt="이미지" />
     </Container>
   );
 }
 
-export default TopVisual;
+export default TopVisualElement;
 
 const Container = styled.div`
   position: relative;

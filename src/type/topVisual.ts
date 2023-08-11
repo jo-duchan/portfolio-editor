@@ -1,7 +1,6 @@
 export type Image = {
   file: string;
   type: string;
-  // label: string;
 };
 
 export type Assets = {
