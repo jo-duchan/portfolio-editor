@@ -52,7 +52,6 @@ function Edit() {
           (item: any) => item.id === portfolioId
         );
         setTopVisualData(findData.topVisual);
-        console.log(findData.topVisual);
       } catch (error) {
         const err = error as CustomError;
         console.log("err:", err.message);

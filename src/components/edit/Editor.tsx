@@ -3,26 +3,14 @@ import styled from "styled-components";
 import useContentValue from "context/useContentValue";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
-// import useTopVisualValue from "context/useTopVisualValue";
 import { nanoid } from "nanoid";
-
-// Style
 import ColorSystem from "styles/color-system";
-
-// UI Components
 import Select from "components/ui/Select";
 import PillTab from "components/ui/PillTab";
 import Input from "components/ui/Input";
 import Button from "components/ui/Button";
-
-// Type
 import {
-  ContentItem,
-  FontSize,
-  MarginSize,
-  Aline,
-  Gap,
-  Colume,
+  ContentItem
 } from "type/contentList";
 import { RootOption } from "type/rootOption";
 
@@ -32,7 +20,6 @@ interface Props {
 }
 
 function Editor({ rootOption, setRootOption }: Props) {
-  // const topVisualData = useTopVisualValue();
   const data = useContentValue();
   const action = useContentAction();
   const [currentItem, setCurrentItem] = useCurrentItem();
@@ -43,37 +30,7 @@ function Editor({ rootOption, setRootOption }: Props) {
 
     const key = sort.toLocaleLowerCase();
     updateItme.option[key] = value;
-    // CourrentItem도 id값만 저장하고 아이템리스트에서 검색해서 가져오는건 어떨까
-    // switch (sort) {
-    //   case "Size": {
-    //     updateItme.option.size = value as FontSize;
-    //     break;
-    //   }
-    //   case "Margin": {
-    //     updateItme.option.margin = value as MarginSize;
-    //     break;
-    //   }
-    //   case "Aline": {
-    //     updateItme.option.aline = value as Aline;
-    //     break;
-    //   }
-    //   case "Gap": {
-    //     updateItme.option.gap = value as Gap;
-    //     break;
-    //   }
-    //   case "Column": {
-    //     updateItme.option.column = value as Colume;
-    //     break;
-    //   }
-    //   case "Fill": {
-    //     updateItme.option.fill = value as string;
-    //     break;
-    //   }
-    //   case "Color": {
-    //     updateItme.option.color = value as string;
-    //     break;
-    //   }
-    // }
+
     onChangeHandler(updateItme, currentItem.id);
   };
 
@@ -107,7 +64,6 @@ function Editor({ rootOption, setRootOption }: Props) {
 
   const onSaveHandler = () => {
     const portfolioItem = {
-      // 나중에 UUID로 수정
       id: nanoid(),
       option: rootOption,
       // topVisual: topVisualData,
