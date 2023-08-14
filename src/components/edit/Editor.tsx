@@ -39,16 +39,13 @@ function Editor({ rootOption, setRootOption }: Props) {
   };
 
   const onChangeRoot = (value: string, sort: string) => {
-    if (sort === "All Color") {
-      setRootOption((prev) => {
-        return { ...prev, color: value };
-      });
-    }
-    if (sort === "All Fill") {
-      setRootOption((prev) => {
-        return { ...prev, fill: value };
-      });
-    }
+    const sortOut = sort.replace("All ", '').toLocaleLowerCase();
+
+    setRootOption((prev) => {
+      const newOption = { ...prev };
+      newOption[sortOut] = value;
+      return newOption;
+    })
   };
 
   const onDeletHandler = () => {
