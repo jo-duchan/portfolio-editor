@@ -1,34 +1,27 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import GlobalStyle from "styles/common";
-import ContentListProvider from "context/ContentListProvider";
-import CurrentItemProvider from "context/CurrentItemProvider";
-
-// Pages
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Create from "pages/Create";
 import Edit from "pages/Edit";
 import Preview from "pages/Preview";
 
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      errorElement: <div>임시 에러 페이지</div>,
+      children: [
+        { index: true, element: <Create /> },
+        { path: "edit/:portfolioId", element: <Edit /> },
+        { path: "preview", element: <Preview /> },
+      ],
+    },
+  ],
+  {
+    basename: process.env.PUBLIC_URL,
+  }
+);
+
 function App() {
-  return (
-    <BrowserRouter>
-      <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<Create />} />
-        <Route
-          path="/edit/:portfolioId"
-          element={
-            <ContentListProvider>
-              <CurrentItemProvider>
-                <Edit />
-              </CurrentItemProvider>
-            </ContentListProvider>
-          }
-        />
-        <Route path="/preview" element={<Preview />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
