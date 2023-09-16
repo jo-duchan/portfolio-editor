@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-
-// Components
+import Utils from "utils/Utils";
 import IconSet from "components/ui/IconSet";
-
-// Style
 import ColorSystem from "styles/color-system";
 import { marginStylePC } from "styles/margin";
-
-// Type
-import { ContentItem, MarginSize, Image } from "type/contentList";
+import { Image } from "type/common";
+import { ContentItem } from "type/portfolio";
+import { MarginSize } from "type/option";
 
 interface Props {
   data: ContentItem;
@@ -28,16 +25,23 @@ interface StyledContent {
 function ImageElement({ data, onUpdateHandler }: Props) {
   const columnNumber = parseInt(data.option.column as string);
 
-  const onCreateImage = (e: React.ChangeEvent<HTMLInputElement>, i: number) => {
+  const onCreateImage = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    i: number
+  ) => {
     const getFile = e.target.files;
     if (!getFile) return;
-    const url = URL.createObjectURL(getFile[0]);
+    // const url = URL.createObjectURL(getFile[0]);
     const typeLength = getFile[0].type.length;
     const newImage = {
-      file: getFile[0],
-      preview: url,
+      file: await Utils.convertBase64(getFile[0]),
       type: getFile[0].type.slice(6, typeLength),
     } as Image;
+    // const newImage = {
+    //   file: getFile[0],
+    //   preview: url,
+    //   type: getFile[0].type.slice(6, typeLength),
+    // } as Image;
     const updateItem = data;
     updateItem.content.image![i] = newImage;
     onUpdateHandler(updateItem);
@@ -59,8 +63,8 @@ function ImageElement({ data, onUpdateHandler }: Props) {
     >
       {[...Array(columnNumber)].map((x, i) => (
         <Content key={i} cloumn={columnNumber}>
-          {data.content.image![i]?.preview ? (
-            <img src={data.content.image![i].preview} alt="이미지" />
+          {data.content.image![i]?.file ? (
+            <img src={data.content.image![i].file} alt="이미지" />
           ) : (
             <UploadButton>
               <label>

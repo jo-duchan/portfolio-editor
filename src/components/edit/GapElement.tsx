@@ -1,11 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-
-// Style
 import { GapStylePC } from "styles/gap";
-
-// Type
-import { ContentItem, Gap } from "type/contentList";
+import { ContentItem } from "type/portfolio";
+import { Gap } from "type/option";
 
 interface Props {
   data: ContentItem;

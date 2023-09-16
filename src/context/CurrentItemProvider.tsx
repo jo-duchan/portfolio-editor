@@ -7,7 +7,7 @@ import {
 } from "react";
 
 // Type
-import { ContentItem } from "type/contentList";
+import { ContentItem } from "type/portfolio";
 
 interface Props {
   children: ReactNode;

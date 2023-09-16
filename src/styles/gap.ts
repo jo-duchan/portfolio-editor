@@ -1,4 +1,4 @@
-import { Gap } from "type/contentList";
+import { Gap } from "type/option";
 
 function GapStylePC(gap: Gap) {
   switch (gap) {

@@ -9,14 +9,12 @@ import Select from "components/ui/Select";
 import PillTab from "components/ui/PillTab";
 import Input from "components/ui/Input";
 import Button from "components/ui/Button";
-import {
-  ContentItem
-} from "type/contentList";
-import { RootOption } from "type/rootOption";
+import { ContentItem } from "type/portfolio";
+import { Root } from "type/option";
 
 interface Props {
-  rootOption: RootOption;
-  setRootOption: Dispatch<React.SetStateAction<RootOption>>;
+  rootOption: Root;
+  setRootOption: Dispatch<React.SetStateAction<Root>>;
 }
 
 function Editor({ rootOption, setRootOption }: Props) {
@@ -39,13 +37,13 @@ function Editor({ rootOption, setRootOption }: Props) {
   };
 
   const onChangeRoot = (value: string, sort: string) => {
-    const sortOut = sort.replace("All ", '').toLocaleLowerCase();
+    const sortOut = sort.replace("All ", "").toLocaleLowerCase();
 
     setRootOption((prev) => {
       const newOption = { ...prev };
       newOption[sortOut] = value;
       return newOption;
-    })
+    });
   };
 
   const onDeletHandler = () => {

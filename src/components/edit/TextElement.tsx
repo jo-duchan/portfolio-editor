@@ -1,14 +1,11 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
-
-// Style
 import ColorSystem from "styles/color-system";
 import { TitleSizePC, TextSizePC } from "styles/typography";
 import { marginStylePC } from "styles/margin";
-
-// Type
-import { ContentItem, FontSize, MarginSize, Aline } from "type/contentList";
+import { ContentItem } from "type/portfolio";
+import { FontSize, MarginSize, Aline } from "type/option";
 
 interface Props {
   data: ContentItem;

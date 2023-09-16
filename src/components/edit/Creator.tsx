@@ -3,15 +3,11 @@ import styled from "styled-components";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
 import { nanoid } from "nanoid";
-
-// Style
 import ColorSystem from "styles/color-system";
-
-// Components
 import IconSet from "components/ui/IconSet";
+import { ContentItem } from "type/portfolio";
+import { Sort } from "type/option";
 
-// Type
-import { ContentItem, ContentSort } from "type/contentList";
 export type EventType = React.MouseEvent<HTMLButtonElement, MouseEvent>;
 
 function Creator() {
@@ -23,7 +19,7 @@ function Creator() {
     setCurrentItem(createData);
   };
 
-  const onCreateText = (sort: ContentSort) => {
+  const onCreateText = (sort: Sort) => {
     const CreateData: ContentItem = {
       id: nanoid(),
       sort: sort,
@@ -73,8 +69,8 @@ function Creator() {
         text: undefined,
         image: [
           {
-            file: {} as File,
-            preview: "",
+            file: {} as string,
+            // preview: "",
             type: "",
           },
         ],

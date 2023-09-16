@@ -7,8 +7,8 @@ import ColorSystem from "styles/color-system";
 import TopVisualElement from "components/edit/TopVisual";
 import ToolsPanel from "components/edit/ToolsPanel";
 import Viewer from "components/edit/Viewer";
-import { RootOption } from "type/rootOption";
-import { TopVisual } from "type/topVisual";
+import { Root } from "type/option";
+import { TopVisual } from "type/portfolio";
 
 interface StyledProps {
   fill: string;
@@ -24,7 +24,7 @@ function Edit() {
   const { portfolioId } = useParams();
   const data = useContentValue();
   const [, setCurrentItem] = useCurrentItem();
-  const [rootOption, setRootOption] = useState({} as RootOption);
+  const [rootOption, setRootOption] = useState({} as Root);
   const viewRef = useRef<HTMLDivElement | null>(null);
   const clearIdHandler = () => setCurrentItem(null);
   const [topVisualData, setTopVisualData] = useState({} as TopVisual);

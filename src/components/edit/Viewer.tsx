@@ -2,14 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useContentAction from "context/useContentAction";
 import useCurrentItem from "context/useCurrentItem";
-
-// Components
 import TextElement from "components/edit/TextElement";
 import GapElement from "components/edit/GapElement";
 import ImageElement from "components/edit//ImageElement";
-
-// Type
-import { ContentItem } from "type/contentList";
+import { ContentItem } from "type/portfolio";
 
 interface Props {
   data: ContentItem;

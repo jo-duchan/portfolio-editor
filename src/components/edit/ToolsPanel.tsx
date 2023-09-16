@@ -6,11 +6,11 @@ import Creator from "components/edit/Creator";
 import Editor from "components/edit/Editor";
 
 // Type
-import { RootOption } from "type/rootOption";
+import { Root } from "type/option";
 
 interface Props {
-  rootOption: RootOption;
-  setRootOption: Dispatch<React.SetStateAction<RootOption>>;
+  rootOption: Root;
+  setRootOption: Dispatch<React.SetStateAction<Root>>;
 }
 
 function ToolsPanel({ rootOption, setRootOption }: Props) {

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import IconSet from "components/ui/IconSet";
 import ColorSystem from "styles/color-system";
 import { TitleSizePC, TextSizePC } from "styles/typography";
-import { TopVisual } from "type/topVisual";
+import { TopVisual } from "type/portfolio";
 
 interface Props {
   data: TopVisual;

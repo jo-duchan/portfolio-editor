@@ -4,7 +4,7 @@ import Utils from "utils/Utils";
 import IconSet from "components/ui/IconSet";
 import ColorSystem from "styles/color-system";
 import { Image } from "type/common";
-import { Assets } from "type/topVisual";
+import { Assets } from "type/portfolio";
 
 interface Props {
   value: Assets;
