@@ -10,11 +10,8 @@ import ImageInput from "components/create/ImageInput";
 import TopicChips from "components/create/TopicChips";
 import { Assets } from "type/topVisual";
 import { nanoid } from "nanoid";
-
-interface CustomError {
-  code: string;
-  message: string;
-}
+import { ref, update } from "firebase/database";
+import { db } from "firebase-config";
 
 function Create() {
   const navigate = useNavigate();
@@ -22,10 +19,6 @@ function Create() {
   const [description, setDescription] = useState<string>("");
   const [topic, setTopic] = useState<string[]>([]);
   const [assets, setAssets] = useState<Assets>({} as Assets);
-
-  useEffect(() => {
-    // GET으로 받아오기
-  }, []);
 
   const onChangeHandler = (value: string, label: string) => {
     if (label === "Title") {
@@ -67,42 +60,25 @@ function Create() {
       return;
     }
 
-    // TopVisual Context 사용할 필요없이 세션스토리지로 Post하고 Home에서는 세션스토리지에서 바로 Get으로 받아오자.
     console.log(title, description, topic, assets);
     const portfolioId = nanoid();
-    const portfolio = {
-      id: portfolioId,
+
+    await update(ref(db, `/${portfolioId}`), {
       topVisual: {
         title,
         description,
         topic,
         assets,
       },
-      content: [],
-    };
-
-    //useHttp만들어서 사용하자
-    const sendRequest = async () => {
-      const response = await fetch(
-        "https://portfolio-editor-1c789-default-rtdb.firebaseio.com/portfolio.json",
-        {
-          method: "PUT",
-          body: JSON.stringify([portfolio]),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Request failed!");
-      }
-    };
-
-    try {
-      await sendRequest();
-      navigate(`/edit/${portfolioId}`);
-    } catch (error) {
-      const err = error as CustomError;
-      console.log("err:", err.message);
-    }
+    })
+      .then(() => {
+        window.alert("프로젝트가 생성되었습니다.");
+        // navigate("/");
+      })
+      .catch((e) => {
+        window.alert("프로젝트 생성에 실패했습니다.");
+        console.log(e);
+      });
   };
   return (
     <Container>
