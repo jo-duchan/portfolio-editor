@@ -5,14 +5,18 @@ import ColorSystem from "styles/color-system";
 import { TitleSizePC, TextSizePC } from "styles/typography";
 import { TopVisual } from "type/portfolio";
 
+type Data = {
+  topVisual: TopVisual;
+};
+
 interface Props {
   data: TopVisual;
 }
 
 function TopVisualElement({ data }: Props) {
   const { title, description, topic, assets } = data;
-
-  if (!data.assets || !data.topic) {
+  console.log("data", data, data.title);
+  if (!assets || !topic) {
     return <>Not Found Top Visual Data</>;
   }
 

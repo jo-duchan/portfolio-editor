@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { json, useLoaderData } from "react-router-dom";
+import { ref, child, get } from "firebase/database";
+import { db } from "firebase-config";
 import styled from "styled-components";
 import useContentValue from "context/useContentValue";
 import useCurrentItem from "context/useCurrentItem";
@@ -15,50 +17,15 @@ interface StyledProps {
   color: string;
 }
 
-interface CustomError {
-  code: string;
-  message: string;
-}
-
 function Edit() {
-  const { portfolioId } = useParams();
+  const { topVisual } = useLoaderData() as { topVisual: TopVisual };
   const data = useContentValue();
   const [, setCurrentItem] = useCurrentItem();
   const [rootOption, setRootOption] = useState({} as Root);
   const viewRef = useRef<HTMLDivElement | null>(null);
   const clearIdHandler = () => setCurrentItem(null);
-  const [topVisualData, setTopVisualData] = useState({} as TopVisual);
 
   useEffect(() => {
-    // 임시로 전부 받아오자.
-    const fetchTopVisualData = async () => {
-      const fetchData = async () => {
-        const response = await fetch(
-          "https://portfolio-editor-1c789-default-rtdb.firebaseio.com/portfolio.json"
-        );
-
-        if (!response.ok) {
-          throw new Error("Could not fetch data!");
-        }
-
-        const data = await response.json();
-
-        return data;
-      };
-
-      try {
-        const data = await fetchData();
-        const findData = await data.find(
-          (item: any) => item.id === portfolioId
-        );
-        setTopVisualData(findData.topVisual);
-      } catch (error) {
-        const err = error as CustomError;
-        console.log("err:", err.message);
-      }
-    };
-
-    fetchTopVisualData();
     viewRef.current?.addEventListener("click", clearIdHandler);
     document.body.style.background = ColorSystem.Neutral[800];
 
@@ -74,7 +41,7 @@ function Edit() {
         fill={rootOption.fill!}
         color={rootOption.color!}
       >
-        <TopVisualElement data={topVisualData} />
+        <TopVisualElement data={topVisual} />
         {data.map((item) => (
           <Viewer key={item.id} data={item} />
         ))}
@@ -86,6 +53,23 @@ function Edit() {
 }
 
 export default Edit;
+
+export async function loader({ params }: any) {
+  const dbRef = ref(db);
+  const data = await get(child(dbRef, `${params.portfolioId}`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else {
+        throw json({ message: "No data available" }, { status: 500 });
+      }
+    })
+    .catch((error) => {
+      throw json({ message: error }, { status: 500 });
+    });
+
+  return data;
+}
 
 const Container = styled.div`
   position: relative;

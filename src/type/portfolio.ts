@@ -9,7 +9,7 @@ export type Assets = {
 };
 
 export type TopVisual = {
-  [key: string]: string | string[] | Assets;
+  // [key: string]: string | string[] | Assets;
   title: string;
   description: string;
   topic: string[];

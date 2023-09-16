@@ -31,17 +31,13 @@ function ImageElement({ data, onUpdateHandler }: Props) {
   ) => {
     const getFile = e.target.files;
     if (!getFile) return;
-    // const url = URL.createObjectURL(getFile[0]);
+
     const typeLength = getFile[0].type.length;
     const newImage = {
       file: await Utils.convertBase64(getFile[0]),
       type: getFile[0].type.slice(6, typeLength),
     } as Image;
-    // const newImage = {
-    //   file: getFile[0],
-    //   preview: url,
-    //   type: getFile[0].type.slice(6, typeLength),
-    // } as Image;
+
     const updateItem = data;
     updateItem.content.image![i] = newImage;
     onUpdateHandler(updateItem);

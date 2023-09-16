@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Create from "pages/Create";
-import Edit from "pages/Edit";
+import Edit, { loader as EditLoader } from "pages/Edit";
 import Preview from "pages/Preview";
 
 const router = createBrowserRouter(
@@ -10,7 +10,7 @@ const router = createBrowserRouter(
       errorElement: <div>임시 에러 페이지</div>,
       children: [
         { index: true, element: <Create /> },
-        { path: "edit/:portfolioId", element: <Edit /> },
+        { path: "edit/:portfolioId", element: <Edit />, loader: EditLoader },
         { path: "preview", element: <Preview /> },
       ],
     },

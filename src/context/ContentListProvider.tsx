@@ -1,6 +1,4 @@
 import { ReactNode, createContext, useMemo, useState } from "react";
-
-// Type
 import { ContentList, ContentItem } from "type/portfolio";
 
 interface Props {

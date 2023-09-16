@@ -73,7 +73,7 @@ function Create() {
     })
       .then(() => {
         window.alert("프로젝트가 생성되었습니다.");
-        // navigate("/");
+        navigate(`/edit/${portfolioId}`);
       })
       .catch((e) => {
         window.alert("프로젝트 생성에 실패했습니다.");
