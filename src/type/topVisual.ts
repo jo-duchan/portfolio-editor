@@ -1,7 +1,4 @@
-export type Image = {
-  file: string;
-  type: string;
-};
+import { Image } from "type/common";
 
 export type Assets = {
   [key: string]: Image;
@@ -11,7 +8,7 @@ export type Assets = {
 };
 
 export type TopVisual = {
-  [key: string]: string | string[] | { [key: string]: Image };
+  [key: string]: string | string[] | Assets;
   title: string;
   description: string;
   topic: string[];
