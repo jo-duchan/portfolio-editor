@@ -8,7 +8,7 @@ import Textarea from "components/ui/Textarea";
 import Button from "components/ui/Button";
 import ImageInput from "components/create/ImageInput";
 import TopicChips from "components/create/TopicChips";
-import { Image, Assets } from "type/topVisual";
+import { Assets } from "type/topVisual";
 import { nanoid } from "nanoid";
 import { ref, update } from "firebase/database";
 import { db } from "firebase-config";

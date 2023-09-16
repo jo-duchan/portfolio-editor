@@ -3,7 +3,8 @@ import styled from "styled-components";
 import Utils from "utils/Utils";
 import IconSet from "components/ui/IconSet";
 import ColorSystem from "styles/color-system";
-import { Image, Assets } from "type/topVisual";
+import { Image } from "type/common";
+import { Assets } from "type/topVisual";
 
 interface Props {
   value: Assets;
