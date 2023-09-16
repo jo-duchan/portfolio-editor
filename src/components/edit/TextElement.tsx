@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 import ColorSystem from "styles/color-system";
@@ -10,6 +10,7 @@ import { FontSize, MarginSize, Aline } from "type/option";
 interface Props {
   data: ContentItem;
   onUpdateHandler: (updateData: ContentItem) => void;
+  isFocus: boolean;
 }
 
 interface StyledContainer {
@@ -24,27 +25,33 @@ interface StyledContentWrapper {
   color: string;
 }
 
-function TitleElement({ data, onUpdateHandler }: Props) {
-  const text = useRef(data.content.text as string);
-  const inner = useRef<HTMLHeadingElement | HTMLParagraphElement | null>(null);
+function TitleElement({ data, onUpdateHandler, isFocus }: Props) {
+  const text = useRef(data.content!.text as string);
+  const inner = useRef<HTMLHeadingElement | HTMLParagraphElement>(null);
   const [isPlaceholder, setIsPlaceholder] = useState<boolean>(true);
   const componentSort = data.sort === "TITLE" ? "h4" : "p";
 
+  useEffect(() => {
+    if (isFocus) {
+      onHidePlaceholder();
+    }
+  }, [isFocus]);
+
   const onChangeHandler = (ev: ContentEditableEvent) => {
     text.current = ev.target.value;
+    setIsPlaceholder(false);
   };
 
   const onBlurHandler = () => {
     if (text.current === "") setIsPlaceholder(true);
     const updateItem = data;
-    updateItem.content.text = text.current;
+    updateItem.content!.text = text.current;
     onUpdateHandler(updateItem);
   };
 
   const onHidePlaceholder = () => {
     inner.current?.focus();
     inner.current?.setAttribute("spellcheck", "false");
-    setIsPlaceholder(false);
   };
 
   return (

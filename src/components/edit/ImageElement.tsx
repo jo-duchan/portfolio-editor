@@ -39,14 +39,14 @@ function ImageElement({ data, onUpdateHandler }: Props) {
     } as Image;
 
     const updateItem = data;
-    updateItem.content.image![i] = newImage;
+    updateItem.content!.image![i] = newImage;
     onUpdateHandler(updateItem);
   };
 
   useEffect(() => {
-    if (data.option.column === "1" && data.content.image?.length === 2) {
+    if (data.option.column === "1" && data.content!.image?.length === 2) {
       const updateItem = data;
-      updateItem.content.image?.splice(1, 1);
+      updateItem.content!.image?.splice(1, 1);
       onUpdateHandler(updateItem);
     }
   }, [data.option.column]);
@@ -59,8 +59,8 @@ function ImageElement({ data, onUpdateHandler }: Props) {
     >
       {[...Array(columnNumber)].map((x, i) => (
         <Content key={i} cloumn={columnNumber}>
-          {data.content.image![i]?.file ? (
-            <img src={data.content.image![i].file} alt="이미지" />
+          {data.content!.image![i]?.file ? (
+            <img src={data.content!.image![i].file} alt="이미지" />
           ) : (
             <UploadButton>
               <label>

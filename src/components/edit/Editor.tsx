@@ -1,4 +1,3 @@
-import React, { Dispatch } from "react";
 import styled from "styled-components";
 import useContentValue from "context/useContentValue";
 import useContentAction from "context/useContentAction";
@@ -9,21 +8,22 @@ import Select from "components/ui/Select";
 import PillTab from "components/ui/PillTab";
 import Input from "components/ui/Input";
 import Button from "components/ui/Button";
-import { ContentItem } from "type/portfolio";
+import { ContentList, ContentItem } from "type/portfolio";
 import { Root } from "type/option";
 
 interface Props {
   rootOption: Root;
-  setRootOption: Dispatch<React.SetStateAction<Root>>;
+  setRootOption: React.Dispatch<React.SetStateAction<Root>>;
+  onSubmit: (option: Root, contentList: ContentList) => void;
 }
 
-function Editor({ rootOption, setRootOption }: Props) {
+function Editor({ rootOption, setRootOption, onSubmit }: Props) {
   const data = useContentValue();
   const action = useContentAction();
   const [currentItem, setCurrentItem] = useCurrentItem();
 
   const onChangeValue = (value: string, sort: string) => {
-    if (!currentItem || value === undefined) return;
+    if (!currentItem || !value) return;
     const updateItme = currentItem;
 
     const key = sort.toLocaleLowerCase();
@@ -58,20 +58,13 @@ function Editor({ rootOption, setRootOption }: Props) {
   };
 
   const onSaveHandler = () => {
-    const portfolioItem = {
-      id: nanoid(),
-      option: rootOption,
-      // topVisual: topVisualData,
-      contentList: data,
-    };
-
-    console.log("Save :", portfolioItem);
+    onSubmit(rootOption, data);
   };
 
   return (
     <Container>
       {/* 전체 color, bg-color 수정 input */}
-      {currentItem === null && (
+      {!currentItem && (
         <Input
           label="All Color"
           width="240"
@@ -81,7 +74,7 @@ function Editor({ rootOption, setRootOption }: Props) {
           onChange={onChangeRoot}
         />
       )}
-      {currentItem === null && (
+      {!currentItem && (
         <Input
           label="All Fill"
           width="240"

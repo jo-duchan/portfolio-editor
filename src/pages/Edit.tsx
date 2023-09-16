@@ -1,24 +1,30 @@
 import React, { useEffect, useRef, useState } from "react";
 import { json, useLoaderData } from "react-router-dom";
-import { ref, child, get } from "firebase/database";
+import { ref, child, get, update } from "firebase/database";
 import { db } from "firebase-config";
 import styled from "styled-components";
 import useContentValue from "context/useContentValue";
 import useCurrentItem from "context/useCurrentItem";
 import ColorSystem from "styles/color-system";
 import TopVisualElement from "components/edit/TopVisual";
-import ToolsPanel from "components/edit/ToolsPanel";
 import Viewer from "components/edit/Viewer";
+import Creator from "components/edit/Creator";
+import Editor from "components/edit/Editor";
 import { Root } from "type/option";
-import { TopVisual } from "type/portfolio";
+import { TopVisual, ContentList } from "type/portfolio";
 
 interface StyledProps {
   fill: string;
   color: string;
 }
 
+type LoaderData = {
+  topVisual: TopVisual;
+  portfolioId: string;
+};
+
 function Edit() {
-  const { topVisual } = useLoaderData() as { topVisual: TopVisual };
+  const { topVisual, portfolioId } = useLoaderData() as LoaderData;
   const data = useContentValue();
   const [, setCurrentItem] = useCurrentItem();
   const [rootOption, setRootOption] = useState({} as Root);
@@ -34,6 +40,22 @@ function Edit() {
     };
   }, []);
 
+  const submitHandler = async (option: Root, data: ContentList) => {
+    const contentList = JSON.parse(JSON.stringify(data));
+    await update(ref(db, `${portfolioId}`), {
+      option,
+      contentList,
+    })
+      .then(() => {
+        window.alert("업데이트가 완료되었습니다.");
+        // navigate("/");
+      })
+      .catch((e) => {
+        window.alert("업데이트에 실패했습니다.");
+        console.log(e);
+      });
+  };
+
   return (
     <Container>
       <CanvasPanel
@@ -46,7 +68,14 @@ function Edit() {
           <Viewer key={item.id} data={item} />
         ))}
       </CanvasPanel>
-      <ToolsPanel rootOption={rootOption} setRootOption={setRootOption} />
+      <ToolsPanel>
+        <Creator />
+        <Editor
+          rootOption={rootOption}
+          setRootOption={setRootOption}
+          onSubmit={submitHandler}
+        />
+      </ToolsPanel>
       <Background onClick={clearIdHandler} />
     </Container>
   );
@@ -55,8 +84,9 @@ function Edit() {
 export default Edit;
 
 export async function loader({ params }: any) {
+  const portfolioId = params.portfolioId;
   const dbRef = ref(db);
-  const data = await get(child(dbRef, `${params.portfolioId}`))
+  const data = await get(child(dbRef, `${portfolioId}`))
     .then((snapshot) => {
       if (snapshot.exists()) {
         return snapshot.val();
@@ -68,7 +98,9 @@ export async function loader({ params }: any) {
       throw json({ message: error }, { status: 500 });
     });
 
-  return data;
+  console.log();
+
+  return { topVisual: data.topVisual, portfolioId };
 }
 
 const Container = styled.div`
@@ -90,6 +122,18 @@ const CanvasPanel = styled.div<StyledProps>`
     props.color ? `#${props.color}` : `${ColorSystem.Neutral[900]}`};
   border-radius: 6px;
   overflow: hidden;
+  z-index: 100;
+`;
+
+const ToolsPanel = styled.div`
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 280px;
+  height: fit-content;
   z-index: 100;
 `;
 

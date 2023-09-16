@@ -19,7 +19,7 @@ export type TopVisual = {
 export type ContentItem = {
   id: string;
   sort: Sort;
-  content: {
+  content?: {
     text?: string;
     image?: Image[];
   };

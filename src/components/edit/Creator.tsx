@@ -25,16 +25,13 @@ function Creator() {
       sort: sort,
       content: {
         text: "",
-        image: undefined,
       },
       option: {
         size: "S",
         margin: "NONE",
         aline: "LEFT",
-        gap: undefined,
         color: "",
         fill: "",
-        column: undefined,
       },
     };
     onCreateHandler(CreateData);
@@ -44,18 +41,9 @@ function Creator() {
     const CreateData: ContentItem = {
       id: nanoid(),
       sort: "GAP",
-      content: {
-        text: undefined,
-        image: undefined,
-      },
       option: {
-        size: undefined,
-        margin: undefined,
-        aline: undefined,
         gap: "XS",
-        color: undefined,
         fill: "",
-        column: undefined,
       },
     };
     onCreateHandler(CreateData);
@@ -66,21 +54,15 @@ function Creator() {
       id: nanoid(),
       sort: "IMG",
       content: {
-        text: undefined,
         image: [
           {
-            file: {} as string,
-            // preview: "",
+            file: "",
             type: "",
           },
         ],
       },
       option: {
-        size: undefined,
         margin: "NONE",
-        aline: undefined,
-        gap: undefined,
-        color: undefined,
         fill: "",
         column: "2",
       },

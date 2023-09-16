@@ -22,11 +22,15 @@ function Viewer({ data }: Props) {
 
   const onRanderElement = () => {
     switch (data.sort) {
-      case "TITLE": {
-        return <TextElement data={data} onUpdateHandler={onUpdateHandler} />;
-      }
+      case "TITLE":
       case "TEXT": {
-        return <TextElement data={data} onUpdateHandler={onUpdateHandler} />;
+        return (
+          <TextElement
+            data={data}
+            onUpdateHandler={onUpdateHandler}
+            isFocus={isFocus}
+          />
+        );
       }
       case "IMG": {
         return <ImageElement data={data} onUpdateHandler={onUpdateHandler} />;
