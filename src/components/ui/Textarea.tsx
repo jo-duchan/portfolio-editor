@@ -1,15 +1,10 @@
-import React from "react";
 import styled, { css } from "styled-components";
-
-// Style
 import ColorSystem from "styles/color-system";
 
-// Type
-export type States = "DEFAULT" | "DISABLED";
+type States = "DEFAULT" | "DISABLED";
+type Sizes = "SMALL" | "MEDIUM" | "LARGE";
 
-export type Sizes = "SMALL" | "MEDIUM" | "LARGE";
-
-export interface Props {
+interface Props {
   states?: States;
   width?: string;
   size?: Sizes;

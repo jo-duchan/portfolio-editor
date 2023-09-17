@@ -24,14 +24,16 @@ const labelList: List = {
 function ImageInput({ value, onUpdate }: Props) {
   useEffect(() => {
     // init
+    if (Object.keys(value).length) return;
+
     onUpdate({
       clientLogo: {} as Image,
       CoverPC: {} as Image,
       CoverMO: {} as Image,
     });
-  }, []);
+  }, [value]);
 
-  const onCreateImage = async (
+  const createImageHandler = async (
     e: React.ChangeEvent<HTMLInputElement>,
     key: string
   ) => {
@@ -44,25 +46,49 @@ function ImageInput({ value, onUpdate }: Props) {
       type: getFile[0].type.slice(6, typeLength),
     } as Image;
 
-    onUpdateHandler(updateData, key);
+    updateHandler(updateData, key);
   };
 
-  const onDeleteHandler = (
+  const deleteHandler = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     key: string
   ) => {
     e.stopPropagation();
 
-    onUpdateHandler({} as Image, key);
+    updateHandler({} as Image, key);
   };
 
-  const onUpdateHandler = (updateData: Image, key: string) => {
+  const updateHandler = (updateData: Image, key: string) => {
     onUpdate((prev) => {
       const newData = { ...prev };
       newData[key] = updateData;
 
       return newData;
     });
+  };
+
+  const renderContent = (key: string, file: string) => {
+    if (file) {
+      return (
+        <div className="img-wrapper">
+          <DeleteButton onClick={(e) => deleteHandler(e, key)}>
+            <IconSet type="CLOSE" />
+          </DeleteButton>
+          <img src={file} alt="이미지" />
+        </div>
+      );
+    }
+
+    return (
+      <label className="uploader">
+        <IconSet type="ADD_IMG" />
+        <input
+          type="file"
+          accept="image/jpg, image/jpeg, image/png, image/webp"
+          onChange={(e) => createImageHandler(e, key)}
+        />
+      </label>
+    );
   };
 
   return (
@@ -72,23 +98,7 @@ function ImageInput({ value, onUpdate }: Props) {
         <ContentInner>
           {Object.entries(value).map(([key, item]) => (
             <Uploader key={key}>
-              {item.file ? (
-                <div className="img-wrapper">
-                  <DeleteButton onClick={(e) => onDeleteHandler(e, key)}>
-                    <IconSet type="CLOSE" />
-                  </DeleteButton>
-                  <img src={item.file} alt="이미지" />
-                </div>
-              ) : (
-                <label className="uploader">
-                  <IconSet type="ADD_IMG" />
-                  <input
-                    type="file"
-                    accept="image/jpg, image/jpeg, image/png, image/webp"
-                    onChange={(e) => onCreateImage(e, key)}
-                  />
-                </label>
-              )}
+              {renderContent(key, item.file)}
               <span className="uploader-label">{labelList[key]}</span>
             </Uploader>
           ))}

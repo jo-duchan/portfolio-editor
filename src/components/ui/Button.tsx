@@ -1,20 +1,13 @@
 import React from "react";
 import styled, { css, keyframes } from "styled-components";
-
-// Style
 import ColorSystem from "styles/color-system";
-
-// Components
 import IconSet from "components/ui/IconSet";
 
-// Type
-export type BtnType = "PRIMARY" | "SECONDARY";
+type BtnType = "PRIMARY" | "SECONDARY";
+type States = "DEFAULT" | "LOADING" | "DISABLED";
+type Sizes = "XSMALL" | "SMALL" | "MEDIUM" | "LARGE" | "XLARGE";
 
-export type States = "DEFAULT" | "LOADING" | "DISABLED";
-
-export type Sizes = "XSMALL" | "SMALL" | "MEDIUM" | "LARGE" | "XLARGE";
-
-export interface ButtonProps {
+interface ButtonProps {
   btnType?: BtnType;
   states?: States;
   size?: Sizes;
@@ -38,6 +31,18 @@ function Button({
   label,
   onClick,
 }: ButtonProps) {
+  const renderContent = () => {
+    if (states === "LOADING") {
+      return (
+        <LoadingMotion>
+          <IconSet type="PROGRESS" />
+        </LoadingMotion>
+      );
+    }
+
+    return <p>{label}</p>;
+  };
+
   return (
     <Container
       btnType={btnType === "PRIMARY"}
@@ -47,13 +52,7 @@ function Button({
       disabled={states === "DISABLED"}
       onClick={onClick}
     >
-      {states === "LOADING" ? (
-        <LoadingMotion>
-          <IconSet type="PROGRESS" />
-        </LoadingMotion>
-      ) : (
-        <> {label}</>
-      )}
+      {renderContent()}
     </Container>
   );
 }

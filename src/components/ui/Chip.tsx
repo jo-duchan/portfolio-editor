@@ -24,26 +24,26 @@ interface StyledProps {
 
 function Chip({ value, index, size, icon, onUpdate, onRemove }: Props) {
   const text = useRef(value as string);
-  const inner = useRef<HTMLSpanElement | null>(null);
+  const inner = useRef<HTMLSpanElement>(null);
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
-  const onChangeHandler = (ev: ContentEditableEvent) => {
+  const changeHandler = (ev: ContentEditableEvent) => {
     text.current = ev.target.value;
   };
 
-  const onPasteHandler = (e: React.ClipboardEvent<HTMLDivElement>) => {
+  const pasteHandler = (e: React.ClipboardEvent<HTMLDivElement>) => {
     e.preventDefault();
     text.current = e.clipboardData.getData("text/plain");
-    onBlurHandler();
+    blurHandler();
   };
 
-  const onBlurHandler = () => {
+  const blurHandler = () => {
     setIsFocus(false);
     if (text.current === "") return;
     onUpdate(text.current, index);
   };
 
-  const onClickHandler = () => {
+  const clickHandler = () => {
     inner.current?.focus();
     inner.current?.setAttribute("spellcheck", "false");
     setIsFocus(true);
@@ -65,16 +65,15 @@ function Chip({ value, index, size, icon, onUpdate, onRemove }: Props) {
       isFocus={isFocus}
       size={size}
       paddingLeft={!icon}
-      onClick={onClickHandler}
-      onMouseLeave={() => inner.current?.blur()}
+      onClick={clickHandler}
     >
       <ContentEditable
         html={text.current}
         innerRef={inner}
         disabled={false}
-        onChange={onChangeHandler}
-        onPaste={onPasteHandler}
-        onBlur={onBlurHandler}
+        onChange={changeHandler}
+        onPaste={pasteHandler}
+        onBlur={blurHandler}
         tagName="span"
       />
       <DeleteButton onClick={(e) => onRemove(e, index)}>

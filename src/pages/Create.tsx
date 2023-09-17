@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import ColorSystem from "styles/color-system";
@@ -20,7 +20,7 @@ function Create() {
   const [topic, setTopic] = useState<string[]>([]);
   const [assets, setAssets] = useState<Assets>({} as Assets);
 
-  const onChangeHandler = (value: string, label: string) => {
+  const changeHandler = (value: string, label: string) => {
     if (label === "Title") {
       setTitle(value);
       return;
@@ -32,14 +32,14 @@ function Create() {
     }
   };
 
-  const onCancelHandler = () => {
+  const cancelHandler = () => {
     setTitle("");
     setDescription("");
     setTopic([]);
     setAssets({} as Assets);
   };
 
-  const onSubmitHandler = async () => {
+  const submitHandler = async () => {
     if (title.trim() === "") {
       alert("Title을 작성해 주세요.");
       return;
@@ -60,16 +60,17 @@ function Create() {
       return;
     }
 
-    console.log(title, description, topic, assets);
     const portfolioId = nanoid();
+    const topVisual = {
+      title,
+      description,
+      topic,
+      assets,
+    };
+    console.log("Update:", topVisual);
 
     await update(ref(db, `/${portfolioId}`), {
-      topVisual: {
-        title,
-        description,
-        topic,
-        assets,
-      },
+      topVisual,
     })
       .then(() => {
         window.alert("프로젝트가 생성되었습니다.");
@@ -88,13 +89,13 @@ function Create() {
           label="Title"
           placeholder="제목을 입력하세요."
           value={title}
-          onChange={onChangeHandler}
+          onChange={changeHandler}
         />
         <Textarea
           label="Description"
           placeholder="내용을 입력하세요."
           value={description}
-          onChange={onChangeHandler}
+          onChange={changeHandler}
         />
         <TopicChips value={topic} onUpdate={setTopic} />
         <ImageInput value={assets} onUpdate={setAssets} />
@@ -103,14 +104,14 @@ function Create() {
             label="Cancel"
             btnType="SECONDARY"
             size="MEDIUM"
-            onClick={onCancelHandler}
+            onClick={cancelHandler}
             fixedWidth
           />
           <Button
             label="Next"
             btnType="PRIMARY"
             size="MEDIUM"
-            onClick={onSubmitHandler}
+            onClick={submitHandler}
             fixedWidth
           />
         </div>

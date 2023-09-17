@@ -1,10 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import styled from "styled-components";
-
-// Style
 import ColorSystem from "styles/color-system";
-
-// Type
 
 type States = "DEFAULT" | "FOCUSED" | "DISABLED";
 
@@ -31,7 +27,7 @@ function Input({
   value,
   onChange,
 }: Props) {
-  const InputRef = useRef<HTMLInputElement | null>(null);
+  const InputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!InputRef) return;

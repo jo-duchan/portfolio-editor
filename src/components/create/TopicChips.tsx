@@ -10,13 +10,13 @@ interface Props {
 }
 
 function TopicChips({ value, onUpdate }: Props) {
-  const handleAddChip = () => {
+  const addChipHandler = () => {
     onUpdate((prev) => {
       return [...prev, ""];
     });
   };
 
-  const handleUpdateChip = (updateData: string, index: number) => {
+  const updateChipHandler = (updateData: string, index: number) => {
     onUpdate((prev) => {
       const newDate = [...prev];
       newDate[index] = updateData;
@@ -24,7 +24,7 @@ function TopicChips({ value, onUpdate }: Props) {
     });
   };
 
-  const handleRemoveChip = (
+  const removeChipHandler = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number
   ) => {
@@ -47,11 +47,11 @@ function TopicChips({ value, onUpdate }: Props) {
               key={nanoid()}
               value={chip}
               index={index}
-              onUpdate={handleUpdateChip}
-              onRemove={handleRemoveChip}
+              onUpdate={updateChipHandler}
+              onRemove={removeChipHandler}
             />
           ))}
-          <div className="add" onClick={handleAddChip}>
+          <div className="add" onClick={addChipHandler}>
             +
           </div>
         </div>
