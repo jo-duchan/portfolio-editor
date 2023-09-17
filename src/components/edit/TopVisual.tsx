@@ -67,7 +67,7 @@ const Background = styled.img`
   left: 0;
   display: block;
   width: 100%;
-  object-fit: contain;
+  object-fit: cover;
   z-index: 0;
 `;
 
@@ -83,7 +83,7 @@ const LogoSection = styled.div`
   & :is(img, svg) {
     width: auto;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
   }
 `;
 const Title = styled.div`

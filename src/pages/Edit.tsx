@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { json, useLoaderData } from "react-router-dom";
+import { json, useLoaderData, useNavigate } from "react-router-dom";
 import { ref, child, get, update } from "firebase/database";
 import { db } from "firebase-config";
 import styled from "styled-components";
@@ -25,6 +25,7 @@ type LoaderData = {
 function Edit() {
   const { topVisual, portfolioId } = useLoaderData() as LoaderData;
   const data = useContentValue();
+  const navigate = useNavigate();
   const [currentItemId, setCurrentItemId] = useState<string | null>(null);
   const [rootOption, setRootOption] = useState({} as Root);
   const viewRef = useRef<HTMLDivElement>(null);
@@ -48,7 +49,7 @@ function Edit() {
     })
       .then(() => {
         window.alert("업데이트가 완료되었습니다.");
-        // navigate("/");
+        navigate("preview");
       })
       .catch((e) => {
         window.alert("업데이트에 실패했습니다.");
