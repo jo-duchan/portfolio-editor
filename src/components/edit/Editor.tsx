@@ -1,42 +1,56 @@
+import React from "react";
 import styled from "styled-components";
 import useContentValue from "context/useContentValue";
 import useContentAction from "context/useContentAction";
-import useCurrentItem from "context/useCurrentItem";
-import { nanoid } from "nanoid";
 import ColorSystem from "styles/color-system";
 import Select from "components/ui/Select";
 import PillTab from "components/ui/PillTab";
 import Input from "components/ui/Input";
 import Button from "components/ui/Button";
-import { ContentList, ContentItem } from "type/portfolio";
+import { ContentList } from "type/portfolio";
 import { Root } from "type/option";
 
 interface Props {
   rootOption: Root;
   setRootOption: React.Dispatch<React.SetStateAction<Root>>;
+  currentItemId: string | null;
+  setCurrentItemId: React.Dispatch<React.SetStateAction<string | null>>;
   onSubmit: (option: Root, contentList: ContentList) => void;
 }
 
-function Editor({ rootOption, setRootOption, onSubmit }: Props) {
+function Editor({
+  rootOption,
+  setRootOption,
+  currentItemId,
+  setCurrentItemId,
+  onSubmit,
+}: Props) {
   const data = useContentValue();
   const action = useContentAction();
-  const [currentItem, setCurrentItem] = useCurrentItem();
 
-  const onChangeValue = (value: string, sort: string) => {
-    if (!currentItem || !value) return;
-    const updateItme = currentItem;
+  const foundCurrentItem = () => {
+    if (!currentItemId) return null;
+    const item = data.find((item) => item.id === currentItemId);
+    const aline = item?.option.aline;
+    const column = item?.option.column;
+    const size = item?.option.size;
+    const gap = item?.option.gap;
+    const margin = item?.option.margin;
+    const color = item?.option.color;
+    const fill = item?.option.fill;
+    return { item, aline, column, size, gap, margin, color, fill };
+  };
 
+  const changeOptionHandler = (value: string, sort: string) => {
+    const updateItem = foundCurrentItem()?.item;
+    if (!updateItem) return;
     const key = sort.toLocaleLowerCase();
-    updateItme.option[key] = value;
+    updateItem.option[key] = value;
 
-    onChangeHandler(updateItme, currentItem.id);
+    action.update(updateItem, updateItem.id);
   };
 
-  const onChangeHandler = (updateItme: ContentItem, id: string) => {
-    action.update(updateItme, id);
-  };
-
-  const onChangeRoot = (value: string, sort: string) => {
+  const changeRootOptionHandler = (value: string, sort: string) => {
     const sortOut = sort.replace("All ", "").toLocaleLowerCase();
 
     setRootOption((prev) => {
@@ -46,125 +60,123 @@ function Editor({ rootOption, setRootOption, onSubmit }: Props) {
     });
   };
 
-  const onDeletHandler = () => {
-    if (!currentItem) return console.log("대상없음");
+  const deletHandler = () => {
     data.forEach((item, idx) => {
-      if (item.id === currentItem.id) {
-        action.delete(currentItem.id);
-        setCurrentItem(data[idx - 1]);
+      if (item.id === currentItemId) {
+        action.delete(currentItemId);
+        setCurrentItemId(data[idx - 1].id);
         return;
       }
     });
   };
 
-  const onSaveHandler = () => {
+  const saveHandler = () => {
     onSubmit(rootOption, data);
   };
 
   return (
     <Container>
-      {/* 전체 color, bg-color 수정 input */}
-      {!currentItem && (
+      {!currentItemId && (
         <Input
           label="All Color"
           width="240"
           placeholder="000000"
           maxLength={6}
           value={rootOption.color as string}
-          onChange={onChangeRoot}
+          onChange={changeRootOptionHandler}
         />
       )}
-      {!currentItem && (
+      {!currentItemId && (
         <Input
           label="All Fill"
           width="240"
           placeholder="FFFFFF"
           maxLength={6}
           value={rootOption.fill as string}
-          onChange={onChangeRoot}
+          onChange={changeRootOptionHandler}
         />
       )}
-      {currentItem?.option?.aline && (
+      {foundCurrentItem()?.aline && (
         <PillTab
           label="Aline"
           option={["LEFT", "CENTER", "RIGHT"]}
-          value={currentItem?.option?.aline as string}
-          onChange={onChangeValue}
+          value={foundCurrentItem()?.aline as string}
+          onChange={changeOptionHandler}
         />
       )}
-      {currentItem?.option?.column && (
+      {foundCurrentItem()?.column && (
         <PillTab
           label="Column"
           option={["1", "2"]}
-          value={currentItem?.option?.column as string}
-          onChange={onChangeValue}
+          value={foundCurrentItem()?.column as string}
+          onChange={changeOptionHandler}
         />
       )}
-      {currentItem?.option?.size && (
+      {foundCurrentItem()?.size && (
         <Select
           label="Size"
           width="240"
           placeholder="사이즈를 선택하세요."
           option={["XS", "S", "M", "L", "XL"]}
-          value={currentItem?.option?.size as string}
-          onChange={onChangeValue}
+          value={foundCurrentItem()?.size as string}
+          onChange={changeOptionHandler}
         />
       )}
-      {currentItem?.option?.gap && (
+      {foundCurrentItem()?.gap && (
         <Select
           label="Gap"
           width="240"
           placeholder="공백을 선택하세요."
           option={["XS", "S", "M", "L", "XL"]}
-          value={currentItem?.option?.gap as string}
-          onChange={onChangeValue}
+          value={foundCurrentItem()?.gap as string}
+          onChange={changeOptionHandler}
         />
       )}
-      {currentItem?.option?.margin && (
+      {foundCurrentItem()?.margin && (
         <Select
           label="Margin"
           width="240"
           placeholder="마진을 선택하세요."
           option={["NONE", "XS", "S", "M", "L", "XL"]}
-          value={currentItem?.option?.margin as string}
-          onChange={onChangeValue}
+          value={foundCurrentItem()?.margin as string}
+          onChange={changeOptionHandler}
         />
       )}
 
-      {currentItem?.option?.color !== undefined && (
+      {foundCurrentItem()?.color !== undefined && (
         <Input
           label="Color"
           width="240"
           placeholder="000000"
           maxLength={6}
-          value={currentItem?.option?.color as string}
-          onChange={onChangeValue}
+          value={foundCurrentItem()?.color as string}
+          onChange={changeOptionHandler}
         />
       )}
-      {currentItem?.option?.fill !== undefined && (
+      {foundCurrentItem()?.fill !== undefined && (
         <Input
           label="Fill"
           width="240"
           placeholder="FFFFFF"
           maxLength={6}
-          value={currentItem?.option?.fill as string}
-          onChange={onChangeValue}
+          value={foundCurrentItem()?.fill as string}
+          onChange={changeOptionHandler}
         />
       )}
       <div className="action-wrapper">
         <Button
           label="Delete"
           btnType="SECONDARY"
-          states={currentItem ? "DEFAULT" : "DISABLED"}
+          states={currentItemId ? "DEFAULT" : "DISABLED"}
           size="MEDIUM"
-          onClick={onDeletHandler}
+          onClick={deletHandler}
           fixedWidth
         />
         <Button
           label="Save"
           btnType="PRIMARY"
           size="MEDIUM"
-          onClick={onSaveHandler}
+          onClick={saveHandler}
           fixedWidth
         />
       </div>

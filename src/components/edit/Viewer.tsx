@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useContentAction from "context/useContentAction";
-import useCurrentItem from "context/useCurrentItem";
 import TextElement from "components/edit/TextElement";
 import GapElement from "components/edit/GapElement";
 import ImageElement from "components/edit//ImageElement";
@@ -9,31 +8,32 @@ import { ContentItem } from "type/portfolio";
 
 interface Props {
   data: ContentItem;
+  currentItemId: string | null;
+  setCurrentItemId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 interface StyledProps {
   focus: boolean;
 }
 
-function Viewer({ data }: Props) {
+function Viewer({ data, currentItemId, setCurrentItemId }: Props) {
   const action = useContentAction();
-  const [currentItem, setCurrentItem] = useCurrentItem();
   const [isFocus, setIsFocus] = useState(false);
 
-  const onRanderElement = () => {
+  const renderContent = () => {
     switch (data.sort) {
       case "TITLE":
       case "TEXT": {
         return (
           <TextElement
             data={data}
-            onUpdateHandler={onUpdateHandler}
+            onUpdateHandler={updateHandler}
             isFocus={isFocus}
           />
         );
       }
       case "IMG": {
-        return <ImageElement data={data} onUpdateHandler={onUpdateHandler} />;
+        return <ImageElement data={data} onUpdateHandler={updateHandler} />;
       }
       case "GAP": {
         return <GapElement data={data} />;
@@ -43,23 +43,23 @@ function Viewer({ data }: Props) {
     }
   };
 
-  const onUpdateHandler = (updateData: ContentItem) => {
+  const updateHandler = (updateData: ContentItem) => {
     action.update(updateData, data.id);
   };
 
-  const setSelectItemHandler = () => {
+  const selectItemHandler = () => {
     if (isFocus) return;
 
-    setCurrentItem(data);
+    setCurrentItemId(data.id);
   };
 
   useEffect(() => {
-    setIsFocus(data.id === currentItem?.id);
-  }, [currentItem?.id]);
+    setIsFocus(data.id === currentItemId);
+  }, [currentItemId]);
 
   return (
-    <Container onClick={setSelectItemHandler} focus={isFocus}>
-      {onRanderElement()}
+    <Container onClick={selectItemHandler} focus={isFocus}>
+      {renderContent()}
     </Container>
   );
 }

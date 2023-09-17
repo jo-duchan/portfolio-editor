@@ -4,7 +4,6 @@ import { ref, child, get, update } from "firebase/database";
 import { db } from "firebase-config";
 import styled from "styled-components";
 import useContentValue from "context/useContentValue";
-import useCurrentItem from "context/useCurrentItem";
 import ColorSystem from "styles/color-system";
 import TopVisualElement from "components/edit/TopVisual";
 import Viewer from "components/edit/Viewer";
@@ -26,10 +25,11 @@ type LoaderData = {
 function Edit() {
   const { topVisual, portfolioId } = useLoaderData() as LoaderData;
   const data = useContentValue();
-  const [, setCurrentItem] = useCurrentItem();
+  const [currentItemId, setCurrentItemId] = useState<string | null>(null);
   const [rootOption, setRootOption] = useState({} as Root);
-  const viewRef = useRef<HTMLDivElement | null>(null);
-  const clearIdHandler = () => setCurrentItem(null);
+  const viewRef = useRef<HTMLDivElement>(null);
+
+  const clearIdHandler = () => setCurrentItemId(null);
 
   useEffect(() => {
     viewRef.current?.addEventListener("click", clearIdHandler);
@@ -65,14 +65,24 @@ function Edit() {
       >
         <TopVisualElement data={topVisual} />
         {data.map((item) => (
-          <Viewer key={item.id} data={item} />
+          <Viewer
+            key={item.id}
+            data={item}
+            currentItemId={currentItemId}
+            setCurrentItemId={setCurrentItemId}
+          />
         ))}
       </CanvasPanel>
       <ToolsPanel>
-        <Creator />
+        <Creator
+          currentItemId={currentItemId}
+          setCurrentItemId={setCurrentItemId}
+        />
         <Editor
           rootOption={rootOption}
           setRootOption={setRootOption}
+          currentItemId={currentItemId}
+          setCurrentItemId={setCurrentItemId}
           onSubmit={submitHandler}
         />
       </ToolsPanel>
@@ -97,8 +107,6 @@ export async function loader({ params }: any) {
     .catch((error) => {
       throw json({ message: error }, { status: 500 });
     });
-
-  console.log();
 
   return { topVisual: data.topVisual, portfolioId };
 }

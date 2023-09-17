@@ -1,25 +1,28 @@
 import React from "react";
 import styled from "styled-components";
 import useContentAction from "context/useContentAction";
-import useCurrentItem from "context/useCurrentItem";
 import { nanoid } from "nanoid";
 import ColorSystem from "styles/color-system";
 import IconSet from "components/ui/IconSet";
 import { ContentItem } from "type/portfolio";
 import { Sort } from "type/option";
 
+interface Props {
+  currentItemId: string | null;
+  setCurrentItemId: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
 export type EventType = React.MouseEvent<HTMLButtonElement, MouseEvent>;
 
-function Creator() {
+function Creator({ currentItemId, setCurrentItemId }: Props) {
   const action = useContentAction();
-  const [currentItem, setCurrentItem] = useCurrentItem();
 
-  const onCreateHandler = (createData: ContentItem) => {
-    action.create(createData, currentItem?.id);
-    setCurrentItem(createData);
+  const createHandler = (createData: ContentItem) => {
+    action.create(createData, currentItemId);
+    setCurrentItemId(createData.id);
   };
 
-  const onCreateText = (sort: Sort) => {
+  const createText = (sort: Sort) => {
     const CreateData: ContentItem = {
       id: nanoid(),
       sort: sort,
@@ -34,10 +37,10 @@ function Creator() {
         fill: "",
       },
     };
-    onCreateHandler(CreateData);
+    createHandler(CreateData);
   };
 
-  const onCreateGap = () => {
+  const createGap = () => {
     const CreateData: ContentItem = {
       id: nanoid(),
       sort: "GAP",
@@ -46,10 +49,10 @@ function Creator() {
         fill: "",
       },
     };
-    onCreateHandler(CreateData);
+    createHandler(CreateData);
   };
 
-  const onCreateImage = () => {
+  const createImage = () => {
     const CreateData: ContentItem = {
       id: nanoid(),
       sort: "IMG",
@@ -67,21 +70,21 @@ function Creator() {
         column: "2",
       },
     };
-    onCreateHandler(CreateData);
+    createHandler(CreateData);
   };
 
   return (
     <Container>
-      <Button onClick={() => onCreateText("TITLE")}>
+      <Button onClick={() => createText("TITLE")}>
         <IconSet type="TITLE" />
       </Button>
-      <Button onClick={() => onCreateText("TEXT")}>
+      <Button onClick={() => createText("TEXT")}>
         <IconSet type="TEXT" />
       </Button>
-      <Button onClick={onCreateGap}>
+      <Button onClick={createGap}>
         <IconSet type="GAP" />
       </Button>
-      <Button onClick={onCreateImage}>
+      <Button onClick={createImage}>
         <IconSet type="IMG" />
       </Button>
     </Container>
