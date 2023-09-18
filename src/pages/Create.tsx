@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLoaderData, json } from "react-router-dom";
 import ColorSystem from "styles/color-system";
 import { TitleSizePC } from "styles/typography";
 import Input from "components/ui/Input";
@@ -9,16 +9,39 @@ import Button from "components/ui/Button";
 import ImageInput from "components/create/ImageInput";
 import TopicChips from "components/create/TopicChips";
 import { Assets } from "type/portfolio";
-import { nanoid } from "nanoid";
-import { ref, update } from "firebase/database";
+import { ref, child, update, get } from "firebase/database";
 import { db } from "firebase-config";
+import { TopVisual } from "type/portfolio";
+
+type LoaderData = {
+  front: TopVisual;
+  portfolioId: string;
+};
 
 function Create() {
+  const { front, portfolioId } = useLoaderData() as LoaderData;
   const navigate = useNavigate();
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [topic, setTopic] = useState<string[]>([]);
   const [assets, setAssets] = useState<Assets>({} as Assets);
+
+  useEffect(() => {
+    // init
+    initial(front);
+  }, [front]);
+
+  const initial = (data?: TopVisual) => {
+    const title = data?.title ? data.title : "";
+    const description = data?.description ? data?.description : "";
+    const topic = data?.topic ? data?.topic : [];
+    const assets = data?.assets ? data.assets : ({} as Assets);
+
+    setTitle(title);
+    setDescription(description);
+    setTopic(topic);
+    setAssets(assets);
+  };
 
   const changeHandler = (value: string, label: string) => {
     if (label === "Title") {
@@ -33,10 +56,7 @@ function Create() {
   };
 
   const cancelHandler = () => {
-    setTitle("");
-    setDescription("");
-    setTopic([]);
-    setAssets({} as Assets);
+    initial();
   };
 
   const submitHandler = async () => {
@@ -60,31 +80,30 @@ function Create() {
       return;
     }
 
-    const portfolioId = nanoid();
-    const topVisual = {
+    const front = {
       title,
       description,
       topic,
       assets,
     };
-    console.log("Update:", topVisual);
+    console.log("Update:", front);
 
     await update(ref(db, `/${portfolioId}`), {
-      topVisual,
+      front,
     })
       .then(() => {
-        window.alert("프로젝트가 생성되었습니다.");
-        navigate(`/edit/${portfolioId}`);
+        window.alert("포트폴리오 생성/수정되었습니다.");
+        navigate(`/edit/${portfolioId}/content`);
       })
       .catch((e) => {
-        window.alert("프로젝트 생성에 실패했습니다.");
+        window.alert("포트폴리오 생성/수정에 실패했습니다.");
         console.log(e);
       });
   };
   return (
     <Container>
       <FrontEditor>
-        <Title>포트폴리오 생성</Title>
+        <Title>포트폴리오 생성/수정</Title>
         <Input
           label="Title"
           placeholder="제목을 입력하세요."
@@ -121,6 +140,24 @@ function Create() {
 }
 
 export default Create;
+
+export async function loader({ params }: any) {
+  const portfolioId = params.portfolioId;
+  const dbRef = ref(db);
+  const data = await get(child(dbRef, `${portfolioId}`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else {
+        throw json({ message: "No data available" }, { status: 500 });
+      }
+    })
+    .catch((error) => {
+      throw json({ message: error }, { status: 500 });
+    });
+
+  return { front: data.front, portfolioId };
+}
 
 const Container = styled.div`
   position: relative;

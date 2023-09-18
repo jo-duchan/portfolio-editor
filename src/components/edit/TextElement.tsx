@@ -32,8 +32,18 @@ function TitleElement({ data, onUpdateHandler, isFocus }: Props) {
   const componentSort = data.sort === "TITLE" ? "h4" : "p";
 
   useEffect(() => {
+    // init
+    if (text.current !== "") {
+      setIsPlaceholder(false);
+    }
+  }, []);
+
+  useEffect(() => {
     if (isFocus) {
       onHidePlaceholder();
+    }
+    if (!isFocus) {
+      inner.current?.blur();
     }
   }, [isFocus]);
 
@@ -52,6 +62,9 @@ function TitleElement({ data, onUpdateHandler, isFocus }: Props) {
   const onHidePlaceholder = () => {
     inner.current?.focus();
     inner.current?.setAttribute("spellcheck", "false");
+    if (text.current !== "") {
+      setIsPlaceholder(false);
+    }
   };
 
   return (

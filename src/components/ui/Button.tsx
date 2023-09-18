@@ -176,6 +176,7 @@ const Container = styled.button<StyledProps>`
           height: 40px;
           font-size: 14px;
           font-weight: 600;
+          border-radius: 8px;
         `;
       case "MEDIUM":
         return css`

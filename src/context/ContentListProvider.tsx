@@ -6,6 +6,7 @@ interface Props {
 }
 
 type ContentActionType = {
+  init(initData: ContentList): void;
   create(createData: ContentItem, currentId: string | null | undefined): void;
   update(updateData: ContentItem, currentId: string): void;
   delete(currentId: string): void;
@@ -23,6 +24,12 @@ function ContentListProvider({ children }: Props) {
 
   const actions = useMemo(
     () => ({
+      init(initData: ContentList) {
+        setContentData(() => {
+          const newData = [...initData];
+          return newData;
+        });
+      },
       create(createData: ContentItem, currentId: string | null | undefined) {
         setContentData((prevData) => {
           const newData = [...prevData];

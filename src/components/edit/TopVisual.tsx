@@ -5,10 +5,6 @@ import ColorSystem from "styles/color-system";
 import { TitleSizePC, TextSizePC } from "styles/typography";
 import { TopVisual } from "type/portfolio";
 
-type Data = {
-  topVisual: TopVisual;
-};
-
 interface Props {
   data: TopVisual;
 }

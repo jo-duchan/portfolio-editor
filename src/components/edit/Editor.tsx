@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import useContentValue from "context/useContentValue";
-import useContentAction from "context/useContentAction";
+import useContent from "context/useContent";
 import ColorSystem from "styles/color-system";
 import Select from "components/ui/Select";
 import PillTab from "components/ui/PillTab";
@@ -25,8 +24,8 @@ function Editor({
   setCurrentItemId,
   onSubmit,
 }: Props) {
-  const data = useContentValue();
-  const action = useContentAction();
+  const data = useContent.Value();
+  const action = useContent.Action();
 
   const foundCurrentItem = () => {
     if (!currentItemId) return null;

@@ -3,7 +3,7 @@ import { json, useLoaderData, useNavigate } from "react-router-dom";
 import { ref, child, get, update } from "firebase/database";
 import { db } from "firebase-config";
 import styled from "styled-components";
-import useContentValue from "context/useContentValue";
+import useContent from "context/useContent";
 import ColorSystem from "styles/color-system";
 import TopVisualElement from "components/edit/TopVisual";
 import Viewer from "components/edit/Viewer";
@@ -18,19 +18,35 @@ interface StyledProps {
 }
 
 type LoaderData = {
-  topVisual: TopVisual;
   portfolioId: string;
+  date: number;
+  option: Root;
+  front: TopVisual;
+  content: ContentList;
 };
 
 function Edit() {
-  const { topVisual, portfolioId } = useLoaderData() as LoaderData;
-  const data = useContentValue();
+  const { portfolioId, date, option, front, content } =
+    useLoaderData() as LoaderData;
+  const data = useContent.Value();
+  const action = useContent.Action();
   const navigate = useNavigate();
   const [currentItemId, setCurrentItemId] = useState<string | null>(null);
   const [rootOption, setRootOption] = useState({} as Root);
   const viewRef = useRef<HTMLDivElement>(null);
 
   const clearIdHandler = () => setCurrentItemId(null);
+
+  useEffect(() => {
+    // init
+    if (content) {
+      action.init(content);
+    }
+
+    if (option) {
+      setRootOption(option);
+    }
+  }, [content]);
 
   useEffect(() => {
     viewRef.current?.addEventListener("click", clearIdHandler);
@@ -42,14 +58,17 @@ function Edit() {
   }, []);
 
   const submitHandler = async (option: Root, data: ContentList) => {
-    const contentList = JSON.parse(JSON.stringify(data));
+    const content = JSON.parse(JSON.stringify(data));
+    const editDate = date ? date : Date.now();
+
     await update(ref(db, `${portfolioId}`), {
+      date: editDate,
       option,
-      contentList,
+      content,
     })
       .then(() => {
         window.alert("업데이트가 완료되었습니다.");
-        navigate("preview");
+        navigate("/");
       })
       .catch((e) => {
         window.alert("업데이트에 실패했습니다.");
@@ -64,7 +83,7 @@ function Edit() {
         fill={rootOption.fill!}
         color={rootOption.color!}
       >
-        <TopVisualElement data={topVisual} />
+        <TopVisualElement data={front} />
         {data.map((item) => (
           <Viewer
             key={item.id}
@@ -108,8 +127,14 @@ export async function loader({ params }: any) {
     .catch((error) => {
       throw json({ message: error }, { status: 500 });
     });
-
-  return { topVisual: data.topVisual, portfolioId };
+  console.log(data);
+  return {
+    portfolioId,
+    date: data.date,
+    option: data.option,
+    front: data.front,
+    content: data.content,
+  };
 }
 
 const Container = styled.div`

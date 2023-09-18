@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import useContentAction from "context/useContentAction";
+import useContent from "context/useContent";
 import { nanoid } from "nanoid";
 import ColorSystem from "styles/color-system";
 import IconSet from "components/ui/IconSet";
@@ -15,7 +15,7 @@ interface Props {
 export type EventType = React.MouseEvent<HTMLButtonElement, MouseEvent>;
 
 function Creator({ currentItemId, setCurrentItemId }: Props) {
-  const action = useContentAction();
+  const action = useContent.Action();
 
   const createHandler = (createData: ContentItem) => {
     action.create(createData, currentItemId);

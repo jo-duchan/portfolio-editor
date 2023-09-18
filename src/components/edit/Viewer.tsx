@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import useContentAction from "context/useContentAction";
+import useContent from "context/useContent";
 import TextElement from "components/edit/TextElement";
 import GapElement from "components/edit/GapElement";
 import ImageElement from "components/edit//ImageElement";
@@ -17,7 +17,7 @@ interface StyledProps {
 }
 
 function Viewer({ data, currentItemId, setCurrentItemId }: Props) {
-  const action = useContentAction();
+  const action = useContent.Action();
   const [isFocus, setIsFocus] = useState(false);
 
   const renderContent = () => {

@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "App";
 import ContentListProvider from "context/ContentListProvider";
-import CurrentItemProvider from "context/CurrentItemProvider";
 import GlobalStyle from "styles/common";
 
 const root = ReactDOM.createRoot(
@@ -10,9 +9,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <ContentListProvider>
-    <CurrentItemProvider>
-      <GlobalStyle />
-      <App />
-    </CurrentItemProvider>
+    <GlobalStyle />
+    <App />
   </ContentListProvider>
 );
