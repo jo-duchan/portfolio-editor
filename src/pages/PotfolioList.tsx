@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { json, useLoaderData, useNavigate } from "react-router-dom";
-import { ref, child, get, update } from "firebase/database";
+import { ref, child, get, update, remove } from "firebase/database";
 import { db } from "firebase-config";
 import { nanoid } from "nanoid";
 import styled from "styled-components";
@@ -43,11 +43,23 @@ function PortfolioListPage() {
   };
 
   const viewHandler = (key: string) => {
-    console.log(key);
+    console.log(key, data);
   };
 
   const deleteHandler = async (key: string) => {
     console.log(key);
+    if (window.confirm("포트폴리오를 삭제하시겠습니까?")) {
+      await remove(ref(db, `/${key}`))
+        .then(() => {
+          window.alert("포트폴리오가 삭제되었습니다.");
+          navigate("/");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+
+    // newData;
   };
 
   return (
