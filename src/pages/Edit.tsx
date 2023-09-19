@@ -41,10 +41,14 @@ function Edit() {
     // init
     if (content) {
       action.init(content);
+    } else {
+      action.init([]);
     }
 
     if (option) {
       setRootOption(option);
+    } else {
+      setRootOption({} as Root);
     }
   }, [content]);
 
@@ -59,7 +63,7 @@ function Edit() {
 
   const submitHandler = async (option: Root, data: ContentList) => {
     const content = JSON.parse(JSON.stringify(data));
-    const editDate = date ? date : Date.now();
+    const editDate = Date.now();
 
     await update(ref(db, `${portfolioId}`), {
       date: editDate,
