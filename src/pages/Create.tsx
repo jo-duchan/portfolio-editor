@@ -18,7 +18,7 @@ type LoaderData = {
   portfolioId: string;
 };
 
-function Create() {
+function CreatePage() {
   const { front, portfolioId } = useLoaderData() as LoaderData;
   const navigate = useNavigate();
   const [title, setTitle] = useState<string>("");
@@ -149,7 +149,7 @@ function Create() {
   );
 }
 
-export default Create;
+export default CreatePage;
 
 export async function loader({ params }: any) {
   const portfolioId = params.portfolioId;

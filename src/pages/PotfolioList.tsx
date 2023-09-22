@@ -44,6 +44,7 @@ function PortfolioListPage() {
 
   const viewHandler = (key: string) => {
     console.log(key, data);
+    navigate(`preview/${key}`);
   };
 
   const deleteHandler = async (key: string) => {

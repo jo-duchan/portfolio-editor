@@ -1,5 +1,5 @@
 import { Image } from "type/common";
-import { Sort, FontSize, MarginSize, Aline, Gap, Colume } from "type/option";
+import { Sort, Option } from "type/option";
 
 export type Assets = {
   [key: string]: Image;
@@ -9,7 +9,6 @@ export type Assets = {
 };
 
 export type TopVisual = {
-  // [key: string]: string | string[] | Assets;
   title: string;
   description: string;
   topic: string[];
@@ -23,23 +22,13 @@ export type ContentItem = {
     text?: string;
     image?: Image[];
   };
-  option: {
-    [key: string]:
-      | FontSize
-      | MarginSize
-      | Aline
-      | Gap
-      | string
-      | Colume
-      | undefined;
-    size?: FontSize;
-    margin?: MarginSize;
-    aline?: Aline;
-    gap?: Gap;
-    color?: string;
-    fill?: string;
-    column?: Colume;
-  };
+  option: Option;
 };
 
 export type ContentList = ContentItem[];
+
+export type Portfolio = {
+  date: number;
+  front: TopVisual;
+  content: ContentList;
+};

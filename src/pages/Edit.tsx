@@ -5,7 +5,7 @@ import { db } from "firebase-config";
 import styled from "styled-components";
 import useContent from "context/useContent";
 import ColorSystem from "styles/color-system";
-import TopVisualElement from "components/edit/TopVisual";
+import TopVisualElement from "components/common/TopVisual";
 import Viewer from "components/edit/Viewer";
 import Creator from "components/edit/Creator";
 import Editor from "components/edit/Editor";
@@ -25,7 +25,7 @@ type LoaderData = {
   content: ContentList;
 };
 
-function Edit() {
+function EditPage() {
   const { portfolioId, date, option, front, content } =
     useLoaderData() as LoaderData;
   const data = useContent.Value();
@@ -128,7 +128,7 @@ function Edit() {
   );
 }
 
-export default Edit;
+export default EditPage;
 
 export async function loader({ params }: any) {
   const portfolioId = params.portfolioId;

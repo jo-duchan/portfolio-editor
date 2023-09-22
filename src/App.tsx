@@ -3,8 +3,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PortfolioListPage, {
   loader as PortfolioListLoader,
 } from "pages/PotfolioList";
-import Create, { loader as CreateLoader } from "pages/Create";
-import Edit, { loader as EditLoader } from "pages/Edit";
+import CreatePage, { loader as CreateLoader } from "pages/Create";
+import EditPage, { loader as EditLoader } from "pages/Edit";
+import PreviewPage, { loader as PreviewLoader } from "pages/Preview";
 
 const router = createBrowserRouter(
   [
@@ -14,7 +15,6 @@ const router = createBrowserRouter(
       children: [
         {
           index: true,
-          // path: "list",
           element: <PortfolioListPage />,
           loader: PortfolioListLoader,
         },
@@ -23,15 +23,20 @@ const router = createBrowserRouter(
           children: [
             {
               path: ":portfolioId/front",
-              element: <Create />,
+              element: <CreatePage />,
               loader: CreateLoader,
             },
             {
               path: ":portfolioId/content",
-              element: <Edit />,
+              element: <EditPage />,
               loader: EditLoader,
             },
           ],
+        },
+        {
+          path: "preview/:portfolioId",
+          element: <PreviewPage />,
+          loader: PreviewLoader,
         },
       ],
     },

@@ -160,7 +160,7 @@ const Uploader = styled.div`
     width: auto;
     max-width: 150px;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 4px;
     margin: 0 auto;
   }

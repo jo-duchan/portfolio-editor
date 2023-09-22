@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useContent from "context/useContent";
-import TextElement from "components/edit/TextElement";
+import TextEditor from "components/edit/TextEditor";
 import GapElement from "components/edit/GapElement";
 import ImageElement from "components/edit//ImageElement";
 import { ContentItem } from "type/portfolio";
@@ -25,7 +25,7 @@ function Viewer({ data, currentItemId, setCurrentItemId }: Props) {
       case "TITLE":
       case "TEXT": {
         return (
-          <TextElement
+          <TextEditor
             data={data}
             onUpdateHandler={updateHandler}
             isFocus={isFocus}
