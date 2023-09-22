@@ -1,29 +1,16 @@
-import { MarginSize } from "type/option";
+const MarginPC = {
+  // 0
+  NONE: "0",
+  // 84px
+  XS: "5.250rem",
+  // 156px
+  S: "9.750rem",
+  // 228px
+  M: "14.250rem",
+  // 300px
+  L: "18.750rem",
+  // 360px
+  XL: "22.500rem",
+};
 
-function marginStylePC(size: MarginSize) {
-  switch (size) {
-    case "NONE": {
-      return "0";
-    }
-    case "XS": {
-      return "84px";
-    }
-    case "S": {
-      return "156px";
-    }
-    case "M": {
-      return "228px";
-    }
-    case "L": {
-      return "300px";
-    }
-    case "XL": {
-      return "360px";
-    }
-    default: {
-      return "0";
-    }
-  }
-}
-
-export { marginStylePC };
+export { MarginPC };

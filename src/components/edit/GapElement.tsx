@@ -1,6 +1,5 @@
-import React from "react";
 import styled from "styled-components";
-import { GapStylePC } from "styles/gap";
+import { GapPC } from "styles/gap";
 import { ContentItem } from "type/portfolio";
 import { Gap } from "type/option";
 
@@ -20,6 +19,6 @@ function GapElement({ data }: Props) {
 export default GapElement;
 
 const Container = styled.div<StyledProps>`
-  padding-bottom: ${(props) => `${GapStylePC(props.gap)}`};
-  background: ${(props) => `#${props.fill}`};
+  padding-bottom: ${({ gap }) => `${GapPC[gap]}`};
+  background: ${({ fill }) => `#${fill}`};
 `;

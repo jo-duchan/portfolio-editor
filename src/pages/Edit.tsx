@@ -53,10 +53,22 @@ function Edit() {
   }, [content]);
 
   useEffect(() => {
+    const setRem = () => {
+      if (!viewRef.current) return;
+      document.documentElement.style.fontSize = `${
+        (viewRef.current.clientWidth / 1920) * 100
+      }%`;
+    };
+
+    setRem();
+
+    window.addEventListener("resize", setRem);
     viewRef.current?.addEventListener("click", clearIdHandler);
     document.body.style.background = ColorSystem.Neutral[800];
 
     return () => {
+      window.removeEventListener("resize", setRem);
+      viewRef.current?.removeEventListener("click", clearIdHandler);
       document.body.style.background = "";
     };
   }, []);
@@ -83,6 +95,7 @@ function Edit() {
   return (
     <Container>
       <CanvasPanel
+        className="??"
         ref={viewRef}
         fill={rootOption.fill!}
         color={rootOption.color!}

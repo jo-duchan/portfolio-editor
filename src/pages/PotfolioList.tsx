@@ -5,7 +5,7 @@ import { db } from "firebase-config";
 import { nanoid } from "nanoid";
 import styled from "styled-components";
 import { TopVisual } from "type/portfolio";
-import { TitleSizePC, TextSizePC } from "styles/typography";
+import { TitlePC, TextPC } from "styles/typography";
 import ColorSystem from "styles/color-system";
 import Button from "components/ui/Button";
 import { format } from "date-fns";
@@ -47,7 +47,6 @@ function PortfolioListPage() {
   };
 
   const deleteHandler = async (key: string) => {
-    console.log(key);
     if (window.confirm("포트폴리오를 삭제하시겠습니까?")) {
       await remove(ref(db, `/${key}`))
         .then(() => {
@@ -58,8 +57,6 @@ function PortfolioListPage() {
           console.log(e);
         });
     }
-
-    // newData;
   };
 
   return (
@@ -142,7 +139,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h3`
-  ${TitleSizePC("S")};
+  ${TitlePC["S"]};
   margin-bottom: 40px;
 `;
 
@@ -175,7 +172,7 @@ const Item = styled.li`
 
   & .project-title {
     flex: 1;
-    ${TextSizePC("L")}
+    ${TextPC["L"]}
   }
 
   & .date {

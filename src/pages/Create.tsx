@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useLoaderData, json } from "react-router-dom";
 import ColorSystem from "styles/color-system";
-import { TitleSizePC } from "styles/typography";
+import { TitlePC } from "styles/typography";
 import Input from "components/ui/Input";
 import Textarea from "components/ui/Textarea";
 import Button from "components/ui/Button";
@@ -177,7 +177,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h3`
-  ${TitleSizePC("S")}
+  ${TitlePC["S"]}
 `;
 
 const FrontEditor = styled.div`

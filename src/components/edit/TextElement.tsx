@@ -2,8 +2,8 @@ import { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 import ColorSystem from "styles/color-system";
-import { TitleSizePC, TextSizePC } from "styles/typography";
-import { marginStylePC } from "styles/margin";
+import { TitlePC, TextPC } from "styles/typography";
+import { MarginPC } from "styles/margin";
 import { ContentItem } from "type/portfolio";
 import { FontSize, MarginSize, Aline } from "type/option";
 
@@ -94,20 +94,20 @@ function TitleElement({ data, onUpdateHandler, isFocus }: Props) {
 
 export default TitleElement;
 
+//Container랑 ContentWarpper로 코어 스타일 컴포넌트 만들면 될듯.
 const Container = styled.div<StyledContainer>`
-  background: ${(props) => `#${props.fill}`};
+  background: ${({ fill }) => `#${fill}`};
 `;
 
 const ContentWrapper = styled.div<StyledContentWrapper>`
   display: flex;
   width: auto;
-  justify-content: ${(props) => props.aline};
-  ${(props) =>
-    props.sort === "h4"
-      ? `${TitleSizePC(props.size)}`
-      : `${TextSizePC(props.size)}`};
-  color: ${(props) => `#${props.color}`};
-  margin-inline: ${(props) => `${marginStylePC(props.margin)}`};
+  justify-content: ${({ aline }) => aline};
+  ${({ sort, size }) =>
+    sort === "h4" ? `${TitlePC[size]}` : `${TextPC[size]}`}
+  color: ${({ color }) => `#${color}`};
+
+  margin-inline: ${({ margin }) => `${MarginPC[margin]}`};
   & > *:focus {
     outline: none;
   }

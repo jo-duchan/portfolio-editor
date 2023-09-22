@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import IconSet from "components/ui/IconSet";
 import ColorSystem from "styles/color-system";
-import { TitleSizePC, TextSizePC } from "styles/typography";
+import { TitlePC, TextPC } from "styles/typography";
 import { TopVisual } from "type/portfolio";
+import { MarginPC } from "styles/margin";
 
 interface Props {
   data: TopVisual;
@@ -42,7 +43,7 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   height: fit-content;
-  max-height: 1080px;
+  max-height: 67.5rem;
   background: ${ColorSystem.Neutral[100]};
   overflow: hidden;
 `;
@@ -71,9 +72,9 @@ const LogoSection = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 30px;
-  margin-top: 150px;
-  padding-inline: 292px;
+  height: 1.875rem;
+  margin-top: 9.375rem;
+  padding-inline: 18.25rem;
   box-sizing: border-box;
 
   & :is(img, svg) {
@@ -83,21 +84,27 @@ const LogoSection = styled.div`
   }
 `;
 const Title = styled.div`
-  margin-top: 150px;
-  ${TitleSizePC("XL")}
+  width: 100%;
+  margin-top: 9.375rem;
+  ${TitlePC["XL"]}
+  padding-inline: ${MarginPC["S"]};
+  box-sizing: border-box;
 `;
 const Description = styled.div`
-  margin-top: 56px;
-  ${TextSizePC("XL")}
+  width: 100%;
+  margin-top: 3.5rem;
+  ${TextPC["XL"]}
   white-space: break-spaces;
+  padding-inline: ${MarginPC["S"]};
+  box-sizing: border-box;
 `;
 const Topic = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 200px;
+  margin-top: 12.5rem;
   margin-bottom: auto;
   & span {
-    ${TextSizePC("M")}
+    ${TextPC["M"]}
   }
 `;

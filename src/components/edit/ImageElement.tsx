@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Utils from "utils/Utils";
 import IconSet from "components/ui/IconSet";
 import ColorSystem from "styles/color-system";
-import { marginStylePC } from "styles/margin";
+import { MarginPC } from "styles/margin";
 import { Image } from "type/common";
 import { ContentItem } from "type/portfolio";
 import { MarginSize } from "type/option";
@@ -81,19 +81,20 @@ function ImageElement({ data, onUpdateHandler }: Props) {
 
 export default ImageElement;
 
+// Container, Content로 img 코어 만들기.
 const Container = styled.div<StyledContainer>`
   display: flex;
-  gap: 24px;
+  gap: 1.5rem;
   justify-content: center;
   width: auto;
-  background: ${(props) => `#${props.fill}`};
-  padding-inline: ${(props) => `${marginStylePC(props.margin)}`};
+  background: ${({ fill }) => `#${fill}`};
+  padding-inline: ${({ margin }) => `${MarginPC[margin]}`};
   box-sizing: border-box;
   pointer-events: none;
 `;
 
 const Content = styled.div<StyledContent>`
-  width: ${(props) => `calc(100% / ${props.cloumn})`};
+  width: ${({ cloumn }) => `calc(100% /${cloumn})`};
 
   & img {
     display: block;
@@ -106,12 +107,12 @@ const UploadButton = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 400px;
+  height: 25rem;
   background: ${ColorSystem.Neutral[200]};
 
   & label {
     pointer-events: all;
-    padding: 10px;
+    padding: 0.625rem;
     cursor: pointer;
   }
 
