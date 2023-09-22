@@ -21,7 +21,7 @@ function TopVisualElement({ data }: Props) {
     <Container>
       <Content>
         <LogoSection>
-          <img className="client" src={assets.clientLogo.file} alt="client" />
+          <img className="client" src={assets.ClientLogo.file} alt="client" />
           <IconSet type="WACKY" />
         </LogoSection>
         <Title>{title}</Title>

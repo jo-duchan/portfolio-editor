@@ -16,7 +16,7 @@ type List = {
 };
 
 const labelList: List = {
-  clientLogo: "Client Logo",
+  ClientLogo: "Client Logo",
   CoverPC: "Cover IMG PC",
   CoverMO: "Cover IMG MO",
 };
@@ -27,7 +27,7 @@ function ImageInput({ value, onUpdate }: Props) {
     if (Object.keys(value).length) return;
 
     onUpdate({
-      clientLogo: {} as Image,
+      ClientLogo: {} as Image,
       CoverPC: {} as Image,
       CoverMO: {} as Image,
     });

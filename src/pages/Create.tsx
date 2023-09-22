@@ -31,11 +31,21 @@ function Create() {
     initial(front);
   }, [front]);
 
+  const Reverse = (obj: Assets) => {
+    const newObj = {
+      ClientLogo: obj.ClientLogo,
+      CoverPC: obj.CoverPC,
+      CoverMO: obj.CoverMO,
+    };
+
+    return newObj;
+  };
+
   const initial = (data?: TopVisual) => {
     const title = data?.title ? data.title : "";
     const description = data?.description ? data?.description : "";
     const topic = data?.topic ? data?.topic : [];
-    const assets = data?.assets ? data.assets : ({} as Assets);
+    const assets = data?.assets ? Reverse(data.assets) : ({} as Assets);
 
     setTitle(title);
     setDescription(description);

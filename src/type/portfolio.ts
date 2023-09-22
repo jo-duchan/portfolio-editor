@@ -3,7 +3,7 @@ import { Sort, FontSize, MarginSize, Aline, Gap, Colume } from "type/option";
 
 export type Assets = {
   [key: string]: Image;
-  clientLogo: Image;
+  ClientLogo: Image;
   CoverPC: Image;
   CoverMO: Image;
 };

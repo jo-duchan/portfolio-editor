@@ -70,7 +70,7 @@ function PortfolioListPage() {
           <Item key={key}>
             <img
               className="thumbnail"
-              src={data[key].front.assets.clientLogo.file}
+              src={data[key].front.assets.CoverPC.file}
               alt="project thumbnail"
             />
             <p className="project-title">{data[key].front.title}</p>
