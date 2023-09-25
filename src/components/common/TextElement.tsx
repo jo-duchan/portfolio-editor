@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { TitlePC, TextPC } from "styles/typography";
 import { MarginPC } from "styles/margin";
-import { Option, FontSize, MarginSize, Aline, Sort } from "type/option";
+import { ContentItem } from "type/portfolio";
+import { FontSize, MarginSize, Aline } from "type/option";
 
 interface Props {
   children: React.ReactNode;
-  sort?: Sort;
-  option: Option;
+  data: ContentItem;
   onClick?: () => void;
 }
 
@@ -20,13 +20,13 @@ interface StyledProps {
   color?: string;
 }
 
-function TextElement({ children, sort, option }: Props) {
-  const componentSort = sort === "TITLE" ? "h4" : "p";
-  const fill = option.fill;
-  const size = option.size;
-  const margin = option.margin;
-  const aline = option.aline;
-  const color = option.color;
+function TextElement({ children, data }: Props) {
+  const componentSort = data.sort === "TITLE" ? "h4" : "p";
+  const fill = data.option.fill;
+  const size = data.option.size;
+  const margin = data.option.margin;
+  const aline = data.option.aline;
+  const color = data.option.color;
 
   return (
     <Container fill={fill}>

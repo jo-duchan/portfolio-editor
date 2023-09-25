@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useContent from "context/useContent";
 import TextEditor from "components/edit/TextEditor";
-import GapElement from "components/edit/GapElement";
-import ImageElement from "components/edit//ImageElement";
+import GapElement from "components/common/GapElement";
+import ImageEditor from "components/edit/ImageEditor";
 import { ContentItem } from "type/portfolio";
 
 interface Props {
@@ -33,7 +33,7 @@ function Viewer({ data, currentItemId, setCurrentItemId }: Props) {
         );
       }
       case "IMG": {
-        return <ImageElement data={data} onUpdateHandler={updateHandler} />;
+        return <ImageEditor data={data} onUpdateHandler={updateHandler} />;
       }
       case "GAP": {
         return <GapElement data={data} />;

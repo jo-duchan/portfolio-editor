@@ -12,13 +12,13 @@ export type IconType =
   | "GAP"
   | "ADD_IMG"
   | "WACKY"
-  | undefined;
+  | "ARROW_BACK";
 
 interface Props {
-  type: IconType;
+  type?: IconType;
 }
 
-function IconSet({ type }: Props) {
+function IconSet({ type = undefined }: Props) {
   switch (type) {
     case "PROGRESS": {
       return (
@@ -153,6 +153,18 @@ function IconSet({ type }: Props) {
             d="M9 42C8.175 42 7.46875 41.7063 6.88125 41.1188C6.29375 40.5313 6 39.825 6 39V9C6 8.175 6.29375 7.46875 6.88125 6.88125C7.46875 6.29375 8.175 6 9 6H29.45V9H9V39H39V18.6H42V39C42 39.825 41.7063 40.5313 41.1188 41.1188C40.5313 41.7063 39.825 42 39 42H9ZM35 17.1V13.05H30.95V10.05H35V6H38V10.05H42.05V13.05H38V17.1H35ZM12 33.9H36L28.8 24.3L22.45 32.65L17.75 26.45L12 33.9Z"
             fill="black"
           />
+        </svg>
+      );
+    }
+    case "ARROW_BACK": {
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24"
+          viewBox="0 -960 960 960"
+          width="24"
+        >
+          <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
         </svg>
       );
     }

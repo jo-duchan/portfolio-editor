@@ -2,29 +2,17 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import Utils from "utils/Utils";
 import IconSet from "components/ui/IconSet";
+import ImageElement from "components/common/ImageElement";
 import ColorSystem from "styles/color-system";
-import { MarginPC } from "styles/margin";
 import { Image } from "type/common";
 import { ContentItem } from "type/portfolio";
-import { MarginSize } from "type/option";
 
 interface Props {
   data: ContentItem;
   onUpdateHandler: (updateData: ContentItem) => void;
 }
 
-interface StyledContainer {
-  fill: string;
-  margin: MarginSize;
-}
-
-interface StyledContent {
-  cloumn: number;
-}
-
-function ImageElement({ data, onUpdateHandler }: Props) {
-  const columnNumber = parseInt(data.option.column as string);
-
+function ImageEditor({ data, onUpdateHandler }: Props) {
   const onCreateImage = async (
     e: React.ChangeEvent<HTMLInputElement>,
     i: number
@@ -51,56 +39,25 @@ function ImageElement({ data, onUpdateHandler }: Props) {
     }
   }, [data.option.column]);
 
-  return (
-    <Container
-      fill={data.option.fill!}
-      margin={data.option.margin!}
-      onClickCapture={(e) => e.stopPropagation()}
-    >
-      {[...Array(columnNumber)].map((x, i) => (
-        <Content key={i} cloumn={columnNumber}>
-          {data.content!.image![i]?.file ? (
-            <img src={data.content!.image![i].file} alt="이미지" />
-          ) : (
-            <UploadButton>
-              <label>
-                <IconSet type="ADD_IMG" />
-                <input
-                  type="file"
-                  accept="image/jpg, image/jpeg, image/png, image/webp"
-                  onChange={(e) => onCreateImage(e, i)}
-                />
-              </label>
-            </UploadButton>
-          )}
-        </Content>
-      ))}
-    </Container>
-  );
+  const renderUploadHandler = (index: number) => {
+    return (
+      <UploadButton>
+        <label>
+          <IconSet type="ADD_IMG" />
+          <input
+            type="file"
+            accept="image/jpg, image/jpeg, image/png, image/webp"
+            onChange={(e) => onCreateImage(e, index)}
+          />
+        </label>
+      </UploadButton>
+    );
+  };
+
+  return <ImageElement data={data} onUpload={renderUploadHandler} />;
 }
 
-export default ImageElement;
-
-// Container, Content로 img 코어 만들기.
-const Container = styled.div<StyledContainer>`
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-  width: auto;
-  background: ${({ fill }) => `#${fill}`};
-  padding-inline: ${({ margin }) => `${MarginPC[margin]}`};
-  box-sizing: border-box;
-  pointer-events: none;
-`;
-
-const Content = styled.div<StyledContent>`
-  width: ${({ cloumn }) => `calc(100% /${cloumn})`};
-
-  & img {
-    display: block;
-    width: 100%;
-  }
-`;
+export default ImageEditor;
 
 const UploadButton = styled.div`
   display: flex;

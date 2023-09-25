@@ -55,11 +55,7 @@ function TextEditor({ data, onUpdateHandler, isFocus }: Props) {
   };
 
   return (
-    <TextElement
-      sort={data.sort}
-      option={data.option}
-      onClick={onHidePlaceholder}
-    >
+    <TextElement data={data} onClick={onHidePlaceholder}>
       <ContentEditable
         html={text.current}
         innerRef={inner}
