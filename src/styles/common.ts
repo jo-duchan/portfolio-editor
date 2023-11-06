@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-// Style
+
+export const deviceWidth = "800px";
 
 const GlobalStyle = createGlobalStyle`
 ${reset};

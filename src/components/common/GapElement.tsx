@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { GapPC } from "styles/gap";
+import { GapPC, GapMO } from "styles/gap";
 import { ContentItem } from "type/portfolio";
 import { Gap } from "type/option";
 
@@ -21,4 +21,8 @@ export default GapElement;
 const Container = styled.div<StyledProps>`
   padding-bottom: ${({ gap }) => `${GapPC[gap]}`};
   background: ${({ fill }) => `#${fill}`};
+
+  @media screen and (max-width: 500px) {
+    padding-bottom: ${({ gap }) => `${GapMO[gap]}`};
+  }
 `;

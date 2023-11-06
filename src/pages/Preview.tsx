@@ -16,9 +16,16 @@ function PreviewPage() {
 
   useEffect(() => {
     const setRem = () => {
-      document.documentElement.style.fontSize = `${
-        (window.innerWidth / 1920) * 100
-      }%`;
+      if (window.innerWidth > 800) {
+        document.documentElement.style.fontSize = `${
+          (window.innerWidth / 1920) * 100
+        }%`;
+      }
+      if (window.innerWidth < 800) {
+        document.documentElement.style.fontSize = `${
+          (window.innerWidth / 360) * 100
+        }%`;
+      }
     };
 
     setRem();
@@ -87,6 +94,8 @@ const Container = styled.div`
   position: relative;
   display: block;
   width: 100%;
+  /* width: clamp(1440px, 100%, 1920px); */
+  margin-inline: auto;
 `;
 
 const BackBtn = styled.div`

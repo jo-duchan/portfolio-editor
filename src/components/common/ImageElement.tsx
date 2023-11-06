@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { ContentItem } from "type/portfolio";
 import { MarginSize } from "type/option";
-import { MarginPC } from "styles/margin";
+import { MarginPC, MarginMO } from "styles/margin";
 
 interface Props {
   data: ContentItem;
@@ -51,6 +51,11 @@ const Container = styled.div<StyledContainer>`
   padding-inline: ${({ margin }) => `${MarginPC[margin]}`};
   box-sizing: border-box;
   pointer-events: none;
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+    padding-inline: ${({ margin }) => `${MarginMO[margin]}`};
+  }
 `;
 
 const Content = styled.div<StyledContent>`
@@ -58,6 +63,10 @@ const Content = styled.div<StyledContent>`
 
   & img {
     display: block;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 500px) {
     width: 100%;
   }
 `;

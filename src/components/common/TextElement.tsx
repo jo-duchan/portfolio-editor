@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { TitlePC, TextPC } from "styles/typography";
-import { MarginPC } from "styles/margin";
+import { TitlePC, TitleMO, TextPC, TextMO } from "styles/typography";
+import { MarginPC, MarginMO } from "styles/margin";
 import { ContentItem } from "type/portfolio";
 import { FontSize, MarginSize, Aline } from "type/option";
 
@@ -53,12 +53,19 @@ const ContentWrapper = styled.div<StyledProps>`
   display: flex;
   width: auto;
   justify-content: ${({ aline }) => aline};
-  ${({ sort, size }) =>
-    sort === "h4" ? `${TitlePC[size!]}` : `${TextPC[size!]}`}
   color: ${({ color }) => `#${color}`};
 
+  ${({ sort, size }) =>
+    sort === "h4" ? `${TitlePC[size!]}` : `${TextPC[size!]}`}
   margin-inline: ${({ margin }) => `${MarginPC[margin!]}`};
+
   & > *:focus {
     outline: none;
+  }
+
+  @media screen and (max-width: 500px) {
+    ${({ sort, size }) =>
+      sort === "h4" ? `${TitleMO[size!]}` : `${TextMO[size!]}`}
+    margin-inline: ${({ margin }) => `${MarginMO[margin!]}`};
   }
 `;

@@ -6,4 +6,12 @@ const GapPC = {
   XL: "12.500rem",
 };
 
-export { GapPC };
+const GapMO = {
+  XS: "1.000rem",
+  S: "1.500rem",
+  M: "2.750rem",
+  L: "4.500rem",
+  XL: "7.500rem",
+};
+
+export { GapPC, GapMO };
